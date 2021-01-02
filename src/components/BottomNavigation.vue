@@ -18,3 +18,7 @@
     </v-btn>
   </v-bottom-navigation>
 </template>
+
+<style>
+.v-bottom-navigation.v-item-group .v-btn {height: inherit !important;}
+</style>
