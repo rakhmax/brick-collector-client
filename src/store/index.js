@@ -15,6 +15,7 @@ export default new Vuex.Store({
     sets: [],
     darkMode: window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches,
     dollarRate: 0,
+    themes: [],
   },
   mutations: {
     ...minifiguresMutations,
