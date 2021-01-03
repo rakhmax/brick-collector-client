@@ -20,9 +20,26 @@
       <!-- <v-icon small class="mr-2">
         mdi-pencil {{ item }}
       </v-icon> -->
-      <v-icon small @click="deleteMinifigure(item.legoId)">
-        mdi-delete
-      </v-icon>
+      <v-menu bottom left>
+        <template #activator="{ on, attrs }">
+          <v-btn
+            v-bind="attrs"
+            v-on="on"
+            :disabled="$store.state.loading"
+            dark
+            icon
+          >
+            <v-icon small>
+              mdi-delete
+            </v-icon>
+          </v-btn>
+        </template>
+        <v-list>
+          <v-list-item @click="deleteMinifigure(item.legoId)">
+            <v-list-item-title>Delete</v-list-item-title>
+          </v-list-item>
+        </v-list>
+      </v-menu>
     </template>
   </v-data-table>
 </template>
@@ -49,7 +66,7 @@ export default {
       },
       { text: 'Theme', value: 'theme' },
       {
-        text: 'Price',
+        text: 'Price (₽)',
         value: 'price',
         width: 120,
       },
@@ -60,8 +77,9 @@ export default {
       },
       {
         sortable: false,
-        text: 'Actions',
+        text: '',
         value: 'actions',
+        width: 60,
       },
     ],
     minifigures: [],

@@ -3,9 +3,13 @@ export function getThemeIdByItemIdPrefix(search) {
     this.dialogData.theme = null;
   } else if (search.startsWith('cty')) {
     this.dialogData.theme = 50;
-  } else if (search.startsWith('sw')) {
+  } else if (search.startsWith('sw')
+    || search.startsWith('751')
+    || search.startsWith('752')
+    || search.startsWith('753')
+  ) {
     this.dialogData.theme = 158;
-  } else if (search.startsWith('hp')) {
+  } else if (search.startsWith('hp') || search.startsWith('759')) {
     this.dialogData.theme = 246;
   } else if (search.startsWith('njo')) {
     this.dialogData.theme = 435;
@@ -31,6 +35,7 @@ export function getThemeIdByItemIdPrefix(search) {
 }
 
 export function getThemeNameById(themeId) {
-  const themeToConvert = this.$store.state.themes.find((theme) => theme.id === themeId) || {};
+  const themeToConvert = this.$store.state.themes
+    .find((theme) => theme.id === themeId) || {};
   return themeToConvert.name;
 }

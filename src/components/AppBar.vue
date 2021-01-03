@@ -3,12 +3,11 @@
     app
     color="light"
     flat
-    :style="{ zIndex: 7 }"
   >
     <div class="d-flex align-center">
       <v-img
-        alt="Vuetify Logo"
-        class="shrink mr-2"
+        alt="Lego Brick Logo"
+        class="shrink mr-4"
         contain
         src="../assets/Plastic_brick_red.svg"
         transition="scale-transition"

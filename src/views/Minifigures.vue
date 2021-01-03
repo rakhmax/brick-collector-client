@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div :style="{ marginBottom: '80px' }">
     <table-minifigures/>
   </div>
 </template>

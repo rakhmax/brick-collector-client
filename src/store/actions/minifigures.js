@@ -37,7 +37,7 @@ export default {
 
   async [DELETE_MINIFIGURES]({ commit, state }, payload) {
     try {
-      state.saving = true;
+      state.loading = true;
       const { data } = await deleteMinifigure(payload);
 
       const filteredData = state.minifigures

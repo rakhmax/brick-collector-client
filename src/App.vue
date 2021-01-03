@@ -1,20 +1,23 @@
 <template>
   <v-app v-resize="onResize">
-    <sidebar v-if="!isMobile"/>
+    <sidebar v-if="!isMobile" />
     <v-main :class="!isMobile && 'ml-14'">
       <app-bar />
       <router-view />
-      <v-btn
-        :style="{ bottom: isMobile ? '56px' : 0 }"
-        @click="dialog = true"
-        color="light"
-        fixed
-        right
-        class="my-4"
-        fab
-      >
-        <v-icon dark>mdi-plus</v-icon>
-      </v-btn>
+      <v-fab-transition>
+        <v-btn
+          v-if="!scrolledToBottom"
+          :style="{ bottom: isMobile ? '56px' : 0 }"
+          @click="dialog = true"
+          color="light"
+          fixed
+          right
+          class="my-4"
+          fab
+        >
+          <v-icon dark>mdi-plus</v-icon>
+        </v-btn>
+      </v-fab-transition>
       <dialog-add-item :dialog.sync="dialog" />
     </v-main>
     <bottom-navigation v-if="isMobile"/>
@@ -44,17 +47,29 @@ export default {
       x: 0,
       y: 0,
     },
+    scrolledToBottom: false,
   }),
 
   mounted() {
     this.$store.dispatch(GET_THEMES);
     this.$vuetify.theme.dark = this.$store.state.darkMode;
     this.onResize();
+    this.onScroll();
   },
 
   methods: {
     onResize() {
       this.windowSize = { x: window.innerWidth, y: window.innerHeight };
+    },
+    onScroll() {
+      window.onscroll = () => {
+        console.log(this.scrolledToBottom);
+        if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 56) {
+          this.scrolledToBottom = true;
+        } else {
+          this.scrolledToBottom = false;
+        }
+      };
     },
   },
 
