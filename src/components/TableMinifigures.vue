@@ -19,6 +19,19 @@
         class="mx-4"
       />
     </template>
+    <template v-slot:item.actions="{ item }">
+      <v-icon
+        small
+        class="mr-2"
+      >
+        mdi-pencil {{item}}
+      </v-icon>
+      <v-icon
+        small
+      >
+        mdi-delete
+      </v-icon>
+    </template>
   </v-data-table>
 </template>
 
@@ -31,7 +44,7 @@ export default {
   data: () => ({
     search: '',
     headers: [
-      // { text: 'ID', value: 'number' },
+      { text: 'ID', value: 'legoId' },
       {
         text: 'Name',
         align: 'start',
@@ -50,13 +63,13 @@ export default {
   }),
 
   methods: {
-    async getAll() {
-      await this.$store.dispatch(GET_MINIFIGURES);
-      this.minifigures = this.$store.state.minifigures;
+    getAll() {
+      this.$store.dispatch(GET_MINIFIGURES)
+        .then(() => { this.minifigures = this.$store.state.minifigures; });
     },
   },
 
-  async mounted() {
+  mounted() {
     this.getAll();
   },
 };
