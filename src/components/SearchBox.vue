@@ -1,12 +1,10 @@
 <template>
   <v-autocomplete
-    :error="!!error"
-    :error-messages="error && error.message"
+    v-model="select"
     :items="items"
     :loading="loading"
     :search-input.sync="search"
-    :value="value"
-    @input="$emit('input', $event)"
+    @change="handleSelect"
     autofocus
     clearable
     flat
@@ -41,43 +39,41 @@ import { eventBus } from '../main';
 export default {
   name: 'App',
 
-  props: ['value', 'error'],
-
   data: () => ({
     loading: false,
     items: [],
     search: null,
+    select: {},
   }),
+
   watch: {
     search(val) {
       eventBus.$emit('search', {
         search: this.search,
       });
       if (val) {
-        this.querySelections(val);
+        this.handleSearch(val.toLowerCase());
       } else {
         this.items = [];
       }
     },
   },
+
   methods: {
-    querySelections: debounce(async function querySelectionsDebounced(v) {
+    handleSearch: debounce(function (v) {
       this.loading = true;
 
-      try {
-        const data = await searchData(v, this.$route.name.toLowerCase());
+      searchData(v, this.$route.name.toLowerCase())
+        .then((data) => { this.items = data; })
+        .catch((err) => console.log(err))
+        .finally(() => { this.loading = false; });
+    }, 400),
 
-        this.items = data.map((item) => ({
-          name: item.name,
-          img: item.img,
-          number: item.id,
-        }));
-      } catch (e) {
-        console.log(e);
-      } finally {
-        this.loading = false;
-      }
-    }, 200),
+    handleSelect() {
+      eventBus.$emit('select', {
+        select: this.select || {},
+      });
+    },
   },
 };
 </script>

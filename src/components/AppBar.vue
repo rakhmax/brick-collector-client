@@ -14,6 +14,10 @@
         width="40"
       />
     </div>
-    <v-app-bar-title>Lego Database</v-app-bar-title>
+    <v-app-bar-title><span>Lego Database</span></v-app-bar-title>
   </v-app-bar>
 </template>
+
+<style>
+  .v-app-bar-title__content { width: auto !important }
+</style>

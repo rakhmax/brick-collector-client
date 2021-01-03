@@ -1,18 +1,14 @@
 <template>
-  <v-bottom-navigation
-    v-model="value"
-    grow
-    fixed
-  >
-    <v-btn value="minifigures" to="/minifigures">
+  <v-bottom-navigation grow fixed>
+    <v-btn to="/minifigures">
       <span>Minifigures</span>
       <v-icon>mdi-human-male</v-icon>
     </v-btn>
-    <v-btn value="sets" to="/sets">
+    <v-btn to="/sets">
       <span>Sets</span>
       <v-icon>mdi-toy-brick</v-icon>
     </v-btn>
-    <v-btn value="stats" to="/statistics">
+    <v-btn to="/statistics">
       <span>Statistics</span>
       <v-icon>mdi-chart-arc</v-icon>
     </v-btn>

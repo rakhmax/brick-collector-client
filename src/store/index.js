@@ -8,13 +8,13 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    error: null,
-    loading: false,
-    saving: false,
-    minifigures: [],
-    sets: [],
     darkMode: window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches,
     dollarRate: 0,
+    error: null,
+    loading: false,
+    minifigures: [],
+    saving: false,
+    sets: [],
     themes: [],
   },
   mutations: {

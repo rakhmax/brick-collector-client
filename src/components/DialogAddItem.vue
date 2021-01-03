@@ -13,12 +13,12 @@
           <v-container>
             <v-row>
               <v-col cols="12">
-                <search-box v-model="dialogData.select" :error="error"/>
+                <search-box />
               </v-col>
               <v-col
                 cols="12"
                 sm="6"
-                md="4"
+                md="6"
               >
                 <v-select
                   v-model="dialogData.theme"
@@ -32,7 +32,18 @@
               <v-col
                 cols="12"
                 sm="6"
-                md="4"
+                md="3"
+              >
+                <v-text-field
+                  v-model="dialogData.select.legoId"
+                  label="Lego ID"
+                  required
+                ></v-text-field>
+              </v-col>
+              <v-col
+                cols="12"
+                sm="6"
+                md="3"
               >
                 <v-text-field
                   v-model="dialogData.price"
@@ -41,14 +52,12 @@
                   type="number"
                 ></v-text-field>
               </v-col>
-              <v-col
-                cols="12"
-              >
+              <v-col cols="12">
                 <v-text-field
                   v-model="dialogData.comment"
                   label="Comment (optional)"
                   required
-                ></v-text-field>
+                />
               </v-col>
             </v-row>
           </v-container>
@@ -56,17 +65,17 @@
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn
+            @click="handleClose"
             color="blue darken-1"
             text
-            @click="handleClose"
           >
             Close
           </v-btn>
           <v-btn
             :disabled="disabledSave"
+            @click="handleSave"
             color="blue darken-1"
             text
-            @click="handleSave"
           >
             Save
           </v-btn>
@@ -86,24 +95,34 @@ export default {
   components: {
     SearchBox,
   },
+
   data: () => ({
     title: 'item',
     dialogData: {
-      select: null,
-      price: null,
       comment: null,
+      price: null,
+      select: {},
       theme: null,
     },
   }),
+
   props: {
     dialog: { type: Boolean, default: false },
   },
+
   methods: {
     handleClose() {
       this.$emit('update:dialog', false);
+
+      this.dialogData = {
+        comment: null,
+        price: null,
+        select: {},
+        theme: null,
+      };
     },
 
-    async handleSave() {
+    handleSave() {
       const {
         comment,
         price,
@@ -119,21 +138,27 @@ export default {
           comment,
         };
 
-        await this.$store.dispatch(SET_MINIFIGURES, data);
-        this.handleClose();
+        this.$store.dispatch(SET_MINIFIGURES, data)
+          .then(() => this.handleClose());
       } else {
         this.error = { message: 'Select an item' };
       }
     },
   },
+
   computed: {
     disabledSave() {
       return !(this.dialogData.select && this.dialogData.price) || this.$store.state.saving;
     },
   },
+
   created() {
     eventBus.$on('search', ({ search }) => {
       selectTheme.call(this, search);
+    });
+
+    eventBus.$on('select', ({ select }) => {
+      this.dialogData.select = select;
     });
   },
 };
