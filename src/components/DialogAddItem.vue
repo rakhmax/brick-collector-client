@@ -13,7 +13,7 @@
           <v-container>
             <v-row>
               <v-col cols="12">
-                <search-box />
+                <search-box v-if="dialog" />
               </v-col>
               <v-col
                 cols="12"
@@ -89,7 +89,7 @@
 import { SET_MINIFIGURES } from '@/store/types';
 import SearchBox from './SearchBox.vue';
 import { eventBus } from '../main';
-import { selectTheme } from '../helpers/selectThemeHelper';
+import { getThemeIdByItemIdPrefix } from '../helpers/themeHelper';
 
 export default {
   components: {
@@ -154,7 +154,7 @@ export default {
 
   created() {
     eventBus.$on('search', ({ search }) => {
-      selectTheme.call(this, search);
+      getThemeIdByItemIdPrefix.call(this, search);
     });
 
     eventBus.$on('select', ({ select }) => {

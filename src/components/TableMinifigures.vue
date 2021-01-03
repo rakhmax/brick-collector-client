@@ -4,31 +4,23 @@
     :items="minifigures"
     :loading="$store.state.loading"
     :search="search"
-    class="elevation-1"
     loading-text="Loading minifigures..."
   >
-    <template v-slot:item.theme="{ item }">
-      <span>{{ $store.state.themes.find((theme) => {
-        return theme.id === item.theme;
-      }).name }}</span>
+    <template #item.theme="{ item }">
+      <span>{{ themeName(item.theme) }}</span>
     </template>
-    <template v-slot:top>
+    <template #top>
       <v-text-field
         v-model="search"
         label="Search"
         class="mx-4"
       />
     </template>
-    <template v-slot:item.actions="{ item }">
-      <v-icon
-        small
-        class="mr-2"
-      >
-        mdi-pencil {{item}}
-      </v-icon>
-      <v-icon
-        small
-      >
+    <template #item.actions="{ item }">
+      <!-- <v-icon small class="mr-2">
+        mdi-pencil {{ item }}
+      </v-icon> -->
+      <v-icon small @click="deleteMinifigure(item.legoId)">
         mdi-delete
       </v-icon>
     </template>
@@ -36,41 +28,65 @@
 </template>
 
 <script>
-import { GET_MINIFIGURES } from '@/store/types';
+import { GET_MINIFIGURES, DELETE_MINIFIGURES } from '@/store/types';
+import { getThemeNameById } from '../helpers/themeHelper';
 
 export default {
   name: 'TableMinifigures',
 
   data: () => ({
-    search: '',
+    search: null,
     headers: [
-      { text: 'ID', value: 'legoId' },
+      {
+        text: 'ID',
+        value: 'legoId',
+        width: 70,
+      },
       {
         text: 'Name',
         align: 'start',
         value: 'name',
       },
       { text: 'Theme', value: 'theme' },
-      { text: 'Price', value: 'price' },
-      // { text: 'Count', value: 'count' },
       {
-        text: 'Comment',
+        text: 'Price',
+        value: 'price',
+        width: 120,
+      },
+      {
         sortable: false,
+        text: 'Comment',
         value: 'comment',
+      },
+      {
+        sortable: false,
+        text: 'Actions',
+        value: 'actions',
       },
     ],
     minifigures: [],
   }),
 
   methods: {
-    getAll() {
+    fetchMinifigures() {
       this.$store.dispatch(GET_MINIFIGURES)
+        .then(() => { this.minifigures = this.$store.state.minifigures; });
+    },
+
+    deleteMinifigure(legoId) {
+      this.$store.dispatch(DELETE_MINIFIGURES, legoId)
         .then(() => { this.minifigures = this.$store.state.minifigures; });
     },
   },
 
+  computed: {
+    themeName() {
+      return (themeId) => getThemeNameById.call(this, themeId);
+    },
+  },
+
   mounted() {
-    this.getAll();
+    this.fetchMinifigures();
   },
 };
 </script>

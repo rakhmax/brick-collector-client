@@ -1,4 +1,4 @@
-import { addMinifigure, getMinifigures } from '../../api/minifigures';
+import { addMinifigure, deleteMinifigure, getMinifigures } from '../../api/minifigures';
 import {
   GET_MINIFIGURES,
   GET_MINIFIGURES_SUCCESS,
@@ -6,6 +6,9 @@ import {
   SET_MINIFIGURES,
   SET_MINIFIGURES_SUCCESS,
   SET_MINIFIGURES_ERROR,
+  DELETE_MINIFIGURES,
+  DELETE_MINIFIGURES_SUCCESS,
+  DELETE_MINIFIGURES_ERROR,
 } from '../types';
 
 export default {
@@ -29,6 +32,21 @@ export default {
       commit(SET_MINIFIGURES_SUCCESS);
     } catch (error) {
       commit(SET_MINIFIGURES_ERROR, error);
+    }
+  },
+
+  async [DELETE_MINIFIGURES]({ commit, state }, payload) {
+    try {
+      state.saving = true;
+      const { data } = await deleteMinifigure(payload);
+
+      const filteredData = state.minifigures
+        .filter((minifigure) => minifigure.legoId !== data.legoId);
+
+      commit(DELETE_MINIFIGURES, filteredData);
+      commit(DELETE_MINIFIGURES_SUCCESS);
+    } catch (error) {
+      commit(DELETE_MINIFIGURES_ERROR, error);
     }
   },
 };

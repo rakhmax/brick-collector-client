@@ -1,4 +1,4 @@
-export function selectTheme(search) {
+export function getThemeIdByItemIdPrefix(search) {
   if (!search) {
     this.dialogData.theme = null;
   } else if (search.startsWith('cty')) {
@@ -23,9 +23,14 @@ export function selectTheme(search) {
     this.dialogData.theme = 604;
   } else if (search.startsWith('nex')) {
     this.dialogData.theme = 605;
-  } else if (search.startsWith('hid')) {
+  } else if (search.startsWith('hs')) {
     this.dialogData.theme = 676;
   } else if (search.startsWith('sh')) {
     this.dialogData.theme = 696;
   }
+}
+
+export function getThemeNameById(themeId) {
+  const themeToConvert = this.$store.state.themes.find((theme) => theme.id === themeId) || {};
+  return themeToConvert.name;
 }

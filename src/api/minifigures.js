@@ -18,4 +18,10 @@ export async function addMinifigure(data) {
   }
 }
 
-export default getMinifigures;
+export async function deleteMinifigure(data) {
+  try {
+    return await http.delete(pathname, { data });
+  } catch (error) {
+    throw new Error(error);
+  }
+}

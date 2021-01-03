@@ -15,7 +15,7 @@
     return-object
     required
   >
-    <template v-slot:item="{ item }">
+    <template #item="{ item }">
       <v-avatar class="mr-3 my-2" color="indigo">
         <img
           v-if="item.img"
@@ -49,10 +49,13 @@ export default {
   watch: {
     search(val) {
       eventBus.$emit('search', {
-        search: this.search,
+        search: val,
       });
-      if (val) {
+
+      if (val && !this.select.legoId) {
         this.handleSearch(val.toLowerCase());
+      } else if (!val) {
+        this.select = {};
       } else {
         this.items = [];
       }

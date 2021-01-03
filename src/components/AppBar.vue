@@ -2,6 +2,7 @@
   <v-app-bar
     app
     color="light"
+    flat
     :style="{ zIndex: 7 }"
   >
     <div class="d-flex align-center">
