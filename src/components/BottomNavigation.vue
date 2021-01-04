@@ -1,15 +1,17 @@
 <template>
-  <v-bottom-navigation grow fixed>
+  <v-bottom-navigation
+    :style="{ paddingRight: '92px' }"
+    color="error"
+    fixed
+    grow
+  >
     <v-btn to="/minifigures">
-      <span>Minifigures</span>
       <v-icon>mdi-human-male</v-icon>
     </v-btn>
     <v-btn to="/sets">
-      <span>Sets</span>
       <v-icon>mdi-toy-brick</v-icon>
     </v-btn>
     <v-btn to="/statistics">
-      <span>Statistics</span>
       <v-icon>mdi-chart-arc</v-icon>
     </v-btn>
   </v-bottom-navigation>

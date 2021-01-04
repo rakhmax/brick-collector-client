@@ -14,7 +14,7 @@
         width="40"
       />
     </div>
-    <v-app-bar-title><span>Lego Database</span></v-app-bar-title>
+    <v-app-bar-title><span>{{ $route.name || 'LEGO Database' }}</span></v-app-bar-title>
   </v-app-bar>
 </template>
 

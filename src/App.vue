@@ -6,14 +6,14 @@
       <router-view />
       <v-fab-transition>
         <v-btn
-          v-if="!scrolledToBottom"
-          :style="{ bottom: isMobile ? '56px' : 0 }"
+          :style="{ zIndex: 5 }"
           @click="dialog = true"
-          color="light"
+          class="mb-3"
+          color="error"
+          fab
+          bottom
           fixed
           right
-          class="my-4"
-          fab
         >
           <v-icon dark>mdi-plus</v-icon>
         </v-btn>
@@ -54,7 +54,7 @@ export default {
     this.$store.dispatch(GET_THEMES);
     this.$vuetify.theme.dark = this.$store.state.darkMode;
     this.onResize();
-    this.onScroll();
+    // this.onScroll();
   },
 
   methods: {
