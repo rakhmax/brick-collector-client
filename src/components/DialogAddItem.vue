@@ -13,29 +13,12 @@
           <v-container>
             <v-row>
               <v-col cols="12">
-                <search-box v-if="dialog" />
-              </v-col>
-              <v-col
-                cols="12"
-                sm="6"
-                md="6"
-              >
-                <v-select
-                  v-model="dialogData.theme"
-                  :items="$store.state.themes"
-                  item-text="name"
-                  item-value="id"
-                  label="Theme"
-                  required
-                ></v-select>
-              </v-col>
-              <v-col
-                cols="12"
-                sm="6"
-                md="3"
-              >
                 <v-text-field
-                  v-model="dialogData.select.legoId"
+                  v-model="dialogData.id"
+                  :error="!!errorMessage"
+                  :error-messages="errorMessage"
+                  messages="e.g. 70666-1 or sw1060"
+                  autofocus
                   label="Lego ID"
                   required
                 ></v-text-field>
@@ -72,7 +55,7 @@
             Close
           </v-btn>
           <v-btn
-            :disabled="disabledSave"
+            :loading="$store.state.saving"
             @click="handleSave"
             color="blue darken-1"
             text
@@ -87,22 +70,16 @@
 
 <script>
 import { SET_MINIFIGURES } from '@/store/types';
-import SearchBox from './SearchBox.vue';
 import { eventBus } from '../main';
 import { getThemeIdByItemIdPrefix } from '../helpers/themeHelper';
 
 export default {
-  components: {
-    SearchBox,
-  },
-
   data: () => ({
     title: 'item',
     dialogData: {
+      id: null,
       comment: null,
       price: null,
-      select: {},
-      theme: null,
     },
   }),
 
@@ -115,31 +92,19 @@ export default {
       this.$emit('update:dialog', false);
 
       this.dialogData = {
+        id: null,
         comment: null,
         price: null,
-        select: {},
-        theme: null,
       };
     },
 
     handleSave() {
-      const {
-        comment,
-        price,
-        select,
-        theme,
-      } = this.dialogData;
+      const { id } = this.dialogData;
 
-      if (select) {
-        const data = {
-          ...select,
-          theme,
-          price,
-          comment,
-        };
-
-        this.$store.dispatch(SET_MINIFIGURES, data)
-          .then(() => this.handleClose());
+      if (id) {
+        this.$store.dispatch(SET_MINIFIGURES, this.dialogData)
+          .then(() => this.handleClose())
+          .catch(() => {});
       } else {
         this.error = { message: 'Select an item' };
       }
@@ -149,6 +114,10 @@ export default {
   computed: {
     disabledSave() {
       return !(this.dialogData.select && this.dialogData.price) || this.$store.state.saving;
+    },
+
+    errorMessage() {
+      return this.$store.state.error && this.$store.state.error.message;
     },
   },
 

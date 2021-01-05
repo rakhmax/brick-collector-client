@@ -21,6 +21,7 @@ export default {
       }
     } catch (error) {
       commit(GET_MINIFIGURES_ERROR, error);
+      throw new Error(error);
     }
   },
 
@@ -32,6 +33,7 @@ export default {
       commit(SET_MINIFIGURES_SUCCESS);
     } catch (error) {
       commit(SET_MINIFIGURES_ERROR, error);
+      throw new Error(error);
     }
   },
 
@@ -41,12 +43,13 @@ export default {
       const { data } = await deleteMinifigure(payload);
 
       const filteredData = state.minifigures
-        .filter((minifigure) => minifigure.legoId !== data.legoId);
+        .filter((minifigure) => minifigure.itemId !== data.itemId);
 
       commit(DELETE_MINIFIGURES, filteredData);
       commit(DELETE_MINIFIGURES_SUCCESS);
     } catch (error) {
       commit(DELETE_MINIFIGURES_ERROR, error);
+      throw new Error(error);
     }
   },
 };
