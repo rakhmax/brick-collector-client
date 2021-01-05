@@ -11,6 +11,7 @@
     </template>
     <template #top>
       <v-text-field
+        v-show="false"
         v-model="search"
         label="Search"
         class="mx-4"
@@ -47,6 +48,7 @@
 <script>
 import { GET_MINIFIGURES, DELETE_MINIFIGURES } from '@/store/types';
 import { getThemeNameById } from '../helpers/themeHelper';
+import { eventBus } from '../main';
 
 export default {
   name: 'TableMinifigures',
@@ -101,6 +103,12 @@ export default {
     themeName() {
       return (themeId) => getThemeNameById.call(this, themeId);
     },
+  },
+
+  created() {
+    eventBus.$on('searchBar', ({ search }) => {
+      this.search = search;
+    });
   },
 
   mounted() {

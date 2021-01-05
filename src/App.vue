@@ -10,8 +10,8 @@
           @click="dialog = true"
           class="mb-3"
           color="error"
-          fab
           bottom
+          fab
           fixed
           right
         >
