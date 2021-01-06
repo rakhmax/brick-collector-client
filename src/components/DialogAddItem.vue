@@ -69,7 +69,7 @@
 </template>
 
 <script>
-import { SET_MINIFIGURES } from '@/store/types';
+import { SET_MINIFIGURES, SET_SETS } from '@/store/types';
 import { eventBus } from '../main';
 import { getThemeIdByItemIdPrefix } from '../helpers/themeHelper';
 
@@ -100,9 +100,10 @@ export default {
 
     handleSave() {
       const { id } = this.dialogData;
+      const setter = this.$route.name === 'Minifigures' ? SET_MINIFIGURES : SET_SETS;
 
       if (id) {
-        this.$store.dispatch(SET_MINIFIGURES, this.dialogData)
+        this.$store.dispatch(setter, this.dialogData)
           .then(() => this.handleClose())
           .catch(() => {});
       } else {

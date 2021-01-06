@@ -13,9 +13,5 @@ export default {
   components: {
     TableMinifigures,
   },
-
-  data: () => ({
-    dialog: false,
-  }),
 };
 </script>

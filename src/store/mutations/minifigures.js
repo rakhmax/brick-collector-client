@@ -12,7 +12,11 @@ import {
 
 export default {
   [GET_MINIFIGURES](state, { data }) {
-    state.minifigures = data;
+    state.minifigures = data.minifigs;
+    state.statistics.minifigures = {
+      total: data.total,
+      unique: data.minifigs.length,
+    };
   },
   [GET_MINIFIGURES_SUCCESS](state) {
     state.loading = false;
@@ -23,7 +27,11 @@ export default {
   },
 
   [SET_MINIFIGURES](state, payload) {
-    state.minifigures.push(payload);
+    if (Array.isArray(payload)) {
+      state.minifigures.push(...payload);
+    } else {
+      state.minifigures.push(payload);
+    }
   },
   [SET_MINIFIGURES_SUCCESS](state) {
     state.saving = false;

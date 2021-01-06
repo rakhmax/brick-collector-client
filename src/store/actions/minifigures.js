@@ -1,4 +1,8 @@
-import { addMinifigure, deleteMinifigure, getMinifigures } from '../../api/minifigures';
+import {
+  addMinifigure,
+  deleteMinifigure,
+  getMinifigures,
+} from '../../api/minifigures';
 import {
   GET_MINIFIGURES,
   GET_MINIFIGURES_SUCCESS,

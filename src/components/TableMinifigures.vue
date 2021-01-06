@@ -1,7 +1,7 @@
 <template>
   <v-data-table
     :headers="headers"
-    :items="minifigures"
+    :items="$store.state.minifigures"
     :loading="$store.state.loading"
     :search="search"
     @item-expanded="getPriceGuide"
@@ -32,12 +32,9 @@
             v-bind="attrs"
             v-on="on"
             :disabled="$store.state.loading"
-            dark
             icon
           >
-            <v-icon small>
-              mdi-delete
-            </v-icon>
+            <v-icon small>mdi-delete</v-icon>
           </v-btn>
         </template>
         <v-list>
@@ -50,35 +47,45 @@
     <template v-slot:expanded-item="{ headers, item }">
       <td :colspan="headers.length" class="pa-0">
         <div class="ml-4 mt-2">
+          <p>Release year: {{ item.year }}</p>
           <p v-if="item.count > 1">Number of duplicated: {{ item.count - 1 }}</p>
-          <h3 class="mt-2">Price guide</h3>
         </div>
-        <v-simple-table dense>
-          <template v-slot:default>
-            <thead>
-              <tr>
-                <th class="text-left" />
-                <!-- <th class="text-left">Max</th> -->
-                <th class="text-left">Min</th>
-                <th class="text-left">Avg</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>New</td>
-                <!-- <td>{{ currentItemPriceGuide.new.max }}</td> -->
-                <td>{{ currentItemPriceGuide.new.min }}</td>
-                <td>{{ currentItemPriceGuide.new.avg }}</td>
-              </tr>
-              <tr>
-                <td>Used</td>
-                <!-- <td>{{ currentItemPriceGuide.used.max }}</td> -->
-                <td>{{ currentItemPriceGuide.used.min }}</td>
-                <td>{{ currentItemPriceGuide.used.avg }}</td>
-              </tr>
-            </tbody>
-          </template>
-        </v-simple-table>
+        <h3 class="ml-4 my-2" v-if="!currentItemPriceGuide.used.hasOwnProperty('avg')">
+          <v-progress-circular
+            :size="24"
+            :width="3"
+            indeterminate
+          />
+        </h3>
+        <div v-else class="ma-2">
+          <h3 class="ml-2 mt-2">Price guide</h3>
+          <v-simple-table dense>
+            <template v-slot:default>
+              <thead>
+                <tr>
+                  <th class="text-left" />
+                  <!-- <th class="text-left">Max</th> -->
+                  <th class="text-left">Min</th>
+                  <th class="text-left">Avg</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>New</td>
+                  <!-- <td>{{ currentItemPriceGuide.new.max }}</td> -->
+                  <td>{{ currentItemPriceGuide.new.min }}</td>
+                  <td>{{ currentItemPriceGuide.new.avg }}</td>
+                </tr>
+                <tr>
+                  <td>Used</td>
+                  <!-- <td>{{ currentItemPriceGuide.used.max }}</td> -->
+                  <td>{{ currentItemPriceGuide.used.min }}</td>
+                  <td>{{ currentItemPriceGuide.used.avg }}</td>
+                </tr>
+              </tbody>
+            </template>
+          </v-simple-table>
+        </div>
       </td>
     </template>
   </v-data-table>
@@ -105,7 +112,7 @@ export default {
       {
         text: 'ID',
         value: 'itemId',
-        width: 70,
+        width: 90,
       },
       {
         text: 'Name',
@@ -130,18 +137,15 @@ export default {
         width: 60,
       },
     ],
-    minifigures: [],
   }),
 
   methods: {
     fetchMinifigures() {
-      this.$store.dispatch(GET_MINIFIGURES)
-        .then(() => { this.minifigures = this.$store.state.minifigures; });
+      this.$store.dispatch(GET_MINIFIGURES);
     },
 
     deleteMinifigure(itemId) {
-      this.$store.dispatch(DELETE_MINIFIGURES, itemId)
-        .then(() => { this.minifigures = this.$store.state.minifigures; });
+      this.$store.dispatch(DELETE_MINIFIGURES, itemId);
     },
 
     async getPriceGuide({ item, value }) {
@@ -154,7 +158,7 @@ export default {
       }
 
       if (value && item.itemId !== this.currentItemPriceGuide.itemId) {
-        const { data } = await getPriceGuide(item.itemId);
+        const { data } = await getPriceGuide(item.itemId, 'Minifig');
 
         this.currentItemPriceGuide = {
           itemId: item.itemId,
