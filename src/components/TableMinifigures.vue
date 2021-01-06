@@ -12,9 +12,15 @@
     single-expand
   >
     <template #item.categoryId="{ item }">
-      <span>{{ themeName(item.categoryId) }}</span>
+      {{themeName(item.categoryId)}}
+    </template>
+    <template #item.price="{ item }">
+      <span v-if="item.price">
+        {{ item.price }} / {{ Number(item.price * $store.state.dollarRate).toFixed(2) }}
+      </span>
     </template>
     <template #top>
+      <dialog-edit-item v-show="false" />
       <v-container class="py-1">
         <v-text-field
           v-show="false"
@@ -29,34 +35,44 @@
       </v-container>
     </template>
     <template #item.actions="{ item }">
-      <!-- <v-icon small class="mr-2">
-        mdi-pencil {{ item }}
-      </v-icon> -->
-      <v-menu bottom left>
-        <template #activator="{ on, attrs }">
-          <v-btn
-            v-bind="attrs"
-            v-on="on"
-            :disabled="$store.state.loading"
-            icon
-          >
-            <v-icon small>mdi-delete</v-icon>
-          </v-btn>
-        </template>
-        <v-list>
-          <v-list-item @click="deleteMinifigure(item.itemId)">
-            <v-list-item-title>Delete</v-list-item-title>
-          </v-list-item>
-        </v-list>
-      </v-menu>
+      <div class="text-right">
+        <v-btn
+          v-if="item.count === 1"
+          :disabled="$store.state.loading"
+          icon
+          @click="openEditDialog(item)"
+        >
+          <v-icon small>
+            mdi-pencil
+          </v-icon>
+        </v-btn>
+        <v-menu bottom>
+          <template #activator="{ on, attrs }">
+            <v-btn
+              v-bind="attrs"
+              v-on="on"
+              :disabled="$store.state.loading"
+              icon
+            >
+              <v-icon small>mdi-delete</v-icon>
+            </v-btn>
+          </template>
+          <v-list>
+            <v-list-item @click="deleteMinifigure(item.itemId)">
+              <v-list-item-title>Delete</v-list-item-title>
+            </v-list-item>
+          </v-list>
+        </v-menu>
+      </div>
+
     </template>
     <template #expanded-item="{ headers, item }">
       <td :colspan="headers.length" class="pa-0">
-        <v-container>
+        <div class="ml-3 mt-2">
           <p>Release year: {{ item.year }}</p>
           <p v-if="item.count > 1">Number of duplicates: {{ item.count - 1 }}</p>
-        </v-container>
-        <h3 class="ml-4 my-2" v-if="!currentItemPriceGuide.used.hasOwnProperty('avg')">
+        </div>
+        <h3 class="ml-3 my-2" v-if="!currentItemPriceGuide.used.hasOwnProperty('avg')">
           <v-progress-circular
             :size="24"
             :width="3"
@@ -70,7 +86,6 @@
               <thead>
                 <tr>
                   <th class="text-left" />
-                  <!-- <th class="text-left">Max</th> -->
                   <th class="text-left">Min</th>
                   <th class="text-left">Avg</th>
                 </tr>
@@ -78,13 +93,11 @@
               <tbody>
                 <tr>
                   <td>New</td>
-                  <!-- <td>{{ currentItemPriceGuide.new.max }}</td> -->
                   <td>{{ currentItemPriceGuide.new.min }}</td>
                   <td>{{ currentItemPriceGuide.new.avg }}</td>
                 </tr>
                 <tr>
                   <td>Used</td>
-                  <!-- <td>{{ currentItemPriceGuide.used.max }}</td> -->
                   <td>{{ currentItemPriceGuide.used.min }}</td>
                   <td>{{ currentItemPriceGuide.used.avg }}</td>
                 </tr>
@@ -98,7 +111,8 @@
 </template>
 
 <script>
-import { GET_MINIFIGURES, DELETE_MINIFIGURES } from '@/store/types';
+import { GET_MINIFIGURES, DELETE_MINIFIGURE } from '../store/types';
+import DialogEditItem from './DialogEditItem.vue';
 import { getThemeNameById } from '../helpers/themeHelper';
 import { eventBus } from '../main';
 import tableHeaders from '../helpers/tableHeaders';
@@ -106,6 +120,10 @@ import { setPriceGuideByItemIdAndType } from '../helpers/priceGuide';
 
 export default {
   name: 'TableMinifigures',
+
+  components: {
+    DialogEditItem,
+  },
 
   data: () => ({
     checkbox: false,
@@ -125,11 +143,18 @@ export default {
     },
 
     deleteMinifigure(itemId) {
-      this.$store.dispatch(DELETE_MINIFIGURES, itemId);
+      this.$store.dispatch(DELETE_MINIFIGURE, itemId);
     },
 
     getPriceGuide({ item, value }) {
       setPriceGuideByItemIdAndType.call(this, item, value, 'Minifig');
+    },
+
+    openEditDialog(item) {
+      eventBus.$emit('open', {
+        item,
+        dialog: true,
+      });
     },
   },
 

@@ -2,17 +2,21 @@ import {
   addMinifigure,
   deleteMinifigure,
   getMinifigures,
+  updateMinifigure,
 } from '../../api/minifigures';
 import {
   GET_MINIFIGURES,
   GET_MINIFIGURES_SUCCESS,
   GET_MINIFIGURES_ERROR,
-  SET_MINIFIGURES,
-  SET_MINIFIGURES_SUCCESS,
-  SET_MINIFIGURES_ERROR,
-  DELETE_MINIFIGURES,
-  DELETE_MINIFIGURES_SUCCESS,
-  DELETE_MINIFIGURES_ERROR,
+  ADD_MINIFIGURE,
+  ADD_MINIFIGURE_SUCCESS,
+  ADD_MINIFIGURE_ERROR,
+  UPDATE_MINIFIGURE,
+  UPDATE_MINIFIGURE_SUCCESS,
+  UPDATE_MINIFIGURE_ERROR,
+  DELETE_MINIFIGURE,
+  DELETE_MINIFIGURE_SUCCESS,
+  DELETE_MINIFIGURE_ERROR,
 } from '../types';
 
 export default {
@@ -29,7 +33,7 @@ export default {
     }
   },
 
-  async [SET_MINIFIGURES]({ commit, state }, payload) {
+  async [ADD_MINIFIGURE]({ commit, state }, payload) {
     try {
       state.saving = true;
 
@@ -39,19 +43,34 @@ export default {
 
       if (el) {
         el.count += 1;
-        commit(SET_MINIFIGURES, { idx, el });
+        commit(ADD_MINIFIGURE, { idx, el });
       } else {
-        commit(SET_MINIFIGURES, data);
+        commit(ADD_MINIFIGURE, data);
       }
 
-      commit(SET_MINIFIGURES_SUCCESS);
+      commit(ADD_MINIFIGURE_SUCCESS);
     } catch (error) {
-      commit(SET_MINIFIGURES_ERROR, error);
+      commit(ADD_MINIFIGURE_ERROR, error);
       throw new Error(error);
     }
   },
 
-  async [DELETE_MINIFIGURES]({ commit, state }, payload) {
+  async [UPDATE_MINIFIGURE]({ commit, state }, payload) {
+    try {
+      state.saving = true;
+      const { data } = await updateMinifigure(payload);
+
+      const idx = state.minifigures.findIndex((set) => set.itemId === data.itemId);
+
+      commit(UPDATE_MINIFIGURE, { idx, data });
+      commit(UPDATE_MINIFIGURE_SUCCESS);
+    } catch (error) {
+      commit(UPDATE_MINIFIGURE_ERROR, error);
+      throw new Error(error);
+    }
+  },
+
+  async [DELETE_MINIFIGURE]({ commit, state }, payload) {
     try {
       state.loading = true;
       const { data } = await deleteMinifigure(payload);
@@ -59,10 +78,10 @@ export default {
       const filteredData = state.minifigures
         .filter((minifigure) => minifigure.itemId !== data.itemId);
 
-      commit(DELETE_MINIFIGURES, filteredData);
-      commit(DELETE_MINIFIGURES_SUCCESS);
+      commit(DELETE_MINIFIGURE, filteredData);
+      commit(DELETE_MINIFIGURE_SUCCESS);
     } catch (error) {
-      commit(DELETE_MINIFIGURES_ERROR, error);
+      commit(DELETE_MINIFIGURE_ERROR, error);
       throw new Error(error);
     }
   },

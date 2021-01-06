@@ -7,26 +7,14 @@
     >
       <v-card>
         <v-card-title>
-          <span class="headline">{{ 'Add ' + title }}</span>
+          <span class="headline">{{ 'Edit ' + dialogData.itemId }}</span>
         </v-card-title>
         <v-card-text>
           <v-container>
             <v-row>
-              <v-col cols="12">
-                <v-text-field
-                  v-model="dialogData.id"
-                  :error="!!errorMessage"
-                  :error-messages="errorMessage"
-                  :messages="message"
-                  autofocus
-                  label="Lego ID"
-                  required
-                />
-              </v-col>
               <v-col
                 cols="12"
-                sm="6"
-                md="3"
+                sm="4"
               >
                 <v-text-field
                   v-model="dialogData.price"
@@ -37,8 +25,7 @@
               </v-col>
               <v-col
                 cols="12"
-                sm="6"
-                md="3"
+                sm="4"
               >
                 <v-checkbox
                   v-if="$route.name === 'Sets'"
@@ -80,42 +67,42 @@
 </template>
 
 <script>
-import { ADD_MINIFIGURE, ADD_SET } from '../store/types';
+import { UPDATE_SET, UPDATE_MINIFIGURE } from '../store/types';
 import { eventBus } from '../main';
 import { getThemeIdByItemIdPrefix } from '../helpers/themeHelper';
 
 export default {
+  name: 'DialogEditItem',
+
   data: () => ({
-    title: 'item',
+    dialog: false,
     dialogData: {
+      itemId: null,
       sealed: false,
-      id: null,
       comment: null,
       price: null,
+      quantity: null,
     },
   }),
 
-  props: {
-    dialog: { type: Boolean, default: false },
-  },
-
   methods: {
     handleClose() {
-      this.$emit('update:dialog', false);
+      this.dialog = false;
 
       this.dialogData = {
         sealed: null,
-        id: null,
+        itemId: null,
         comment: null,
         price: null,
+        quantity: null,
       };
     },
 
     handleSave() {
-      const { id } = this.dialogData;
-      const setter = this.$route.name === 'Minifigures' ? ADD_MINIFIGURE : ADD_SET;
+      const { itemId } = this.dialogData;
+      const setter = this.$route.name === 'Minifigures' ? UPDATE_MINIFIGURE : UPDATE_SET;
 
-      if (id) {
+      if (itemId) {
         this.$store.dispatch(setter, this.dialogData)
           .then(() => this.handleClose())
           .catch(() => {});
@@ -140,6 +127,20 @@ export default {
   },
 
   created() {
+    eventBus.$on('open', ({ dialog, item }) => {
+      const {
+        itemId, sealed, comment, price,
+      } = item;
+
+      this.dialogData = {
+        sealed,
+        comment,
+        price,
+        itemId,
+      };
+      this.dialog = dialog;
+    });
+
     eventBus.$on('search', ({ search }) => {
       getThemeIdByItemIdPrefix.call(this, search);
     });

@@ -2,17 +2,21 @@ import {
   addSet,
   deleteSet,
   getSets,
+  updateSet,
 } from '../../api/sets';
 import {
   GET_SETS,
   GET_SETS_SUCCESS,
   GET_SETS_ERROR,
-  SET_SETS,
-  SET_SETS_SUCCESS,
-  SET_SETS_ERROR,
-  DELETE_SETS,
-  DELETE_SETS_SUCCESS,
-  DELETE_SETS_ERROR,
+  ADD_SET,
+  ADD_SET_SUCCESS,
+  ADD_SET_ERROR,
+  UPDATE_SET,
+  UPDATE_SET_SUCCESS,
+  UPDATE_SET_ERROR,
+  DELETE_SET,
+  DELETE_SET_SUCCESS,
+  DELETE_SET_ERROR,
 } from '../types';
 
 export default {
@@ -29,7 +33,7 @@ export default {
     }
   },
 
-  async [SET_SETS]({ commit, state }, payload) {
+  async [ADD_SET]({ commit, state }, payload) {
     try {
       state.saving = true;
 
@@ -39,19 +43,34 @@ export default {
 
       if (el) {
         el.count += 1;
-        commit(SET_SETS, { idx, el });
+        commit(ADD_SET, { idx, el });
       } else {
-        commit(SET_SETS, data.set);
+        commit(ADD_SET, data.set);
       }
 
-      commit(SET_SETS_SUCCESS);
+      commit(ADD_SET_SUCCESS);
     } catch (error) {
-      commit(SET_SETS_ERROR, error);
+      commit(ADD_SET_ERROR, error);
       throw new Error(error);
     }
   },
 
-  async [DELETE_SETS]({ commit, state }, payload) {
+  async [UPDATE_SET]({ commit, state }, payload) {
+    try {
+      state.saving = true;
+
+      const { data } = await updateSet(payload);
+      const idx = state.sets.findIndex((set) => set.itemId === data.itemId);
+
+      commit(UPDATE_SET, { idx, data });
+      commit(UPDATE_SET_SUCCESS);
+    } catch (error) {
+      commit(UPDATE_SET_ERROR, error);
+      throw new Error(error);
+    }
+  },
+
+  async [DELETE_SET]({ commit, state }, payload) {
     try {
       state.loading = true;
       const { data } = await deleteSet(payload);
@@ -59,10 +78,10 @@ export default {
       const filteredData = state.sets
         .filter((set) => set.itemId !== data.itemId);
 
-      commit(DELETE_SETS, filteredData);
-      commit(DELETE_SETS_SUCCESS);
+      commit(DELETE_SET, filteredData);
+      commit(DELETE_SET_SUCCESS);
     } catch (error) {
-      commit(DELETE_SETS_ERROR, error);
+      commit(DELETE_SET_ERROR, error);
       throw new Error(error);
     }
   },

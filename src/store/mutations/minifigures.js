@@ -2,12 +2,15 @@ import {
   GET_MINIFIGURES,
   GET_MINIFIGURES_SUCCESS,
   GET_MINIFIGURES_ERROR,
-  SET_MINIFIGURES,
-  SET_MINIFIGURES_SUCCESS,
-  SET_MINIFIGURES_ERROR,
-  DELETE_MINIFIGURES,
-  DELETE_MINIFIGURES_SUCCESS,
-  DELETE_MINIFIGURES_ERROR,
+  ADD_MINIFIGURE,
+  ADD_MINIFIGURE_SUCCESS,
+  ADD_MINIFIGURE_ERROR,
+  DELETE_MINIFIGURE,
+  DELETE_MINIFIGURE_SUCCESS,
+  DELETE_MINIFIGURE_ERROR,
+  UPDATE_MINIFIGURE,
+  UPDATE_MINIFIGURE_SUCCESS,
+  UPDATE_MINIFIGURE_ERROR,
 } from '../types';
 
 export default {
@@ -16,6 +19,7 @@ export default {
     state.statistics.minifigures = {
       total: data.total,
       unique: data.minifigs.length,
+      totalPrice: state.minifigures.reduce((acc, minifig) => acc + Number(minifig.price), 0),
     };
   },
   [GET_MINIFIGURES_SUCCESS](state) {
@@ -26,7 +30,7 @@ export default {
     state.error = payload;
   },
 
-  [SET_MINIFIGURES](state, payload) {
+  [ADD_MINIFIGURE](state, payload) {
     if (Array.isArray(payload)) {
       state.minifigures.push(...payload);
     } else if (Object.prototype.hasOwnProperty.call(payload, 'idx')) {
@@ -35,21 +39,32 @@ export default {
       state.minifigures.push(payload);
     }
   },
-  [SET_MINIFIGURES_SUCCESS](state) {
+  [ADD_MINIFIGURE_SUCCESS](state) {
     state.saving = false;
   },
-  [SET_MINIFIGURES_ERROR](state, payload) {
+  [ADD_MINIFIGURE_ERROR](state, payload) {
     state.saving = false;
     state.error = payload;
   },
 
-  [DELETE_MINIFIGURES](state, data) {
+  [UPDATE_MINIFIGURE](state, { idx, data }) {
+    state.minifigures.splice(idx, 1, data);
+  },
+  [UPDATE_MINIFIGURE_SUCCESS](state) {
+    state.saving = false;
+  },
+  [UPDATE_MINIFIGURE_ERROR](state, payload) {
+    state.saving = false;
+    state.error = payload;
+  },
+
+  [DELETE_MINIFIGURE](state, data) {
     state.minifigures = data;
   },
-  [DELETE_MINIFIGURES_SUCCESS](state) {
+  [DELETE_MINIFIGURE_SUCCESS](state) {
     state.loading = false;
   },
-  [DELETE_MINIFIGURES_ERROR](state, payload) {
+  [DELETE_MINIFIGURE_ERROR](state, payload) {
     state.loading = false;
     state.error = payload;
   },

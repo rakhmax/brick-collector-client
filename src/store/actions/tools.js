@@ -8,7 +8,16 @@ export default {
     commit(GET_DOLLAR_RATE, data.rates.USD);
   },
   async [GET_THEMES]({ commit }) {
-    const { data } = await http.get('/themes');
-    commit(GET_THEMES, data);
+    let themes = null;
+
+    if (!localStorage.getItem('categories')) {
+      const { data } = await http.get('/themes');
+      themes = data;
+      localStorage.setItem('categories', JSON.stringify(themes));
+    } else {
+      themes = JSON.parse(localStorage.getItem('categories'));
+    }
+
+    commit(GET_THEMES, themes);
   },
 };

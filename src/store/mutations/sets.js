@@ -2,17 +2,25 @@ import {
   GET_SETS,
   GET_SETS_SUCCESS,
   GET_SETS_ERROR,
-  SET_SETS,
-  SET_SETS_SUCCESS,
-  SET_SETS_ERROR,
-  DELETE_SETS,
-  DELETE_SETS_SUCCESS,
-  DELETE_SETS_ERROR,
+  ADD_SET,
+  ADD_SET_SUCCESS,
+  ADD_SET_ERROR,
+  UPDATE_SET,
+  UPDATE_SET_ERROR,
+  UPDATE_SET_SUCCESS,
+  DELETE_SET,
+  DELETE_SET_SUCCESS,
+  DELETE_SET_ERROR,
 } from '../types';
 
 export default {
   [GET_SETS](state, { data }) {
-    state.sets = data;
+    state.sets = data.sets;
+    state.statistics.sets = {
+      total: data.total,
+      unique: data.sets.length,
+      totalPrice: state.sets.reduce((acc, set) => acc + Number(set.price), 0),
+    };
   },
   [GET_SETS_SUCCESS](state) {
     state.loading = false;
@@ -22,7 +30,7 @@ export default {
     state.error = payload;
   },
 
-  [SET_SETS](state, payload) {
+  [ADD_SET](state, payload) {
     if (Array.isArray(payload)) {
       state.sets.push(...payload);
     } else if (Object.prototype.hasOwnProperty.call(payload, 'idx')) {
@@ -31,23 +39,34 @@ export default {
       state.sets.push(payload);
     }
   },
-  [SET_SETS_SUCCESS](state) {
+  [ADD_SET_SUCCESS](state) {
     state.saving = false;
     state.minifigures = [];
   },
-  [SET_SETS_ERROR](state, payload) {
+  [ADD_SET_ERROR](state, payload) {
     state.saving = false;
     state.error = payload;
   },
 
-  [DELETE_SETS](state, data) {
+  [UPDATE_SET](state, { idx, data }) {
+    state.sets.splice(idx, 1, data);
+  },
+  [UPDATE_SET_SUCCESS](state) {
+    state.saving = false;
+  },
+  [UPDATE_SET_ERROR](state, payload) {
+    state.saving = false;
+    state.error = payload;
+  },
+
+  [DELETE_SET](state, data) {
     state.sets = data;
   },
-  [DELETE_SETS_SUCCESS](state) {
+  [DELETE_SET_SUCCESS](state) {
     state.loading = false;
     state.minifigures = [];
   },
-  [DELETE_SETS_ERROR](state, payload) {
+  [DELETE_SET_ERROR](state, payload) {
     state.loading = false;
     state.error = payload;
   },

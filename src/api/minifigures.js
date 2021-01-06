@@ -18,6 +18,14 @@ export async function addMinifigure(data) {
   }
 }
 
+export async function updateMinifigure(data) {
+  try {
+    return await http.patch(pathname, data);
+  } catch (error) {
+    throw new Error(error);
+  }
+}
+
 export async function deleteMinifigure(data) {
   try {
     return await http.delete(pathname, { data });

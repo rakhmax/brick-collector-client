@@ -11,19 +11,19 @@ export default [
   },
   { text: 'Theme', value: 'categoryId' },
   {
-    text: 'Price (₽)',
+    text: 'Price (₽ / $)',
     value: 'price',
     width: 120,
   },
-  {
-    sortable: false,
-    text: 'Comment',
-    value: 'comment',
-  },
+  // {
+  //   sortable: false,
+  //   text: 'Comment',
+  //   value: 'comment',
+  // },
   {
     sortable: false,
     text: '',
     value: 'actions',
-    width: 60,
+    width: 105,
   },
 ];

@@ -30,7 +30,7 @@ import AppBar from '@/components/AppBar.vue';
 import BottomNavigation from '@/components/BottomNavigation.vue';
 import DialogAddItem from '@/components/DialogAddItem.vue';
 import Sidebar from '@/components/Sidebar.vue';
-import { GET_THEMES } from '@/store/types';
+import { GET_DOLLAR_RATE, GET_THEMES } from './store/types';
 
 export default {
   name: 'App',
@@ -48,29 +48,18 @@ export default {
       x: 0,
       y: 0,
     },
-    scrolledToBottom: false,
   }),
 
   mounted() {
     this.$store.dispatch(GET_THEMES);
+    this.$store.dispatch(GET_DOLLAR_RATE);
     this.$vuetify.theme.dark = this.$store.state.darkMode;
     this.onResize();
-    // this.onScroll();
   },
 
   methods: {
     onResize() {
       this.windowSize = { x: window.innerWidth, y: window.innerHeight };
-    },
-    onScroll() {
-      window.onscroll = () => {
-        console.log(this.scrolledToBottom);
-        if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 56) {
-          this.scrolledToBottom = true;
-        } else {
-          this.scrolledToBottom = false;
-        }
-      };
     },
   },
 
