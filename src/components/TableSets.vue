@@ -1,6 +1,7 @@
 <template>
   <v-data-table
     :headers="headers"
+    :item-class="itemRowBackground"
     :items="$store.state.sets"
     :loading="$store.state.loading"
     :search="search"
@@ -9,7 +10,7 @@
     show-expand
     single-expand
     :expanded="expanded"
-    loading-text="Loading minifigures..."
+    loading-text="Loading sets..."
   >
     <template #item.categoryId="{ item }">
       <span>{{ themeName(item.categoryId) }}</span>
@@ -40,8 +41,11 @@
           </v-btn>
         </template>
         <v-list>
-          <v-list-item @click="deleteMinifigure(item.itemId)">
+          <v-list-item @click="deleteSet(item.itemId)">
             <v-list-item-title>Delete</v-list-item-title>
+          </v-list-item>
+          <v-list-item @click="deleteSet(item.itemId, true)">
+            <v-list-item-title>Delete with minifigures</v-list-item-title>
           </v-list-item>
         </v-list>
       </v-menu>
@@ -100,7 +104,8 @@
 import { DELETE_SETS, GET_SETS } from '@/store/types';
 import { getThemeNameById } from '../helpers/themeHelper';
 import { eventBus } from '../main';
-import { getPriceGuide } from '../api/priceGuide';
+import tableHeaders from '../helpers/tableHeaders';
+import { setPriceGuideByItemIdAndType } from '../helpers/priceGuide';
 
 export default {
   name: 'TableSets',
@@ -113,35 +118,7 @@ export default {
       used: {},
     },
     expanded: [],
-    headers: [
-      {
-        text: 'ID',
-        value: 'itemId',
-        width: 90,
-      },
-      {
-        text: 'Name',
-        align: 'start',
-        value: 'name',
-      },
-      { text: 'Theme', value: 'categoryId' },
-      {
-        text: 'Price (₽)',
-        value: 'price',
-        width: 120,
-      },
-      {
-        sortable: false,
-        text: 'Comment',
-        value: 'comment',
-      },
-      {
-        sortable: false,
-        text: '',
-        value: 'actions',
-        width: 60,
-      },
-    ],
+    headers: tableHeaders,
   }),
 
   methods: {
@@ -149,33 +126,22 @@ export default {
       this.$store.dispatch(GET_SETS);
     },
 
-    deleteMinifigure(itemId) {
-      this.$store.dispatch(DELETE_SETS, itemId);
+    deleteSet(itemId, withMinifigures = false) {
+      this.$store.dispatch(DELETE_SETS, { itemId, withMinifigures });
     },
 
-    async getPriceGuide({ item, value }) {
-      if (item.itemId !== this.currentItemPriceGuide.itemId) {
-        this.currentItemPriceGuide = {
-          itemId: null,
-          new: {},
-          used: {},
-        };
-      }
-
-      if (value && item.itemId !== this.currentItemPriceGuide.itemId) {
-        const { data } = await getPriceGuide(item.itemId, 'Set');
-
-        this.currentItemPriceGuide = {
-          itemId: item.itemId,
-          ...data,
-        };
-      }
+    getPriceGuide({ item, value }) {
+      setPriceGuideByItemIdAndType.call(this, item, value, 'Set');
     },
   },
 
   computed: {
     themeName() {
       return (themeId) => getThemeNameById.call(this, themeId);
+    },
+
+    itemRowBackground() {
+      return (item) => item.sealed && 'sealed';
     },
   },
 
@@ -190,3 +156,9 @@ export default {
   },
 };
 </script>
+
+<style>
+  .sealed {
+    background-color: #1B5E20;
+  }
+</style>

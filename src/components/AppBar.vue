@@ -15,22 +15,24 @@
       />
     </div>
     <v-app-bar-title><span>{{ $route.name || 'LEGO Database' }}</span></v-app-bar-title>
-      <v-spacer />
+    <v-spacer />
     <v-btn v-if="!isSearch" icon @click="isSearch = true">
       <v-icon>mdi-magnify</v-icon>
     </v-btn>
     <v-text-field
-      @input="onChange"
-      v-model="searchText"
-      clearable
-      rounded
-      dense
+      :style="{ maxWidth: '300px'  }"
       v-if="isSearch"
-      append-icon="mdi-close"
-      @click:append="isSearch = false"
+      v-model="searchText"
+      @blur="clearSearch"
+      @input="onChange"
+      autofocus
+      clearable
+      dense
+      flat
       hide-details
-      single-line
       prepend-icon="mdi-magnify"
+      rounded
+      single-line
       solo
     />
   </v-app-bar>
@@ -50,6 +52,11 @@ export default {
       eventBus.$emit('searchBar', {
         search: this.searchText,
       });
+    },
+
+    clearSearch() {
+      this.isSearch = false;
+      this.searchText = null;
     },
   },
 };

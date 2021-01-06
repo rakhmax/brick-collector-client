@@ -29,6 +29,8 @@ export default {
   [SET_MINIFIGURES](state, payload) {
     if (Array.isArray(payload)) {
       state.minifigures.push(...payload);
+    } else if (Object.prototype.hasOwnProperty.call(payload, 'idx')) {
+      state.minifigures.splice(payload.idx, 1, payload.el);
     } else {
       state.minifigures.push(payload);
     }

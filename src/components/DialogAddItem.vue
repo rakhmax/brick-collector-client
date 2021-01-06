@@ -17,11 +17,11 @@
                   v-model="dialogData.id"
                   :error="!!errorMessage"
                   :error-messages="errorMessage"
-                  messages="e.g. 70666-1 or sw1060"
+                  :messages="message"
                   autofocus
                   label="Lego ID"
                   required
-                ></v-text-field>
+                />
               </v-col>
               <v-col
                 cols="12"
@@ -33,7 +33,18 @@
                   label="Price"
                   required
                   type="number"
-                ></v-text-field>
+                />
+              </v-col>
+              <v-col
+                cols="12"
+                sm="6"
+                md="3"
+              >
+                <v-checkbox
+                  v-if="$route.name === 'Sets'"
+                  v-model="dialogData.sealed"
+                  label="Sealed"
+                />
               </v-col>
               <v-col cols="12">
                 <v-text-field
@@ -77,6 +88,7 @@ export default {
   data: () => ({
     title: 'item',
     dialogData: {
+      sealed: null,
       id: null,
       comment: null,
       price: null,
@@ -92,6 +104,7 @@ export default {
       this.$emit('update:dialog', false);
 
       this.dialogData = {
+        sealed: null,
         id: null,
         comment: null,
         price: null,
@@ -119,6 +132,10 @@ export default {
 
     errorMessage() {
       return this.$store.state.error && this.$store.state.error.message;
+    },
+
+    message() {
+      return this.$route.name === 'Minifigures' ? 'e.g. sw1060' : 'e.g. 70666-1';
     },
   },
 

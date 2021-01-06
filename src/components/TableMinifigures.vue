@@ -1,26 +1,32 @@
 <template>
   <v-data-table
+    :expanded="expanded"
     :headers="headers"
-    :items="$store.state.minifigures"
+    :items="checkbox ? filteredMinifigures : $store.state.minifigures"
     :loading="$store.state.loading"
     :search="search"
     @item-expanded="getPriceGuide"
     item-key="itemId"
+    loading-text="Loading minifigures..."
     show-expand
     single-expand
-    :expanded="expanded"
-    loading-text="Loading minifigures..."
   >
     <template #item.categoryId="{ item }">
       <span>{{ themeName(item.categoryId) }}</span>
     </template>
     <template #top>
-      <v-text-field
-        v-show="false"
-        v-model="search"
-        label="Search"
-        class="mx-4"
-      />
+      <v-container class="py-1">
+        <v-text-field
+          v-show="false"
+          v-model="search"
+          label="Search"
+          class="mx-4"
+        />
+        <v-checkbox
+          v-model="checkbox"
+          label="with duplicates only"
+        />
+      </v-container>
     </template>
     <template #item.actions="{ item }">
       <!-- <v-icon small class="mr-2">
@@ -44,12 +50,12 @@
         </v-list>
       </v-menu>
     </template>
-    <template v-slot:expanded-item="{ headers, item }">
+    <template #expanded-item="{ headers, item }">
       <td :colspan="headers.length" class="pa-0">
-        <div class="ml-4 mt-2">
+        <v-container>
           <p>Release year: {{ item.year }}</p>
-          <p v-if="item.count > 1">Number of duplicated: {{ item.count - 1 }}</p>
-        </div>
+          <p v-if="item.count > 1">Number of duplicates: {{ item.count - 1 }}</p>
+        </v-container>
         <h3 class="ml-4 my-2" v-if="!currentItemPriceGuide.used.hasOwnProperty('avg')">
           <v-progress-circular
             :size="24"
@@ -58,7 +64,7 @@
           />
         </h3>
         <div v-else class="ma-2">
-          <h3 class="ml-2 mt-2">Price guide</h3>
+          <h3 class="ml-1">Price guide</h3>
           <v-simple-table dense>
             <template v-slot:default>
               <thead>
@@ -95,12 +101,14 @@
 import { GET_MINIFIGURES, DELETE_MINIFIGURES } from '@/store/types';
 import { getThemeNameById } from '../helpers/themeHelper';
 import { eventBus } from '../main';
-import { getPriceGuide } from '../api/priceGuide';
+import tableHeaders from '../helpers/tableHeaders';
+import { setPriceGuideByItemIdAndType } from '../helpers/priceGuide';
 
 export default {
   name: 'TableMinifigures',
 
   data: () => ({
+    checkbox: false,
     search: null,
     currentItemPriceGuide: {
       itemId: null,
@@ -108,35 +116,7 @@ export default {
       used: {},
     },
     expanded: [],
-    headers: [
-      {
-        text: 'ID',
-        value: 'itemId',
-        width: 90,
-      },
-      {
-        text: 'Name',
-        align: 'start',
-        value: 'name',
-      },
-      { text: 'Theme', value: 'categoryId' },
-      {
-        text: 'Price (₽)',
-        value: 'price',
-        width: 120,
-      },
-      {
-        sortable: false,
-        text: 'Comment',
-        value: 'comment',
-      },
-      {
-        sortable: false,
-        text: '',
-        value: 'actions',
-        width: 60,
-      },
-    ],
+    headers: tableHeaders,
   }),
 
   methods: {
@@ -148,29 +128,18 @@ export default {
       this.$store.dispatch(DELETE_MINIFIGURES, itemId);
     },
 
-    async getPriceGuide({ item, value }) {
-      if (item.itemId !== this.currentItemPriceGuide.itemId) {
-        this.currentItemPriceGuide = {
-          itemId: null,
-          new: {},
-          used: {},
-        };
-      }
-
-      if (value && item.itemId !== this.currentItemPriceGuide.itemId) {
-        const { data } = await getPriceGuide(item.itemId, 'Minifig');
-
-        this.currentItemPriceGuide = {
-          itemId: item.itemId,
-          ...data,
-        };
-      }
+    getPriceGuide({ item, value }) {
+      setPriceGuideByItemIdAndType.call(this, item, value, 'Minifig');
     },
   },
 
   computed: {
     themeName() {
       return (themeId) => getThemeNameById.call(this, themeId);
+    },
+
+    filteredMinifigures() {
+      return this.$store.state.minifigures.filter((minifig) => minifig.count > 1);
     },
   },
 

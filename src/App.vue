@@ -6,11 +6,12 @@
       <router-view />
       <v-fab-transition>
         <v-btn
+          v-if="$route.name !== 'Statistics'"
           :style="{ zIndex: 5 }"
           @click="dialog = true"
+          bottom
           class="mb-3"
           color="error"
-          bottom
           fab
           fixed
           right

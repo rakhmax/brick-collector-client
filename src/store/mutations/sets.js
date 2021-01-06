@@ -23,10 +23,17 @@ export default {
   },
 
   [SET_SETS](state, payload) {
-    state.sets.push(payload);
+    if (Array.isArray(payload)) {
+      state.sets.push(...payload);
+    } else if (Object.prototype.hasOwnProperty.call(payload, 'idx')) {
+      state.sets.splice(payload.idx, 1, payload.el);
+    } else {
+      state.sets.push(payload);
+    }
   },
   [SET_SETS_SUCCESS](state) {
     state.saving = false;
+    state.minifigures = [];
   },
   [SET_SETS_ERROR](state, payload) {
     state.saving = false;
@@ -38,6 +45,7 @@ export default {
   },
   [DELETE_SETS_SUCCESS](state) {
     state.loading = false;
+    state.minifigures = [];
   },
   [DELETE_SETS_ERROR](state, payload) {
     state.loading = false;

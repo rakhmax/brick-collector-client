@@ -32,8 +32,18 @@ export default {
   async [SET_MINIFIGURES]({ commit, state }, payload) {
     try {
       state.saving = true;
+
       const { data } = await addMinifigure(payload);
-      commit(SET_MINIFIGURES, data);
+      const idx = state.minifigures.findIndex((minifig) => minifig.itemId === data.itemId);
+      const el = state.minifigures.find((minifig) => minifig.itemId === data.itemId);
+
+      if (el) {
+        el.count += 1;
+        commit(SET_MINIFIGURES, { idx, el });
+      } else {
+        commit(SET_MINIFIGURES, data);
+      }
+
       commit(SET_MINIFIGURES_SUCCESS);
     } catch (error) {
       commit(SET_MINIFIGURES_ERROR, error);

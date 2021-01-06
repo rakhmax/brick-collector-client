@@ -3,7 +3,6 @@ import {
   deleteSet,
   getSets,
 } from '../../api/sets';
-import { getMinifigures } from '../../api/minifigures';
 import {
   GET_SETS,
   GET_SETS_SUCCESS,
@@ -14,9 +13,6 @@ import {
   DELETE_SETS,
   DELETE_SETS_SUCCESS,
   DELETE_SETS_ERROR,
-  GET_MINIFIGURES,
-  GET_MINIFIGURES_SUCCESS,
-  GET_MINIFIGURES_ERROR,
 } from '../types';
 
 export default {
@@ -36,18 +32,19 @@ export default {
   async [SET_SETS]({ commit, state }, payload) {
     try {
       state.saving = true;
-      const { data } = await addSet(payload);
-      commit(SET_SETS, data.set);
-      commit(SET_SETS_SUCCESS);
 
-      // TODO replace get with set
-      try {
-        commit(GET_MINIFIGURES, await getMinifigures());
-        commit(GET_MINIFIGURES_SUCCESS);
-      } catch (error) {
-        commit(GET_MINIFIGURES_ERROR, error);
-        throw new Error(error);
+      const { data } = await addSet(payload);
+      const idx = state.sets.findIndex((set) => set.itemId === data.set.itemId);
+      const el = state.sets.find((set) => set.itemId === data.set.itemId);
+
+      if (el) {
+        el.count += 1;
+        commit(SET_SETS, { idx, el });
+      } else {
+        commit(SET_SETS, data.set);
       }
+
+      commit(SET_SETS_SUCCESS);
     } catch (error) {
       commit(SET_SETS_ERROR, error);
       throw new Error(error);
