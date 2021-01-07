@@ -14,7 +14,7 @@
   >
     <template #top>
       <dialog-edit-item v-show="false" />
-      <v-container class="py-0" fluid>
+      <v-container fluid>
         <v-text-field
           v-show="false"
           v-model="search"

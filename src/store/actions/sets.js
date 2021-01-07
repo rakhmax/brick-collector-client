@@ -1,9 +1,9 @@
 import {
-  addItem,
-  deleteItem,
-  getItems,
-  updateItem,
-} from '../../api/items';
+  addSet,
+  deleteSet,
+  getSets,
+  updateSet,
+} from '../../api/sets';
 import {
   GET_SETS,
   GET_SETS_SUCCESS,
@@ -25,7 +25,7 @@ export default {
       if (!state.sets.length) {
         state.loading = true;
 
-        commit(GET_SETS, await getItems());
+        commit(GET_SETS, await getSets());
         commit(GET_SETS_SUCCESS);
       }
     } catch (error) {
@@ -38,7 +38,7 @@ export default {
     try {
       state.saving = true;
 
-      const { data } = await addItem(payload);
+      const { data } = await addSet(payload);
       const idx = state.sets.findIndex((set) => set.itemId === data.set.itemId);
       const el = state.sets.find((set) => set.itemId === data.set.itemId);
 
@@ -60,7 +60,7 @@ export default {
     try {
       state.saving = true;
 
-      const { data } = await updateItem(payload);
+      const { data } = await updateSet(payload);
       const idx = state.sets.findIndex((set) => set.itemId === data.itemId);
 
       commit(UPDATE_SET, { idx, data });
@@ -75,7 +75,7 @@ export default {
     try {
       state.loading = true;
 
-      const { data } = await deleteItem(payload);
+      const { data } = await deleteSet(payload);
       const filteredData = state.sets
         .filter((set) => set.itemId !== data.itemId);
 

@@ -1,5 +1,18 @@
 <template>
-  <div>
-      <h1>Coming soon...</h1>
-  </div>
+  <v-container class="mb-9" fluid>
+    <statistics-minifigures v-if="$store.state.statistics.minifigures" />
+    <statistics-sets v-if="$store.state.statistics.sets" />
+  </v-container>
 </template>
+
+<script>
+import StatisticsMinifigures from '../components/StatisticsMinifigures.vue';
+import StatisticsSets from '../components/StatisticsSets.vue';
+
+export default {
+  components: {
+    StatisticsMinifigures,
+    StatisticsSets,
+  },
+};
+</script>

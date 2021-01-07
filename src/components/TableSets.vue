@@ -13,7 +13,7 @@
   >
     <template #top>
       <dialog-edit-item v-show="false"/>
-      <v-container class="py-0" fluid>
+      <v-container fluid>
         <v-text-field
           v-show="false"
           v-model="search"
@@ -78,7 +78,7 @@
           <p>Price per piece: {{ Number(item.price / item.pieces).toFixed(2) }}</p>
           <p v-if="item.extraPieces">Extra parts: {{ item.extraPieces }}</p>
           <p>Release year: {{ item.year }}</p>
-          <p>Count: {{ item.count - 1 }}</p>
+          <p>Count: {{ item.count }}</p>
           <p v-if="item.comment">Comment: {{ item.comment }}</p>
         </div>
         <h3 class="ml-4 my-2" v-if="!currentItemPriceGuide.used.hasOwnProperty('avg')">

@@ -13,7 +13,11 @@ export default new Vuex.Store({
     error: null,
     loading: false,
     minifigures: [],
-    statistics: {},
+    statistics: {
+      minifigures: {},
+      sets: {},
+      parts: {},
+    },
     saving: false,
     sets: [],
     themes: [],
@@ -29,5 +33,48 @@ export default new Vuex.Store({
     ...toolsActions,
   },
   modules: {
+  },
+  getters: {
+    setsStatistics({ statistics }) {
+      return [
+        {
+          title: 'Total',
+          value: statistics.sets.total || 0,
+        },
+        {
+          title: 'Unique',
+          value: statistics.sets.unique || 0,
+        },
+        {
+          title: 'Duplicates',
+          value: statistics.sets.total - statistics.sets.unique || 0,
+        },
+        {
+          title: 'Overall Price',
+          value: statistics.sets.totalPrice || 0,
+        },
+      ];
+    },
+
+    minifiguresStatistics({ statistics }) {
+      return [
+        {
+          title: 'Total',
+          value: statistics.minifigures.total || 0,
+        },
+        {
+          title: 'Unique',
+          value: statistics.minifigures.unique || 0,
+        },
+        {
+          title: 'Duplicates',
+          value: statistics.minifigures.total - statistics.minifigures.unique || 0,
+        },
+        {
+          title: 'Overall Price',
+          value: statistics.minifigures.totalPrice || 0,
+        },
+      ];
+    },
   },
 });
