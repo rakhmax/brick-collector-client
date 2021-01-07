@@ -21,6 +21,10 @@ export default {
       unique: data.sets.length,
       totalPrice: state.sets.reduce((acc, set) => acc + Number(set.price), 0),
     };
+    state.statistics.parts = {
+      total: state.sets.reduce((acc, set) => acc + Number(set.pieces), 0),
+      totalExtra: state.sets.reduce((acc, set) => acc + Number(set.extraPieces), 0),
+    };
   },
   [GET_SETS_SUCCESS](state) {
     state.loading = false;

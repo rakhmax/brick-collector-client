@@ -3,6 +3,7 @@
     :expanded="expanded"
     :headers="headers"
     :items="checkbox ? filteredMinifigures : $store.state.minifigures"
+    :items-per-page="-1"
     :loading="$store.state.loading"
     :search="search"
     @item-expanded="getPriceGuide"
@@ -47,9 +48,8 @@
           </v-icon>
         </v-btn>
         <v-menu bottom>
-          <template #activator="{ on, attrs }">
+          <template #activator="{ on }">
             <v-btn
-              v-bind="attrs"
               v-on="on"
               :disabled="$store.state.loading"
               icon

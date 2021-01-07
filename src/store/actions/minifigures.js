@@ -1,9 +1,9 @@
 import {
-  addMinifigure,
-  deleteMinifigure,
-  getMinifigures,
-  updateMinifigure,
-} from '../../api/minifigures';
+  addItem,
+  deleteItem,
+  getItems,
+  updateItem,
+} from '../../api/items';
 import {
   GET_MINIFIGURES,
   GET_MINIFIGURES_SUCCESS,
@@ -24,7 +24,8 @@ export default {
     try {
       if (!state.minifigures.length) {
         state.loading = true;
-        commit(GET_MINIFIGURES, await getMinifigures());
+
+        commit(GET_MINIFIGURES, await getItems());
         commit(GET_MINIFIGURES_SUCCESS);
       }
     } catch (error) {
@@ -37,7 +38,7 @@ export default {
     try {
       state.saving = true;
 
-      const { data } = await addMinifigure(payload);
+      const { data } = await addItem(payload);
       const idx = state.minifigures.findIndex((minifig) => minifig.itemId === data.itemId);
       const el = state.minifigures.find((minifig) => minifig.itemId === data.itemId);
 
@@ -58,8 +59,8 @@ export default {
   async [UPDATE_MINIFIGURE]({ commit, state }, payload) {
     try {
       state.saving = true;
-      const { data } = await updateMinifigure(payload);
 
+      const { data } = await updateItem(payload);
       const idx = state.minifigures.findIndex((set) => set.itemId === data.itemId);
 
       commit(UPDATE_MINIFIGURE, { idx, data });
@@ -73,10 +74,10 @@ export default {
   async [DELETE_MINIFIGURE]({ commit, state }, payload) {
     try {
       state.loading = true;
-      const { data } = await deleteMinifigure(payload);
 
+      const { data } = await deleteItem(payload);
       const filteredData = state.minifigures
-        .filter((minifigure) => minifigure.itemId !== data.itemId);
+        .filter((minifig) => minifig.itemId !== data.itemId);
 
       commit(DELETE_MINIFIGURE, filteredData);
       commit(DELETE_MINIFIGURE_SUCCESS);

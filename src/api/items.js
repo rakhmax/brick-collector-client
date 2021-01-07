@@ -1,8 +1,8 @@
 import http from '../axios';
 
-const pathname = '/minifigs';
+export async function getItems() {
+  const { pathname } = window.location;
 
-export async function getMinifigures() {
   try {
     return await http.get(pathname);
   } catch (error) {
@@ -10,7 +10,9 @@ export async function getMinifigures() {
   }
 }
 
-export async function addMinifigure(data) {
+export async function addItem(data) {
+  const { pathname } = window.location;
+
   try {
     return await http.post(pathname, data);
   } catch (error) {
@@ -18,7 +20,9 @@ export async function addMinifigure(data) {
   }
 }
 
-export async function updateMinifigure(data) {
+export async function updateItem(data) {
+  const { pathname } = window.location;
+
   try {
     return await http.patch(pathname, data);
   } catch (error) {
@@ -26,7 +30,9 @@ export async function updateMinifigure(data) {
   }
 }
 
-export async function deleteMinifigure(data) {
+export async function deleteItem(data) {
+  const { pathname } = window.location;
+
   try {
     return await http.delete(pathname, { data });
   } catch (error) {
