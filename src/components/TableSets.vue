@@ -2,8 +2,7 @@
   <v-data-table
     :expanded="expanded"
     :headers="headers"
-    :item-class="itemRowBackground"
-    :items="$store.state.sets"
+    :items="sets"
     :loading="$store.state.loading"
     :search="search"
     @item-expanded="getPriceGuide"
@@ -12,6 +11,21 @@
     single-expand
     loading-text="Loading sets..."
   >
+    <template #top>
+      <dialog-edit-item v-show="false"/>
+      <v-container class="py-0" fluid>
+        <v-text-field
+          v-show="false"
+          v-model="search"
+          label="Search"
+          class="mx-4"
+        />
+        <v-checkbox
+          v-model="checkbox"
+          label="Sealed only"
+        />
+      </v-container>
+    </template>
     <template #item.categoryId="{ item }">
       <span>{{ themeName(item.categoryId) }}</span>
     </template>
@@ -19,16 +33,6 @@
       <span v-if="item.price">
         {{ item.price }} / {{ Number(item.price * $store.state.dollarRate).toFixed(2) }}
       </span>
-    </template>
-    <template #top>
-      <dialog-edit-item v-show="false"/>
-      <v-text-field
-        v-show="false"
-        v-model="search"
-        label="Search"
-        class="mx-4"
-      />
-
     </template>
     <template #item.actions="{ item }">
       <div class="text-right">
@@ -74,7 +78,8 @@
           <p>Price per piece: {{ Number(item.price / item.pieces).toFixed(2) }}</p>
           <p v-if="item.extraPieces">Extra parts: {{ item.extraPieces }}</p>
           <p>Release year: {{ item.year }}</p>
-          <p v-if="item.count > 1">Number of duplicates: {{ item.count - 1 }}</p>
+          <p>Count: {{ item.count - 1 }}</p>
+          <p v-if="item.comment">Comment: {{ item.comment }}</p>
         </div>
         <h3 class="ml-4 my-2" v-if="!currentItemPriceGuide.used.hasOwnProperty('avg')">
           <v-progress-circular
@@ -130,6 +135,7 @@ export default {
   },
 
   data: () => ({
+    checkbox: false,
     search: null,
     currentItemPriceGuide: {
       itemId: null,
@@ -168,6 +174,14 @@ export default {
 
     itemRowBackground() {
       return (item) => item.sealed && 'success';
+    },
+
+    sets() {
+      if (this.checkbox) {
+        return this.$store.state.sets.filter((set) => set.sealed);
+      }
+
+      return this.$store.state.sets;
     },
   },
 

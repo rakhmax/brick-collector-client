@@ -5,76 +5,80 @@
       max-width="600px"
       persistent
     >
-      <v-card>
-        <v-card-title>
-          <span class="headline">{{ 'Add ' + title }}</span>
-        </v-card-title>
-        <v-card-text>
-          <v-container>
-            <v-row>
-              <v-col cols="12">
-                <v-text-field
-                  v-model="dialogData.id"
-                  :error="!!errorMessage"
-                  :error-messages="errorMessage"
-                  :messages="message"
-                  autofocus
-                  label="Lego ID"
-                  required
-                />
-              </v-col>
-              <v-col
-                cols="12"
-                sm="6"
-                md="3"
-              >
-                <v-text-field
-                  v-model="dialogData.price"
-                  label="Price"
-                  required
-                  type="number"
-                />
-              </v-col>
-              <v-col
-                cols="12"
-                sm="6"
-                md="3"
-              >
-                <v-checkbox
-                  v-if="$route.name === 'Sets'"
-                  v-model="dialogData.sealed"
-                  label="Sealed"
-                />
-              </v-col>
-              <v-col cols="12">
-                <v-text-field
-                  v-model="dialogData.comment"
-                  label="Comment (optional)"
-                  required
-                />
-              </v-col>
-            </v-row>
-          </v-container>
-        </v-card-text>
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn
-            @click="handleClose"
-            color="blue darken-1"
-            text
-          >
-            Close
-          </v-btn>
-          <v-btn
-            :loading="$store.state.saving"
-            @click="handleSave"
-            color="blue darken-1"
-            text
-          >
-            Save
-          </v-btn>
-        </v-card-actions>
-      </v-card>
+      <v-form
+        v-model="valid"
+        @submit.prevent="handleSave"
+        lazy-validation
+        ref="addForm"
+      >
+        <v-card>
+          <v-card-title>
+            <span class="headline">{{ 'Add ' + title }}</span>
+          </v-card-title>
+          <v-card-text>
+            <v-container>
+              <v-row>
+                <v-col cols="12">
+                  <v-text-field
+                    v-model="dialogData.itemId"
+                    :rules="[computedRules]"
+                    autofocus
+                    label="Item ID"
+                    required
+                  />
+                </v-col>
+                <v-col
+                  cols="12"
+                  sm="6"
+                  md="3"
+                >
+                  <v-text-field
+                    v-model="dialogData.price"
+                    label="Price"
+                    required
+                    type="number"
+                  />
+                </v-col>
+                <v-col
+                  cols="12"
+                  sm="6"
+                  md="3"
+                >
+                  <v-checkbox
+                    v-if="$route.name === 'Sets'"
+                    v-model="dialogData.sealed"
+                    label="Sealed"
+                  />
+                </v-col>
+                <v-col cols="12">
+                  <v-text-field
+                    v-model="dialogData.comment"
+                    label="Comment (optional)"
+                  />
+                </v-col>
+              </v-row>
+            </v-container>
+          </v-card-text>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn
+              @click="handleClose"
+              text
+            >
+              Close
+            </v-btn>
+            <v-btn
+              :disabled="!valid"
+              :loading="$store.state.saving"
+              color="blue darken-1"
+              text
+              type="submit"
+            >
+              Save
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-form>
     </v-dialog>
   </v-row>
 </template>
@@ -86,10 +90,11 @@ import { getThemeIdByItemIdPrefix } from '../helpers/themeHelper';
 
 export default {
   data: () => ({
+    valid: true,
     title: 'item',
     dialogData: {
-      sealed: false,
-      id: null,
+      sealed: null,
+      itemId: null,
       comment: null,
       price: null,
     },
@@ -102,40 +107,47 @@ export default {
   methods: {
     handleClose() {
       this.$emit('update:dialog', false);
-
-      this.dialogData = {
-        sealed: null,
-        id: null,
-        comment: null,
-        price: null,
-      };
+      this.$refs.addForm.reset();
     },
 
     handleSave() {
-      const { id } = this.dialogData;
       const setter = this.$route.name === 'Minifigures' ? ADD_MINIFIGURE : ADD_SET;
 
-      if (id) {
+      if (this.$refs.addForm.validate()) {
         this.$store.dispatch(setter, this.dialogData)
           .then(() => this.handleClose())
           .catch(() => {});
-      } else {
-        this.error = { message: 'Select an item' };
       }
     },
   },
 
   computed: {
-    disabledSave() {
-      return !(this.dialogData.select && this.dialogData.price) || this.$store.state.saving;
-    },
-
     errorMessage() {
       return this.$store.state.error && this.$store.state.error.message;
     },
 
     message() {
       return this.$route.name === 'Minifigures' ? 'e.g. sw1060' : 'e.g. 70666-1';
+    },
+
+    computedRules() {
+      return (value) => {
+        const lowerValue = value && value.toLowerCase();
+
+        const { sets, minifigures } = this.$store.state;
+
+        if (sets.find((set) => set.itemId === lowerValue)
+          || minifigures.find((minifig) => minifig.itemId === lowerValue)
+        ) {
+          return 'You already have this item';
+        }
+
+        if (!lowerValue) {
+          return 'ID is required';
+        }
+
+        return null;
+      };
     },
   },
 

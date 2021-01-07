@@ -2,7 +2,7 @@
   <v-data-table
     :expanded="expanded"
     :headers="headers"
-    :items="checkbox ? filteredMinifigures : $store.state.minifigures"
+    :items="minifigures"
     :items-per-page="-1"
     :loading="$store.state.loading"
     :search="search"
@@ -12,17 +12,9 @@
     show-expand
     single-expand
   >
-    <template #item.categoryId="{ item }">
-      {{themeName(item.categoryId)}}
-    </template>
-    <template #item.price="{ item }">
-      <span v-if="item.price">
-        {{ item.price }} / {{ Number(item.price * $store.state.dollarRate).toFixed(2) }}
-      </span>
-    </template>
     <template #top>
       <dialog-edit-item v-show="false" />
-      <v-container class="py-1">
+      <v-container class="py-0" fluid>
         <v-text-field
           v-show="false"
           v-model="search"
@@ -31,9 +23,17 @@
         />
         <v-checkbox
           v-model="checkbox"
-          label="with duplicates only"
+          label="More than 1 only"
         />
       </v-container>
+    </template>
+    <template #item.categoryId="{ item }">
+      {{themeName(item.categoryId)}}
+    </template>
+    <template #item.price="{ item }">
+      <span v-if="item.price">
+        {{ item.price }} / {{ Number(item.price * $store.state.dollarRate).toFixed(2) }}
+      </span>
     </template>
     <template #item.actions="{ item }">
       <div class="text-right">
@@ -64,13 +64,13 @@
           </v-list>
         </v-menu>
       </div>
-
     </template>
     <template #expanded-item="{ headers, item }">
       <td :colspan="headers.length" class="pa-0">
         <div class="ml-3 mt-2">
           <p>Release year: {{ item.year }}</p>
-          <p v-if="item.count > 1">Number of duplicates: {{ item.count - 1 }}</p>
+          <p>Count: {{ item.count }}</p>
+          <p v-if="item.comment">Comment: {{ item.comment }}</p>
         </div>
         <h3 class="ml-3 my-2" v-if="!currentItemPriceGuide.used.hasOwnProperty('avg')">
           <v-progress-circular
@@ -82,7 +82,7 @@
         <div v-else class="ma-2">
           <h3 class="ml-1">Price guide</h3>
           <v-simple-table dense>
-            <template v-slot:default>
+            <template #default>
               <thead>
                 <tr>
                   <th class="text-left" />
@@ -163,8 +163,12 @@ export default {
       return (themeId) => getThemeNameById.call(this, themeId);
     },
 
-    filteredMinifigures() {
-      return this.$store.state.minifigures.filter((minifig) => minifig.count > 1);
+    minifigures() {
+      if (this.checkbox) {
+        return this.$store.state.minifigures.filter((minifig) => minifig.count > 1);
+      }
+
+      return this.$store.state.minifigures;
     },
   },
 

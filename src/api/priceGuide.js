@@ -7,7 +7,7 @@ export async function getPriceGuide(itemId, type) {
     return await http.get(pathname, {
       params: {
         type,
-        id: itemId,
+        itemId,
       },
     });
   } catch (error) {

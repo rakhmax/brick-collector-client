@@ -8,7 +8,7 @@
 import TableMinifigures from '@/components/TableMinifigures.vue';
 
 export default {
-  name: 'Minifigs',
+  name: 'Minifigures',
 
   components: {
     TableMinifigures,

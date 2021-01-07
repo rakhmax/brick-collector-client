@@ -7,10 +7,10 @@
       <v-fab-transition>
         <v-btn
           v-if="$route.name !== 'Statistics'"
+          :class="isMobile && 'mb-3'"
           :style="{ zIndex: 5 }"
           @click="dialog = true"
           bottom
-          class="mb-3"
           color="error"
           fab
           fixed
@@ -50,13 +50,6 @@ export default {
     },
   }),
 
-  mounted() {
-    this.$store.dispatch(GET_THEMES);
-    this.$store.dispatch(GET_DOLLAR_RATE);
-    this.$vuetify.theme.dark = this.$store.state.darkMode;
-    this.onResize();
-  },
-
   methods: {
     onResize() {
       this.windowSize = { x: window.innerWidth, y: window.innerHeight };
@@ -67,6 +60,13 @@ export default {
     isMobile() {
       return this.windowSize.x < 600;
     },
+  },
+
+  mounted() {
+    this.$store.dispatch(GET_THEMES);
+    this.$store.dispatch(GET_DOLLAR_RATE);
+    this.$vuetify.theme.dark = this.$store.state.darkMode;
+    this.onResize();
   },
 };
 </script>

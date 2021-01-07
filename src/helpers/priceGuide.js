@@ -1,7 +1,7 @@
 import { getPriceGuide } from '../api/priceGuide';
 
-export async function setPriceGuideByItemIdAndType(item, value, type) {
-  if (item.itemId !== this.currentItemPriceGuide.itemId) {
+export async function setPriceGuideByItemIdAndType({ itemId }, value, type) {
+  if (itemId !== this.currentItemPriceGuide.itemId) {
     this.currentItemPriceGuide = {
       itemId: null,
       new: {},
@@ -9,11 +9,11 @@ export async function setPriceGuideByItemIdAndType(item, value, type) {
     };
   }
 
-  if (value && item.itemId !== this.currentItemPriceGuide.itemId) {
-    const { data } = await getPriceGuide(item.itemId, type);
+  if (value && itemId !== this.currentItemPriceGuide.itemId) {
+    const { data } = await getPriceGuide(itemId, type);
 
     this.currentItemPriceGuide = {
-      itemId: item.itemId,
+      itemId,
       ...data,
     };
   }

@@ -20,7 +20,7 @@
       <v-icon>mdi-magnify</v-icon>
     </v-btn>
     <v-text-field
-      :style="{ maxWidth: '300px'  }"
+      :style="{ maxWidth: '300px' }"
       v-if="isSearch"
       v-model="searchText"
       @blur="clearSearch"
@@ -30,7 +30,7 @@
       dense
       flat
       hide-details
-      prepend-icon="mdi-magnify"
+      prepend-inner-icon="mdi-magnify"
       rounded
       single-line
       solo
