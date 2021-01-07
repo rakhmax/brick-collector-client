@@ -72,15 +72,27 @@
     </template>
     <template v-slot:expanded-item="{ headers, item }">
       <td :colspan="headers.length" class="pa-0">
-        <div class="ml-4 mt-2">
-          <p v-if="item.minifiguresCount">Minifigures: {{ item.minifiguresCount }}</p>
-          <p>Parts: {{ item.pieces }}</p>
-          <p>Price per piece: {{ Number(item.price / item.pieces).toFixed(2) }}</p>
-          <p v-if="item.extraPieces">Extra parts: {{ item.extraPieces }}</p>
-          <p>Release year: {{ item.year }}</p>
-          <p>Count: {{ item.count }}</p>
-          <p v-if="item.comment">Comment: {{ item.comment }}</p>
-        </div>
+        <v-row>
+          <v-col cols="12" sm="4" class="py-6">
+            <v-img max-width="100%"
+              contain
+              :lazy-src="'http:' + item.image.base"
+              max-height="200"
+              :src="'http:' + item.image.base"
+            ></v-img>
+          </v-col>
+          <v-col cols="12" sm="8">
+            <div class="ml-4 mt-2">
+              <p v-if="item.minifiguresCount">Minifigures: {{ item.minifiguresCount }}</p>
+              <p>Parts: {{ item.pieces }}</p>
+              <p>Price per piece: {{ Number(item.price / item.pieces).toFixed(2) }}</p>
+              <p v-if="item.extraPieces">Extra parts: {{ item.extraPieces }}</p>
+              <p>Release year: {{ item.year }}</p>
+              <p>Count: {{ item.count }}</p>
+              <p v-if="item.comment">Comment: {{ item.comment }}</p>
+            </div>
+          </v-col>
+        </v-row>
         <h3 class="ml-4 my-2" v-if="!currentItemPriceGuide.used.hasOwnProperty('avg')">
           <v-progress-circular
             :size="24"
