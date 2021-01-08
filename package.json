@@ -1,5 +1,5 @@
 {
-  "name": "lego-database",
+  "name": "lego-database-client",
   "version": "0.1.0",
   "private": true,
   "scripts": {
