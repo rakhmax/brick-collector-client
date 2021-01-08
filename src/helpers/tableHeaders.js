@@ -24,6 +24,6 @@ export default [
     sortable: false,
     text: '',
     value: 'actions',
-    width: 105,
+    width: 1,
   },
 ];

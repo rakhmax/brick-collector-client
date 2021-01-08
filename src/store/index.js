@@ -8,7 +8,7 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    darkMode: false,
+    darkMode: true,
     dollarRate: 0,
     error: null,
     loading: false,

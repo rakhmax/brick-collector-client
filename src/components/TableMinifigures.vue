@@ -1,28 +1,19 @@
 <template>
   <v-data-table
-    :expanded="expanded"
+    :expanded.sync="expanded"
     :headers="headers"
     :items="minifigures"
     :items-per-page="15"
     :loading="$store.state.loading"
     :search="search"
+    @click:row="handleClickRow"
     item-key="itemId"
-    loading-text="Loading minifigures..."
-    show-expand
+    loading-text="Loading..."
     single-expand
     sort-by="itemId"
   >
-    <template #top>
-      <dialog-edit-item v-show="false" />
-      <v-container fluid>
-        <v-checkbox
-          v-model="checkbox"
-          label="More than 1 only"
-        />
-      </v-container>
-    </template>
     <template #item.categoryId="{ item }">
-      {{themeName(item.categoryId)}}
+      {{ themeName(item.categoryId) }}
     </template>
     <template #item.price="{ item }">
       <span v-if="item.price">
@@ -30,10 +21,7 @@
       </span>
     </template>
     <template #item.actions="{ item }">
-      <table-actions
-        :item="item"
-        itemType="Minifig"
-      />
+      <actions :item="item" />
     </template>
     <template #expanded-item="{ headers, item }">
       <td :colspan="headers.length" class="pa-0">
@@ -68,11 +56,8 @@
 </template>
 
 <script>
-import { eventBus } from '@/main';
-import DialogEditItem from '@/components/DialogEditItem.vue';
-import TableActions from '@/components/TableActions.vue';
+import Actions from '@/components/Actions.vue';
 import TablePriceGuide from '@/components/TablePriceGuide.vue';
-import { GET_MINIFIGURES } from '@/store/types';
 import tableHeaders from '@/helpers/tableHeaders';
 import { getThemeNameById } from '@/helpers/themeHelper';
 
@@ -80,23 +65,19 @@ export default {
   name: 'TableMinifigures',
 
   components: {
-    DialogEditItem,
-    TableActions,
+    Actions,
     TablePriceGuide,
+  },
+
+  props: {
+    search: String,
   },
 
   data: () => ({
     checkbox: false,
-    search: null,
     expanded: [],
     headers: tableHeaders,
   }),
-
-  methods: {
-    fetchMinifigures() {
-      this.$store.dispatch(GET_MINIFIGURES);
-    },
-  },
 
   computed: {
     themeName() {
@@ -112,14 +93,14 @@ export default {
     },
   },
 
-  created() {
-    eventBus.$on('changeSearchValue', ({ search }) => {
-      this.search = search;
-    });
-  },
-
-  mounted() {
-    this.fetchMinifigures();
+  methods: {
+    handleClickRow(item, { expand, isExpanded }) {
+      if (isExpanded) {
+        this.expanded = [];
+      } else {
+        expand();
+      }
+    },
   },
 };
 </script>
