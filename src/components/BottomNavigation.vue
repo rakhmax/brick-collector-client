@@ -17,6 +17,12 @@
   </v-bottom-navigation>
 </template>
 
+<script>
+export default {
+  name: 'BottomNavigation',
+};
+</script>
+
 <style>
 .v-bottom-navigation.v-item-group .v-btn {height: inherit !important;}
 </style>

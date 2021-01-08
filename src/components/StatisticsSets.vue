@@ -25,9 +25,11 @@
 </template>
 
 <script>
-import { GET_SETS } from '../store/types';
+import { GET_SETS } from '@/store/types';
 
 export default {
+  name: 'StatisticsSets',
+
   computed: {
     setsStatistics() {
       return this.$store.getters.setsStatistics;

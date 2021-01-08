@@ -71,11 +71,11 @@ export default {
     }
   },
 
-  async [DELETE_MINIFIGURE]({ commit, state }, payload) {
+  async [DELETE_MINIFIGURE]({ commit, state }, { itemId }) {
     try {
       state.loading = true;
 
-      const { data } = await deleteMinifigure(payload);
+      const { data } = await deleteMinifigure(itemId);
       const filteredData = state.minifigures
         .filter((minifig) => minifig.itemId !== data.itemId);
 

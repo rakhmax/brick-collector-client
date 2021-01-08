@@ -1,4 +1,4 @@
-import http from '../axios';
+import http from '@/axios';
 
 const pathname = '/sets';
 

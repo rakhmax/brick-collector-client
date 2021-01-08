@@ -1,9 +1,9 @@
 <template>
   <v-navigation-drawer
-    permanent
-    mini-variant
-    fixed
     class="mt-14 mt-md-16"
+    fixed
+    mini-variant
+    permanent
   >
     <v-list nav dense class="pt-2">
       <v-list-item link class="px-2" to="/minifigures">
@@ -27,3 +27,9 @@
     </v-list>
   </v-navigation-drawer>
 </template>
+
+<script>
+export default {
+  name: 'Sidebar',
+};
+</script>

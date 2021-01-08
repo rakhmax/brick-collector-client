@@ -73,9 +73,9 @@
 </template>
 
 <script>
-import { UPDATE_SET, UPDATE_MINIFIGURE } from '../store/types';
-import { eventBus } from '../main';
-import { getThemeIdByItemIdPrefix } from '../helpers/themeHelper';
+import { eventBus } from '@/main';
+import { UPDATE_SET, UPDATE_MINIFIGURE } from '@/store/types';
+import { getThemeIdByItemIdPrefix } from '@/helpers/themeHelper';
 
 export default {
   name: 'DialogEditItem',

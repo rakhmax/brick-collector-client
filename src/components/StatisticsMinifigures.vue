@@ -25,9 +25,11 @@
 </template>
 
 <script>
-import { GET_MINIFIGURES } from '../store/types';
+import { GET_MINIFIGURES } from '@/store/types';
 
 export default {
+  name: 'StatisticsMinifigures',
+
   computed: {
     minifiguresStatistics() {
       return this.$store.getters.minifiguresStatistics;

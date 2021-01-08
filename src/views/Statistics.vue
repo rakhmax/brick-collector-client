@@ -6,10 +6,12 @@
 </template>
 
 <script>
-import StatisticsMinifigures from '../components/StatisticsMinifigures.vue';
-import StatisticsSets from '../components/StatisticsSets.vue';
+import StatisticsMinifigures from '@/components/StatisticsMinifigures.vue';
+import StatisticsSets from '@/components/StatisticsSets.vue';
 
 export default {
+  name: 'Statistics',
+
   components: {
     StatisticsMinifigures,
     StatisticsSets,

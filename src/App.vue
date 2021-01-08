@@ -30,7 +30,7 @@ import AppBar from '@/components/AppBar.vue';
 import BottomNavigation from '@/components/BottomNavigation.vue';
 import DialogAddItem from '@/components/DialogAddItem.vue';
 import Sidebar from '@/components/Sidebar.vue';
-import { GET_DOLLAR_RATE, GET_THEMES } from './store/types';
+import { GET_DOLLAR_RATE, GET_THEMES } from '@/store/types';
 
 export default {
   name: 'App',

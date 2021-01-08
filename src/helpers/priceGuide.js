@@ -1,20 +1,14 @@
-import { getPriceGuide } from '../api/priceGuide';
+import { getPriceGuide } from '@/api/priceGuide';
 
-export async function setPriceGuideByItemIdAndType({ itemId }, value, type) {
-  if (itemId !== this.currentItemPriceGuide.itemId) {
-    this.currentItemPriceGuide = {
-      itemId: null,
-      new: {},
-      used: {},
-    };
-  }
-
-  if (value && itemId !== this.currentItemPriceGuide.itemId) {
+export async function getPriceGuideByItemIdAndType({ itemId }, currentItemId, type) {
+  if (itemId !== currentItemId) {
     const { data } = await getPriceGuide(itemId, type);
 
-    this.currentItemPriceGuide = {
+    return {
       itemId,
       ...data,
     };
   }
+
+  return {};
 }

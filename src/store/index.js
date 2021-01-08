@@ -8,7 +8,7 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    darkMode: window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches,
+    darkMode: false,
     dollarRate: 0,
     error: null,
     loading: false,

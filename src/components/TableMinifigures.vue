@@ -6,7 +6,6 @@
     :items-per-page="15"
     :loading="$store.state.loading"
     :search="search"
-    @item-expanded="getPriceGuide"
     item-key="itemId"
     loading-text="Loading minifigures..."
     show-expand
@@ -16,12 +15,6 @@
     <template #top>
       <dialog-edit-item v-show="false" />
       <v-container fluid>
-        <v-text-field
-          v-show="false"
-          v-model="search"
-          label="Search"
-          class="mx-4"
-        />
         <v-checkbox
           v-model="checkbox"
           label="More than 1 only"
@@ -37,34 +30,10 @@
       </span>
     </template>
     <template #item.actions="{ item }">
-      <div class="text-right">
-        <v-btn
-          v-if="item.count === 1"
-          :disabled="$store.state.loading"
-          icon
-          @click="openEditDialog(item)"
-        >
-          <v-icon small>
-            mdi-pencil
-          </v-icon>
-        </v-btn>
-        <v-menu bottom>
-          <template #activator="{ on }">
-            <v-btn
-              v-on="on"
-              :disabled="$store.state.loading"
-              icon
-            >
-              <v-icon small>mdi-delete</v-icon>
-            </v-btn>
-          </template>
-          <v-list>
-            <v-list-item @click="deleteMinifigure(item.itemId)">
-              <v-list-item-title>Delete</v-list-item-title>
-            </v-list-item>
-          </v-list>
-        </v-menu>
-      </div>
+      <table-actions
+        :item="item"
+        itemType="Minifig"
+      />
     </template>
     <template #expanded-item="{ headers, item }">
       <td :colspan="headers.length" class="pa-0">
@@ -86,38 +55,10 @@
               </div>
             </v-col>
             <v-col cols="12">
-              <v-progress-circular
-                v-if="!currentItemPriceGuide.used.hasOwnProperty('avg')"
-                :size="24"
-                :width="3"
-                indeterminate
+              <table-price-guide
+                :item="item"
+                itemType="Minifig"
               />
-              <div v-else>
-                <h3>Price guide</h3>
-                <v-simple-table dense>
-                  <template #default>
-                    <thead>
-                      <tr>
-                        <th class="text-left" />
-                        <th class="text-left">Min</th>
-                        <th class="text-left">Avg</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>New</td>
-                        <td>{{ currentItemPriceGuide.new.min }}</td>
-                        <td>{{ currentItemPriceGuide.new.avg }}</td>
-                      </tr>
-                      <tr>
-                        <td>Used</td>
-                        <td>{{ currentItemPriceGuide.used.min }}</td>
-                        <td>{{ currentItemPriceGuide.used.avg }}</td>
-                      </tr>
-                    </tbody>
-                  </template>
-                </v-simple-table>
-              </div>
             </v-col>
           </v-row>
         </v-container>
@@ -127,28 +68,26 @@
 </template>
 
 <script>
-import { GET_MINIFIGURES, DELETE_MINIFIGURE } from '../store/types';
-import DialogEditItem from './DialogEditItem.vue';
-import { getThemeNameById } from '../helpers/themeHelper';
-import { eventBus } from '../main';
-import tableHeaders from '../helpers/tableHeaders';
-import { setPriceGuideByItemIdAndType } from '../helpers/priceGuide';
+import { eventBus } from '@/main';
+import DialogEditItem from '@/components/DialogEditItem.vue';
+import TableActions from '@/components/TableActions.vue';
+import TablePriceGuide from '@/components/TablePriceGuide.vue';
+import { GET_MINIFIGURES } from '@/store/types';
+import tableHeaders from '@/helpers/tableHeaders';
+import { getThemeNameById } from '@/helpers/themeHelper';
 
 export default {
   name: 'TableMinifigures',
 
   components: {
     DialogEditItem,
+    TableActions,
+    TablePriceGuide,
   },
 
   data: () => ({
     checkbox: false,
     search: null,
-    currentItemPriceGuide: {
-      itemId: null,
-      new: {},
-      used: {},
-    },
     expanded: [],
     headers: tableHeaders,
   }),
@@ -156,21 +95,6 @@ export default {
   methods: {
     fetchMinifigures() {
       this.$store.dispatch(GET_MINIFIGURES);
-    },
-
-    deleteMinifigure(itemId) {
-      this.$store.dispatch(DELETE_MINIFIGURE, itemId);
-    },
-
-    getPriceGuide({ item, value }) {
-      setPriceGuideByItemIdAndType.call(this, item, value, 'Minifig');
-    },
-
-    openEditDialog(item) {
-      eventBus.$emit('open', {
-        item,
-        dialog: true,
-      });
     },
   },
 
@@ -189,7 +113,7 @@ export default {
   },
 
   created() {
-    eventBus.$on('searchBar', ({ search }) => {
+    eventBus.$on('changeSearchValue', ({ search }) => {
       this.search = search;
     });
   },

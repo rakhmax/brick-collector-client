@@ -1,4 +1,4 @@
-import http from '../axios';
+import http from '@/axios';
 
 export async function getItems() {
   const { pathname } = window.location;

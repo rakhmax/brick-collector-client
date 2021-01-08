@@ -14,10 +14,14 @@
         width="40"
       />
     </div>
-    <v-app-bar-title><span>{{ $route.name || 'LEGO Database' }}</span></v-app-bar-title>
+    <v-app-bar-title>{{ $route.name || 'LEGO Database' }}</v-app-bar-title>
     <v-spacer />
     <div v-if="$route.name !== 'Statistics'">
-      <v-btn v-if="!isSearch" icon @click="isSearch = true">
+      <v-btn
+        v-if="!isSearch"
+        @click="isSearch = true"
+        icon
+      >
         <v-icon>mdi-magnify</v-icon>
       </v-btn>
       <v-text-field
@@ -25,7 +29,7 @@
         v-model="searchText"
         :style="{ maxWidth: '300px', width: '100%' }"
         @blur="clearSearch"
-        @input="onChange"
+        @input="handleSearch"
         autofocus
         clearable
         dense
@@ -41,29 +45,30 @@
 </template>
 
 <script>
-import { eventBus } from '../main';
+import { eventBus } from '@/main';
 
 export default {
+  name: 'AppBar',
+
   data: () => ({
     isSearch: false,
     searchText: null,
   }),
 
   methods: {
-    onChange() {
-      eventBus.$emit('searchBar', {
+    handleSearch() {
+      eventBus.$emit('changeSearchValue', {
         search: this.searchText,
       });
     },
 
     clearSearch() {
       this.isSearch = false;
-      this.searchText = null;
     },
   },
 };
 </script>
 
 <style>
-  .v-app-bar-title__content { width: auto !important }
+.v-app-bar-title__content { width: auto !important }
 </style>
