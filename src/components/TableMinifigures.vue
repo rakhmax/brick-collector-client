@@ -3,7 +3,7 @@
     :expanded="expanded"
     :headers="headers"
     :items="minifigures"
-    :items-per-page="-1"
+    :items-per-page="15"
     :loading="$store.state.loading"
     :search="search"
     @item-expanded="getPriceGuide"
@@ -32,7 +32,7 @@
     </template>
     <template #item.price="{ item }">
       <span v-if="item.price">
-        {{ item.price }} / {{ Number(item.price * $store.state.dollarRate).toFixed(2) }}
+        {{ Number(item.price).toFixed(2) }}
       </span>
     </template>
     <template #item.actions="{ item }">
@@ -67,56 +67,59 @@
     </template>
     <template #expanded-item="{ headers, item }">
       <td :colspan="headers.length" class="pa-0">
-        <v-row>
-          <v-col cols="12" sm="3" class="py-6">
-            <v-img max-width="100%"
-              contain
-              :lazy-src="'http:' + item.image.base"
-              max-height="200"
-              :src="'http:' + item.image.base"
-            ></v-img>
-          </v-col>
-          <v-col cols="12" sm="9">
-            <div class="ml-3 mt-2">
-              <p>Release year: {{ item.year }}</p>
-              <p>Count: {{ item.count }}</p>
-              <p v-if="item.comment">Comment: {{ item.comment }}</p>
-            </div>
-          </v-col>
-        </v-row>
-        <h3 class="ml-3 my-2" v-if="!currentItemPriceGuide.used.hasOwnProperty('avg')">
-          <v-progress-circular
-            :size="24"
-            :width="3"
-            indeterminate
-          />
-        </h3>
-        <div v-else class="ma-2">
-          <h3 class="ml-1">Price guide</h3>
-          <v-simple-table dense>
-            <template #default>
-              <thead>
-                <tr>
-                  <th class="text-left" />
-                  <th class="text-left">Min</th>
-                  <th class="text-left">Avg</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>New</td>
-                  <td>{{ currentItemPriceGuide.new.min }}</td>
-                  <td>{{ currentItemPriceGuide.new.avg }}</td>
-                </tr>
-                <tr>
-                  <td>Used</td>
-                  <td>{{ currentItemPriceGuide.used.min }}</td>
-                  <td>{{ currentItemPriceGuide.used.avg }}</td>
-                </tr>
-              </tbody>
-            </template>
-          </v-simple-table>
-        </div>
+        <v-container>
+          <v-row>
+            <v-col cols="12" sm="6" md="4">
+              <v-img max-width="100%"
+                :lazy-src="'http:' + item.image.base"
+                :src="'http:' + item.image.base"
+                contain
+                max-height="200"
+              ></v-img>
+            </v-col>
+            <v-col cols="12" sm="6" md="8">
+              <div>
+                <p>Release year: {{ item.year }}</p>
+                <p>Count: {{ item.count }}</p>
+                <p v-if="item.comment">Comment: {{ item.comment }}</p>
+              </div>
+            </v-col>
+            <v-col cols="12">
+              <v-progress-circular
+                v-if="!currentItemPriceGuide.used.hasOwnProperty('avg')"
+                :size="24"
+                :width="3"
+                indeterminate
+              />
+              <div v-else>
+                <h3>Price guide</h3>
+                <v-simple-table dense>
+                  <template #default>
+                    <thead>
+                      <tr>
+                        <th class="text-left" />
+                        <th class="text-left">Min</th>
+                        <th class="text-left">Avg</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>New</td>
+                        <td>{{ currentItemPriceGuide.new.min }}</td>
+                        <td>{{ currentItemPriceGuide.new.avg }}</td>
+                      </tr>
+                      <tr>
+                        <td>Used</td>
+                        <td>{{ currentItemPriceGuide.used.min }}</td>
+                        <td>{{ currentItemPriceGuide.used.avg }}</td>
+                      </tr>
+                    </tbody>
+                  </template>
+                </v-simple-table>
+              </div>
+            </v-col>
+          </v-row>
+        </v-container>
       </td>
     </template>
   </v-data-table>

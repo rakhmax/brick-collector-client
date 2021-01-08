@@ -70,3 +70,7 @@ export default {
   },
 };
 </script>
+
+<style>
+  .v-image .v-responsive__content { width: auto !important }
+</style>
