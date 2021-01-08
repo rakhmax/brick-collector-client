@@ -5,6 +5,8 @@ module.exports = {
   pwa: {
     name: 'LEGO Database',
     themeColor: '#BDBDBD',
-    backgroundColor: '#FFFFFF',
+    manifestOptions: {
+      background_color: '#FFFFFF',
+    },
   },
 };
