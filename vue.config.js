@@ -5,5 +5,6 @@ module.exports = {
   pwa: {
     name: 'LEGO Database',
     themeColor: '#BDBDBD',
+    backgroundColor: '#FFFFFF',
   },
 };
