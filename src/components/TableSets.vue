@@ -6,6 +6,7 @@
     :items-per-page="15"
     :loading="$store.state.loading"
     :search="search"
+    :sort-by="['categoryId', 'itemId']"
     @item-expanded="getPriceGuide"
     item-key="itemId"
     show-expand

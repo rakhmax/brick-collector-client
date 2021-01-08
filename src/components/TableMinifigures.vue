@@ -11,6 +11,7 @@
     loading-text="Loading minifigures..."
     show-expand
     single-expand
+    sort-by="itemId"
   >
     <template #top>
       <dialog-edit-item v-show="false" />
