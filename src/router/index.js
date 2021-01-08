@@ -34,4 +34,9 @@ const router = new VueRouter({
   routes,
 });
 
+router.beforeEach((to, from, next) => {
+  document.title = to.name || 'LEGO Database';
+  next();
+});
+
 export default router;

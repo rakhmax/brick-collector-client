@@ -68,7 +68,7 @@
     </template>
     <template #expanded-item="{ headers, item }">
       <td :colspan="headers.length" class="pa-0">
-        <v-container>
+        <v-container fluid>
           <v-row>
             <v-col cols="12" sm="6" md="4">
               <v-img max-width="100%"

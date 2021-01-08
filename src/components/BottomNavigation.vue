@@ -1,6 +1,6 @@
 <template>
   <v-bottom-navigation
-    :style="{ paddingRight: $route.name !== 'Statistics' ? '92px' : 0 }"
+    :style="{ paddingRight: $route.name !== 'Statistics' ? '88px' : 0 }"
     color="error"
     fixed
     grow

@@ -30,7 +30,6 @@ import { GET_SETS } from '../store/types';
 export default {
   computed: {
     setsStatistics() {
-      console.log(this.$store.getters.setsStatistics);
       return this.$store.getters.setsStatistics;
     },
   },

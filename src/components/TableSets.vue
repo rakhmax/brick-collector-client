@@ -88,7 +88,9 @@
               <div>
                 <p v-if="item.minifiguresCount">Minifigures: {{ item.minifiguresCount }}</p>
                 <p>Parts: {{ item.pieces }}</p>
-                <p>Price per piece: {{ Number(item.price / item.pieces).toFixed(2) }}</p>
+                <p v-if="item.price">
+                  Price per piece: {{ Number(item.price / item.pieces).toFixed(2) }}
+                </p>
                 <p v-if="item.extraPieces">Extra parts: {{ item.extraPieces }}</p>
                 <p>Release year: {{ item.year }}</p>
                 <p>Count: {{ item.count }}</p>
