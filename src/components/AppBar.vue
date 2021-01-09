@@ -2,7 +2,6 @@
   <v-app-bar
     :hide-on-scroll="isMobile"
     app
-    dense
     elevate-on-scroll
   >
     <div v-if="!isMobile" class="d-flex align-center">

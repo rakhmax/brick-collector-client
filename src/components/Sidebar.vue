@@ -1,8 +1,11 @@
 <template>
   <v-navigation-drawer
-    :style="{ marginTop: '96px', paddingBottom: '96px' }"
-    fixed
+    :style="{
+      marginTop: $vuetify.breakpoint.md ? '112px' : '104px',
+      paddingBottom: $vuetify.breakpoint.md ? '112px' : '104px'
+    }"
     color="#f5f5f5"
+    fixed
     mini-variant
     permanent
   >
