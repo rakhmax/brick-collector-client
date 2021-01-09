@@ -84,9 +84,7 @@
 </template>
 
 <script>
-import { eventBus } from '@/main';
 import { ADD_MINIFIGURE, ADD_SET } from '@/store/types';
-import { getThemeIdByItemIdPrefix } from '@/helpers/themeHelper';
 
 export default {
   name: 'DialogAddItem',
@@ -151,16 +149,6 @@ export default {
         return null;
       };
     },
-  },
-
-  created() {
-    eventBus.$on('search', ({ search }) => {
-      getThemeIdByItemIdPrefix.call(this, search);
-    });
-
-    eventBus.$on('select', ({ select }) => {
-      this.dialogData.select = select;
-    });
   },
 };
 </script>

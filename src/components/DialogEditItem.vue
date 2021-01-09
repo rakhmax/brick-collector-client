@@ -75,7 +75,6 @@
 <script>
 import { eventBus } from '@/main';
 import { UPDATE_SET, UPDATE_MINIFIGURE } from '@/store/types';
-import { getThemeIdByItemIdPrefix } from '@/helpers/themeHelper';
 
 export default {
   name: 'DialogEditItem',
@@ -131,14 +130,6 @@ export default {
         itemId,
       };
       this.dialog = dialog;
-    });
-
-    eventBus.$on('search', ({ search }) => {
-      getThemeIdByItemIdPrefix.call(this, search);
-    });
-
-    eventBus.$on('select', ({ select }) => {
-      this.dialogData.select = select;
     });
   },
 };

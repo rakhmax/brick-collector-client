@@ -1,8 +1,8 @@
 <template>
   <v-data-table
-    :expanded.sync="expanded"
+    :expanded="expanded"
     :headers="headers"
-    :items="minifigures"
+    :items="items"
     :items-per-page="15"
     :loading="$store.state.loading"
     :search="search"
@@ -28,24 +28,24 @@
         <v-container fluid>
           <v-row>
             <v-col cols="12" sm="6" md="4">
-              <v-img max-width="100%"
+              <v-img
                 :lazy-src="'http:' + item.image.base"
                 :src="'http:' + item.image.base"
                 contain
                 max-height="200"
+                max-width="100%"
               ></v-img>
             </v-col>
             <v-col cols="12" sm="6" md="8">
-              <div>
-                <p>Release year: {{ item.year }}</p>
-                <p>Count: {{ item.count }}</p>
-                <p v-if="item.comment">Comment: {{ item.comment }}</p>
-              </div>
+              <slot
+                :item="item"
+                name="info"
+              />
             </v-col>
             <v-col cols="12">
               <table-price-guide
                 :item="item"
-                itemType="Minifig"
+                :itemType="itemType"
               />
             </v-col>
           </v-row>
@@ -70,6 +70,8 @@ export default {
   },
 
   props: {
+    items: Array,
+    itemType: String,
     search: String,
   },
 
@@ -82,14 +84,6 @@ export default {
   computed: {
     themeName() {
       return (themeId) => getThemeNameById.call(this, themeId);
-    },
-
-    minifigures() {
-      if (this.checkbox) {
-        return this.$store.state.minifigures.filter((minifig) => minifig.count > 1);
-      }
-
-      return this.$store.state.minifigures;
     },
   },
 

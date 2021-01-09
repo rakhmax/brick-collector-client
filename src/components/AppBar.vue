@@ -6,7 +6,7 @@
   >
     <div class="d-flex align-center">
       <v-img
-        alt="Lego Brick Logo"
+        alt="Lego Brick"
         class="shrink mr-4"
         contain
         src="../assets/Plastic_brick_red.svg"

@@ -13,7 +13,7 @@
     >
       {{ item.name }}
     </v-card-title>
-    <v-card-subtitle>{{ item.itemId }}</v-card-subtitle>
+    <v-card-subtitle>{{ item.itemId }} | {{ themeName(item.categoryId) }}</v-card-subtitle>
     <v-card-actions>
       <v-btn
         @click="expanded = !expanded"
@@ -37,6 +37,7 @@
 
 <script>
 import Actions from '@/components/Actions.vue';
+import { getThemeNameById } from '@/helpers/themeHelper';
 
 export default {
   name: 'CardMinifigure',
@@ -52,5 +53,11 @@ export default {
   data: () => ({
     expanded: false,
   }),
+
+  computed: {
+    themeName() {
+      return (themeId) => getThemeNameById.call(this, themeId);
+    },
+  },
 };
 </script>
