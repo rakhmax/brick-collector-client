@@ -1,7 +1,8 @@
 <template>
   <v-navigation-drawer
-    class="mt-14 mt-md-16"
+    :style="{ marginTop: '96px', paddingBottom: '96px' }"
     fixed
+    color="#f5f5f5"
     mini-variant
     permanent
   >
@@ -25,11 +26,28 @@
         <v-list-item-title>Statistics</v-list-item-title>
       </v-list-item>
     </v-list>
+    <template #append>
+      <v-list nav dense>
+        <v-list-item @click="handleLogout">
+          <v-list-item-icon class="mx-0">
+            <v-icon>mdi-logout</v-icon>
+          </v-list-item-icon>
+        </v-list-item>
+      </v-list>
+    </template>
   </v-navigation-drawer>
 </template>
 
 <script>
 export default {
   name: 'Sidebar',
+
+  methods: {
+    handleLogout() {
+      localStorage.removeItem('accessString');
+
+      window.location.reload();
+    },
+  },
 };
 </script>

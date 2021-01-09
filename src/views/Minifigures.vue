@@ -1,24 +1,12 @@
 <template>
   <div :style="{ marginBottom: '110px' }">
-    <v-btn
-      class="mx-2"
-      fab
-      dark
-      small
-      outlined
-      @click="isCardView = !isCardView"
-    >
-      <v-icon dark>
-        {{ isCardView ? 'mdi-view-list' : 'mdi-view-grid' }}
-      </v-icon>
-    </v-btn>
     <cards-items
-      v-if="isCardView"
+      v-if="isCardLayout"
       :items="minifigures"
       :search="search"
     >
       <template #item="{ item }">
-        <card-item :item="item">
+        <card-item :item="item" :itemType="itemType">
           <template #info>
             <div>
               <p v-if="item.price">Price: {{ item.price }}</p>
@@ -34,7 +22,7 @@
       v-else
       :items="minifigures"
       :search="search"
-      itemType="Minifig"
+      :itemType="itemType"
     >
       <template #info="{ item }">
         <div>
@@ -55,6 +43,7 @@ import CardItem from '@/components/CardItem.vue';
 import DialogEditItem from '@/components/DialogEditItem.vue';
 import TableItems from '@/components/TableItems.vue';
 import { GET_MINIFIGURES } from '@/store/types';
+import { mapState } from 'vuex';
 
 export default {
   name: 'Minifigures',
@@ -67,6 +56,7 @@ export default {
   },
 
   data: () => ({
+    itemType: 'Minifig',
     checkbox: false,
     isCardView: true,
     search: null,
@@ -86,6 +76,8 @@ export default {
 
       return this.$store.state.minifigures;
     },
+
+    ...mapState({ isCardLayout: (state) => state.isCardLayout }),
   },
 
   created() {

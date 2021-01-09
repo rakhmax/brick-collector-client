@@ -1,36 +1,42 @@
 <template>
   <v-app v-resize="onResize">
-    <sidebar v-if="!isMobile" />
-    <v-main :class="!isMobile && 'ml-14'">
-      <app-bar />
-      <router-view />
-      <v-fab-transition>
-        <v-btn
-          v-if="$route.name !== 'Statistics'"
-          :class="isMobile && 'mb-3'"
-          :style="{ zIndex: 5 }"
-          @click="dialog = true"
-          bottom
-          color="error"
-          fab
-          fixed
-          right
-        >
-          <v-icon dark>mdi-plus</v-icon>
-        </v-btn>
-      </v-fab-transition>
-      <dialog-add-item :dialog.sync="dialog" />
-    </v-main>
-    <bottom-navigation v-if="isMobile"/>
+    <router-view name="login" />
+    <div v-if="isAuthentificated">
+      <sidebar v-if="!isMobile" />
+      <v-main :class="!isMobile && 'ml-14'">
+        <app-bar />
+        <router-view />
+        <v-fab-transition>
+          <v-btn
+            v-if="$route.name !== 'Statistics'"
+            :class="isMobile && 'mb-3'"
+            :style="{ zIndex: 5 }"
+            @click="dialog = true"
+            bottom
+            color="error"
+            fab
+            fixed
+            right
+          >
+            <v-icon dark>mdi-plus</v-icon>
+          </v-btn>
+        </v-fab-transition>
+        <dialog-add-item :dialog.sync="dialog" />
+      </v-main>
+      <bottom-navigation v-if="isMobile"/>
+    </div>
   </v-app>
 </template>
 
 <script>
+import { debounce } from 'lodash';
+import { mapState } from 'vuex';
 import AppBar from '@/components/AppBar.vue';
 import BottomNavigation from '@/components/BottomNavigation.vue';
 import DialogAddItem from '@/components/DialogAddItem.vue';
 import Sidebar from '@/components/Sidebar.vue';
-import { GET_DOLLAR_RATE, GET_THEMES } from '@/store/types';
+import { GET_DOLLAR_RATE, GET_IS_MOBILE, GET_THEMES } from '@/store/types';
+import isAuthentificated from './helpers/auth';
 
 export default {
   name: 'App',
@@ -43,6 +49,7 @@ export default {
   },
 
   data: () => ({
+    scrolledToBottom: false,
     dialog: false,
     windowSize: {
       x: 0,
@@ -51,14 +58,21 @@ export default {
   }),
 
   methods: {
-    onResize() {
+    onResize: debounce(function () {
       this.windowSize = { x: window.innerWidth, y: window.innerHeight };
+      this.$store.commit(GET_IS_MOBILE, this.windowSize.x < 600);
+    }, 300),
+
+    scroll() {
+      console.log(window.scrollY === document.documentElement.offsetHeight - window.innerHeight);
     },
   },
 
   computed: {
-    isMobile() {
-      return this.windowSize.x < 600;
+    ...mapState({ isMobile: (state) => state.isMobile }),
+
+    isAuthentificated() {
+      return isAuthentificated();
     },
   },
 

@@ -1,5 +1,5 @@
 <template>
-  <v-card class="mx-auto">
+  <v-card class="mx-auto" outlined>
     <v-img
       :src="item.image.base"
       :style="{ background: '#fff' }"
@@ -13,7 +13,9 @@
     >
       {{ item.name }}
     </v-card-title>
-    <v-card-subtitle>{{ item.itemId }} | {{ themeName(item.categoryId) }}</v-card-subtitle>
+    <v-card-subtitle>
+      {{ item.itemId }} | {{ themeName(item.categoryId) }}
+    </v-card-subtitle>
     <v-card-actions>
       <v-btn
         @click="expanded = !expanded"
@@ -22,14 +24,19 @@
         {{ expanded ? 'Less' : 'More' }}
       </v-btn>
       <v-spacer />
-      <actions :item="item" />
+      <actions :item="item" :itemType="itemType" />
     </v-card-actions>
     <v-expand-transition>
       <div v-show="expanded">
         <v-divider />
         <v-card-text>
           <slot name="info" />
+          <table-price-guide
+            :item="item"
+            :itemType="itemType"
+          />
         </v-card-text>
+
       </div>
     </v-expand-transition>
   </v-card>
@@ -38,16 +45,19 @@
 <script>
 import Actions from '@/components/Actions.vue';
 import { getThemeNameById } from '@/helpers/themeHelper';
+import TablePriceGuide from './TablePriceGuide.vue';
 
 export default {
   name: 'CardMinifigure',
 
   components: {
     Actions,
+    TablePriceGuide,
   },
 
   props: {
     item: Object,
+    itemType: String,
   },
 
   data: () => ({

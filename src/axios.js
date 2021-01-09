@@ -5,6 +5,7 @@ const http = axios.create({
   baseURL: apiRootUrl,
   headers: {
     'Access-Control-Allow-Origin': '*',
+    Authorization: localStorage.getItem('accessString'),
     'Content-Type': 'application/json',
   },
 });

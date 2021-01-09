@@ -35,3 +35,6 @@ export const DELETE_SET_ERROR = `${DELETE_SET}/ERROR`;
 // Tools
 export const GET_DOLLAR_RATE = 'GET_DOLLAR_RATE';
 export const GET_THEMES = 'GET_THEMES';
+export const GET_IS_DARK_MODE = 'GET_IS_DARK_MODE';
+export const GET_IS_MOBILE = 'GET_IS_MOBILE';
+export const SET_CARD_LAYOUT = 'SET_CARD_LAYOUT';

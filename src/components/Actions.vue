@@ -1,8 +1,13 @@
 <template>
   <v-menu bottom>
     <template #activator="{ on, attrs }">
-      <v-btn v-bind="attrs" v-on="on" :disabled="$store.state.loading" icon>
-        <v-icon small>mdi-dots-vertical</v-icon>
+      <v-btn
+        v-bind="attrs"
+        v-on="on"
+        :disabled="$store.state.loading"
+        icon
+      >
+        <v-icon>mdi-dots-vertical</v-icon>
       </v-btn>
     </template>
     <v-list>
@@ -34,6 +39,12 @@ export default {
     itemType: String,
   },
 
+  watch: {
+    itemType(newVal, oldVal) {
+      console.log(newVal, oldVal);
+    },
+  },
+
   methods: {
     openEditDialog(item) {
       eventBus.$emit('open', {
@@ -43,12 +54,14 @@ export default {
     },
 
     deleteItem(itemId, withMinifigures = false) {
+      debugger;
       this.$store.dispatch(this.actionTypes.delete, { itemId, withMinifigures });
     },
   },
 
   computed: {
     actionTypes() {
+      debugger;
       if (this.itemType === 'Minifig') return { delete: DELETE_MINIFIGURE };
       if (this.itemType === 'Set') return { delete: DELETE_SET };
 

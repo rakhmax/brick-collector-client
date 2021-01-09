@@ -1,30 +1,33 @@
 <template>
-  <v-data-iterator
-    :items="items"
-    :items-per-page="15"
-    :loading="$store.state.loading"
-    :search="search"
-    item-key="itemId"
-    loading-text="Loading..."
-    sort-by="itemId"
-  >
-    <template #default="{ items }">
-      <v-container fluid>
-        <v-row>
-          <v-col
-            v-for="item in items"
-            :key="item.itemId"
-            cols="12"
-            sm="6"
-            md="4"
-            lg="3"
-          >
-            <slot :item="item" name="item" />
-          </v-col>
-        </v-row>
-      </v-container>
-    </template>
-  </v-data-iterator>
+  <div v-scroll="scroll">
+    <v-data-iterator
+      :items="items"
+      :items-per-page="itemsPerPage"
+      :loading="$store.state.loading"
+      :search="search"
+      hide-default-footer
+      item-key="itemId"
+      loading-text="Loading..."
+      sort-by="itemId"
+    >
+      <template #default="{ items }">
+        <v-container fluid>
+          <v-row>
+            <v-col
+              v-for="item in items"
+              :key="item.itemId"
+              cols="12"
+              sm="6"
+              md="4"
+              lg="3"
+            >
+              <slot :item="item" name="item" />
+            </v-col>
+          </v-row>
+        </v-container>
+      </template>
+    </v-data-iterator>
+  </div>
 </template>
 
 <script>
@@ -39,9 +42,18 @@ export default {
   },
 
   data: () => ({
+    itemsPerPage: 15,
     checkbox: false,
     expanded: [],
     headers: tableHeaders,
   }),
+
+  methods: {
+    scroll() {
+      if (window.scrollY === document.documentElement.offsetHeight - window.innerHeight) {
+        this.itemsPerPage += 15;
+      }
+    },
+  },
 };
 </script>

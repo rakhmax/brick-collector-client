@@ -1,12 +1,12 @@
 <template>
   <div :style="{ marginBottom: '110px' }">
     <cards-items
-      v-if="true"
+      v-if="isCardLayout"
       :items="sets"
       :search="search"
     >
       <template #item="{ item }">
-        <card-item :item="item">
+        <card-item :item="item" :itemType="itemType">
           <template #info>
             <div>
               <p v-if="item.price">Price: {{ item.price }}</p>
@@ -27,8 +27,8 @@
     <table-items
       v-else
       :items="sets"
+      :itemType="itemType"
       :search="search"
-      itemType="Set"
     >
       <template #info="{ item }">
         <div>
@@ -49,6 +49,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
 import { eventBus } from '@/main';
 import CardsItems from '@/components/CardsItems.vue';
 import CardItem from '@/components/CardItem.vue';
@@ -67,6 +68,7 @@ export default {
   },
 
   data: () => ({
+    itemType: 'Set',
     checkbox: false,
     search: null,
   }),
@@ -78,6 +80,8 @@ export default {
   },
 
   computed: {
+    ...mapState({ isCardLayout: (state) => state.isCardLayout }),
+
     sets() {
       if (this.checkbox) {
         return this.$store.state.sets.filter((set) => set.sealed);

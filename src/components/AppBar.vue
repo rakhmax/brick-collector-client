@@ -1,10 +1,11 @@
 <template>
   <v-app-bar
+    :hide-on-scroll="isMobile"
     app
-    color="light"
-    flat
+    dense
+    elevate-on-scroll
   >
-    <div class="d-flex align-center">
+    <div v-if="!isMobile" class="d-flex align-center">
       <v-img
         alt="Lego Brick"
         class="shrink mr-4"
@@ -13,39 +14,46 @@
         transition="scale-transition"
         width="40"
       />
+      <v-app-bar-title>{{ $route.name || 'LEGO Database' }}</v-app-bar-title>
     </div>
-    <v-app-bar-title>{{ $route.name || 'LEGO Database' }}</v-app-bar-title>
     <v-spacer />
-    <div v-if="$route.name !== 'Statistics'">
-      <v-btn
-        v-if="!isSearch"
-        @click="isSearch = true"
-        icon
-      >
-        <v-icon>mdi-magnify</v-icon>
-      </v-btn>
+    <div
+      v-if="$route.name !== 'Statistics'"
+      :style="{ width: isMobile ? '100%' : 'auto' }"
+    >
       <v-text-field
-        v-if="isSearch"
+        full-width
+        label="Search collection"
         v-model="searchText"
-        :style="{ maxWidth: '300px', width: '100%' }"
         @blur="clearSearch"
         @input="handleSearch"
-        autofocus
         clearable
         dense
         flat
         hide-details
         prepend-inner-icon="mdi-magnify"
-        rounded
         single-line
         solo
       />
     </div>
+    <template v-slot:extension>
+      <v-spacer />
+      <v-btn
+        icon
+        @click="handleChangeLayout"
+      >
+        <v-icon>
+          {{ isCardLayout ? 'mdi-view-list' : 'mdi-view-grid' }}
+        </v-icon>
+      </v-btn>
+    </template>
   </v-app-bar>
 </template>
 
 <script>
 import { eventBus } from '@/main';
+import { mapState } from 'vuex';
+import { SET_CARD_LAYOUT } from '@/store/types';
 
 export default {
   name: 'AppBar',
@@ -65,6 +73,17 @@ export default {
     clearSearch() {
       this.isSearch = false;
     },
+
+    handleChangeLayout() {
+      this.$store.dispatch(SET_CARD_LAYOUT, Number(!this.isCardLayout));
+    },
+  },
+
+  computed: {
+    ...mapState({
+      isCardLayout: (state) => state.isCardLayout,
+      isMobile: (state) => state.isMobile,
+    }),
   },
 };
 </script>

@@ -8,11 +8,14 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    darkMode: true,
+    darkMode: !!Number(localStorage.getItem('dark_mode'))
+      || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches),
     dollarRate: 0,
     error: null,
     loading: false,
     minifigures: [],
+    isCardLayout: !!Number(localStorage.getItem('card_layout')),
+    isMobile: window.innerWidth < 600,
     statistics: {
       minifigures: {},
       sets: {},

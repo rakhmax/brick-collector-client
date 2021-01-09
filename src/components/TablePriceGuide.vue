@@ -1,5 +1,5 @@
 <template>
-  <div v-resize="onResize">
+  <div>
     <v-btn
       v-if="!priceGuide.used"
       :block="block"
@@ -50,7 +50,6 @@ export default {
   data: () => ({
     priceGuide: {},
     loading: false,
-    block: false,
   }),
 
   methods: {
@@ -61,15 +60,19 @@ export default {
       );
       this.loading = false;
     },
-
-    onResize() {
-      this.block = window.innerWidth < 600;
-    },
   },
 
   watch: {
     item() {
       this.priceGuide = {};
+    },
+  },
+
+  computed: {
+    block() {
+      const { isCardLayout, isMobile } = this.$store.state;
+
+      return isCardLayout || isMobile;
     },
   },
 };
