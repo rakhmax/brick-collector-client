@@ -2,8 +2,8 @@
   <v-app>
     <router-view name="login" />
     <div v-if="isAuthentificated">
-      <sidebar v-if="$vuetify.breakpoint.sm" />
-      <v-main :class="$vuetify.breakpoint.sm && 'ml-14'">
+      <sidebar v-if="$vuetify.breakpoint.smAndUp" />
+      <v-main :class="$vuetify.breakpoint.smAndUp && 'ml-14'">
         <app-bar />
         <router-view />
       </v-main>
@@ -50,6 +50,8 @@ export default {
     this.$store.dispatch(GET_THEMES);
     this.$store.dispatch(GET_DOLLAR_RATE);
     this.$store.dispatch(SET_DARK_MODE, this.$store.state.darkMode);
+    this.$vuetify.theme.themes.light.primary = '#4caf50';
+    this.$vuetify.theme.themes.dark.primary = '#4caf50';
   },
 
   destroyed() {

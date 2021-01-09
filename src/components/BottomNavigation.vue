@@ -7,7 +7,8 @@
         :style="{ zIndex: 5 }"
         @click="openAddDialog"
         bottom
-        color="error"
+        color="green"
+        dark
         fab
         fixed
         right
@@ -17,11 +18,11 @@
     </v-fab-transition>
     <v-bottom-navigation
       v-if="$vuetify.breakpoint.xsOnly"
-      :style="{ paddingRight: $route.name !== 'Statistics' ? '88px' : 0 }"
-      color="error"
+      :style="{ paddingRight: $route.meta.withExtensionBar ? '88px' : 0 }"
+      color="green"
       fixed
-      hide-on-scroll
       grow
+      hide-on-scroll
     >
       <v-btn to="/minifigures">
         <span>Minifigures</span>

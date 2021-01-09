@@ -5,15 +5,12 @@
     color="light"
     elevate-on-scroll
   >
-    <div v-if="$vuetify.breakpoint.sm" class="d-flex align-center">
-      <v-img
-        alt="Lego Brick"
-        class="shrink mr-4"
-        contain
-        src="../assets/Plastic_brick_red.svg"
-        transition="scale-transition"
-        width="40"
-      />
+    <div v-if="$vuetify.breakpoint.smAndUp" class="d-flex align-center">
+      <v-icon
+        class="mr-3"
+        color="green"
+        x-large
+      >mdi-toy-brick-marker</v-icon>
       <v-app-bar-title>{{ $route.name || 'LEGO Database' }}</v-app-bar-title>
     </div>
     <v-spacer />
@@ -28,6 +25,7 @@
         @blur="clearSearch"
         @input="handleSearch"
         clearable
+        color="green"
         dense
         flat
         hide-details

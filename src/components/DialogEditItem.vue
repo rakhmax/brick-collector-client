@@ -58,7 +58,7 @@
             </v-btn>
             <v-btn
               :loading="$store.state.saving"
-              color="blue darken-1"
+              color="green"
               text
               type="submit"
             >

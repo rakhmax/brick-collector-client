@@ -21,7 +21,6 @@
                   <v-text-field
                     v-model="dialogData.itemId"
                     :rules="[computedRules]"
-                    @change="handleChange"
                     autofocus
                     label="Item ID"
                     required
@@ -70,7 +69,7 @@
             <v-btn
               :disabled="!valid"
               :loading="$store.state.saving"
-              color="blue darken-1"
+              color="green"
               text
               type="submit"
             >
@@ -114,10 +113,6 @@ export default {
           .then(() => this.handleClose())
           .catch(() => {});
       }
-    },
-
-    handleChange(value) {
-      this.dialogData.itemId = `${value}-1`;
     },
   },
 

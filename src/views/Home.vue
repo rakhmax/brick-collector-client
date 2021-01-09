@@ -50,7 +50,8 @@ export default {
         this.loading = true;
 
         try {
-          const data = new TextEncoder().encode(this.username + this.password);
+          const textToEncode = (this.username + this.password).toLowerCase();
+          const data = new TextEncoder().encode(textToEncode);
           const hashBuffer = await crypto.subtle.digest('SHA-1', data);
           const hashArray = Array.from(new Uint8Array(hashBuffer));
           const hashHex = hashArray
