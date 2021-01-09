@@ -31,7 +31,7 @@
 
 <script>
 export default {
-  name: 'Home',
+  name: 'Login',
 
   data: () => ({
     loading: false,

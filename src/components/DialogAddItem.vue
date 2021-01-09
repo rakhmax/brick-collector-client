@@ -89,6 +89,8 @@ import { ADD_MINIFIGURE, ADD_SET } from '@/store/types';
 export default {
   name: 'DialogAddItem',
 
+  props: { itemType: String },
+
   data: () => ({
     dialog: false,
     valid: true,

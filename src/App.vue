@@ -53,13 +53,12 @@ export default {
     this.$vuetify.theme.themes.light.primary = '#4caf50';
     this.$vuetify.theme.themes.dark.primary = '#4caf50';
   },
-
-  destroyed() {
-    window.matchMedia('(prefers-color-scheme: dark)').removeEventListener('change');
-  },
 };
 </script>
 
 <style>
   .v-image .v-responsive__content { width: auto !important }
+  .ps {
+    height: 5000px;
+  }
 </style>

@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import Home from '@/views/Home.vue';
+import Login from '@/views/Login.vue';
 import isAuthentificated from '@/helpers/auth';
 
 Vue.use(VueRouter);
@@ -8,9 +8,9 @@ Vue.use(VueRouter);
 const routes = [
   {
     path: '/',
-    name: 'Home',
-    components: { login: Home },
-    meta: { title: 'LEGO Database' },
+    name: 'Login',
+    components: { login: Login },
+    meta: { title: 'BrickCollector' },
   },
   {
     path: '/minifigures',
@@ -37,8 +37,8 @@ const routes = [
     name: 'Statistics',
     component: () => import('../views/Statistics.vue'),
     meta: {
-      title: 'Statistics',
       requiresAuth: true,
+      title: 'Statistics',
     },
   },
 ];
@@ -50,10 +50,10 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  if (to.meta.requiresAuth && !isAuthentificated()) next({ name: 'Home' });
-  else if (to.name === 'Home' && isAuthentificated()) next({ name: from.name || 'Statistics' });
+  if (to.meta.requiresAuth && !isAuthentificated()) next({ name: 'Login' });
+  else if (to.name === 'Login' && isAuthentificated()) next({ name: from.name || 'Statistics' });
   else {
-    document.title = to.meta.title || 'LEGO Database';
+    document.title = to.meta.title || 'BrickCollector';
     next();
   }
 });

@@ -3,7 +3,7 @@ module.exports = {
     'vuetify',
   ],
   pwa: {
-    name: 'LEGO Database',
+    name: 'BrickCollector',
     themeColor: '#BDBDBD',
     manifestOptions: {
       background_color: '#FFFFFF',
