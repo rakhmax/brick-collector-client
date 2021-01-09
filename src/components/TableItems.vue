@@ -23,7 +23,7 @@
         </span>
       </template>
       <template #item.actions="{ item }">
-        <actions :item="item" />
+        <actions :item="item" :itemType="itemType" />
       </template>
       <template #expanded-item="{ headers, item }">
         <td :colspan="headers.length" class="pa-0">

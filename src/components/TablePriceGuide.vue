@@ -70,9 +70,9 @@ export default {
 
   computed: {
     block() {
-      const { isCardLayout, isMobile } = this.$store.state;
+      const { isCardLayout } = this.$store.state;
 
-      return isCardLayout || isMobile;
+      return isCardLayout || this.$vuetify.breakpoint.xsOnly;
     },
   },
 };

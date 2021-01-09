@@ -7,7 +7,9 @@
         :disabled="$store.state.loading"
         icon
       >
-        <v-icon>mdi-dots-vertical</v-icon>
+        <v-icon :small="!isCardLayout">
+          mdi-dots-vertical
+        </v-icon>
       </v-btn>
     </template>
     <v-list>
@@ -28,6 +30,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
 import { eventBus } from '@/main';
 import { DELETE_MINIFIGURE, DELETE_SET } from '@/store/types';
 
@@ -47,21 +50,21 @@ export default {
 
   methods: {
     openEditDialog(item) {
-      eventBus.$emit('open', {
+      eventBus.$emit('openEditDialog', {
         item,
         dialog: true,
       });
     },
 
     deleteItem(itemId, withMinifigures = false) {
-      debugger;
       this.$store.dispatch(this.actionTypes.delete, { itemId, withMinifigures });
     },
   },
 
   computed: {
+    ...mapState({ isCardLayout: (state) => state.isCardLayout }),
+
     actionTypes() {
-      debugger;
       if (this.itemType === 'Minifig') return { delete: DELETE_MINIFIGURE };
       if (this.itemType === 'Set') return { delete: DELETE_SET };
 

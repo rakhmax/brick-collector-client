@@ -1,10 +1,15 @@
 <template>
   <v-navigation-drawer
     :style="{
-      marginTop: $vuetify.breakpoint.md ? '112px' : '104px',
-      paddingBottom: $vuetify.breakpoint.md ? '112px' : '104px'
+      marginTop: $vuetify.breakpoint.md
+        ? ($route.meta.withExtensionBar ? '112px' : '64px')
+        : ($route.meta.withExtensionBar ? '104px' : '64px'),
+      paddingBottom: $vuetify.breakpoint.md
+        ? ($route.meta.withExtensionBar ? '112px' : '64px')
+        : ($route.meta.withExtensionBar ? '104px' : '64px'),
+      paddingTop: !$route.meta.withExtensionBar ? '48px' : 0
     }"
-    color="#f5f5f5"
+    color="light"
     fixed
     mini-variant
     permanent
@@ -31,6 +36,12 @@
     </v-list>
     <template #append>
       <v-list nav dense>
+        <v-list-item @click="handleSwitchDarkMode">
+          <v-list-item-icon class="mx-0">
+            <v-icon>mdi-theme-light-dark</v-icon>
+          </v-list-item-icon>
+        </v-list-item>
+        <v-divider />
         <v-list-item @click="handleLogout">
           <v-list-item-icon class="mx-0">
             <v-icon>mdi-logout</v-icon>
@@ -42,14 +53,20 @@
 </template>
 
 <script>
+import { SET_DARK_MODE } from '@/store/types';
+
 export default {
   name: 'Sidebar',
 
   methods: {
     handleLogout() {
       localStorage.removeItem('accessString');
-
       window.location.reload();
+    },
+
+    handleSwitchDarkMode() {
+      localStorage.setItem('darkMode', Number(!this.$vuetify.theme.dark));
+      this.$store.dispatch(SET_DARK_MODE, !this.$vuetify.theme.dark);
     },
   },
 };

@@ -3,7 +3,6 @@
     <v-dialog
       v-model="dialog"
       max-width="600px"
-      persistent
     >
       <v-form
         v-model="valid"
@@ -34,7 +33,7 @@
                   sm="4"
                 >
                   <v-checkbox
-                    v-if="$route.name === 'Sets'"
+                    v-if="itemType === 'Set'"
                     v-model="dialogData.sealed"
                     label="Sealed"
                   />
@@ -79,6 +78,8 @@ import { UPDATE_SET, UPDATE_MINIFIGURE } from '@/store/types';
 export default {
   name: 'DialogEditItem',
 
+  props: { itemType: String },
+
   data: () => ({
     valid: true,
     dialog: false,
@@ -97,10 +98,8 @@ export default {
     },
 
     handleSave() {
-      const setter = this.$route.name === 'Minifigures' ? UPDATE_MINIFIGURE : UPDATE_SET;
-
       if (this.$refs.editForm.validate()) {
-        this.$store.dispatch(setter, this.dialogData)
+        this.$store.dispatch(this.actionTypes.update, this.dialogData)
           .then(() => this.handleClose())
           .catch(() => {});
       }
@@ -112,13 +111,16 @@ export default {
       return this.$store.state.error && this.$store.state.error.message;
     },
 
-    message() {
-      return this.$route.name === 'Minifigures' ? 'e.g. sw1060' : 'e.g. 70666-1';
+    actionTypes() {
+      if (this.itemType === 'Minifig') return { update: UPDATE_MINIFIGURE };
+      if (this.itemType === 'Set') return { update: UPDATE_SET };
+
+      return {};
     },
   },
 
   created() {
-    eventBus.$on('open', ({ dialog, item }) => {
+    eventBus.$on('openEditDialog', ({ dialog, item }) => {
       const {
         itemId, sealed, comment, price,
       } = item;

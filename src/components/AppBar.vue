@@ -1,10 +1,11 @@
 <template>
   <v-app-bar
-    :hide-on-scroll="isMobile"
+    :hide-on-scroll="$vuetify.breakpoint.xsOnly"
     app
+    color="light"
     elevate-on-scroll
   >
-    <div v-if="!isMobile" class="d-flex align-center">
+    <div v-if="$vuetify.breakpoint.sm" class="d-flex align-center">
       <v-img
         alt="Lego Brick"
         class="shrink mr-4"
@@ -17,8 +18,8 @@
     </div>
     <v-spacer />
     <div
-      v-if="$route.name !== 'Statistics'"
-      :style="{ width: isMobile ? '100%' : 'auto' }"
+      v-if="$route.meta.withExtensionBar"
+      :style="{ width: $vuetify.breakpoint.xsOnly ? '100%' : 'auto' }"
     >
       <v-text-field
         full-width
@@ -35,7 +36,7 @@
         solo
       />
     </div>
-    <template v-slot:extension>
+    <template v-slot:extension v-if="$route.meta.withExtensionBar">
       <v-spacer />
       <v-btn
         icon
@@ -81,7 +82,6 @@ export default {
   computed: {
     ...mapState({
       isCardLayout: (state) => state.isCardLayout,
-      isMobile: (state) => state.isMobile,
     }),
   },
 };

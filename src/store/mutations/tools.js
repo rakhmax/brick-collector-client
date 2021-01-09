@@ -3,6 +3,7 @@ import {
   GET_THEMES,
   GET_IS_MOBILE,
   SET_CARD_LAYOUT,
+  SET_DARK_MODE,
 } from '../types';
 
 export default {
@@ -17,5 +18,8 @@ export default {
   },
   [SET_CARD_LAYOUT](state, payload) {
     state.isCardLayout = payload;
+  },
+  [SET_DARK_MODE](state, payload) {
+    state.darkMode = payload;
   },
 };

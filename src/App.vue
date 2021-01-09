@@ -1,41 +1,22 @@
 <template>
-  <v-app v-resize="onResize">
+  <v-app>
     <router-view name="login" />
     <div v-if="isAuthentificated">
-      <sidebar v-if="!isMobile" />
-      <v-main :class="!isMobile && 'ml-14'">
+      <sidebar v-if="$vuetify.breakpoint.sm" />
+      <v-main :class="$vuetify.breakpoint.sm && 'ml-14'">
         <app-bar />
         <router-view />
-        <v-fab-transition>
-          <v-btn
-            v-if="$route.name !== 'Statistics'"
-            :class="isMobile && 'mb-3'"
-            :style="{ zIndex: 5 }"
-            @click="dialog = true"
-            bottom
-            color="error"
-            fab
-            fixed
-            right
-          >
-            <v-icon dark>mdi-plus</v-icon>
-          </v-btn>
-        </v-fab-transition>
-        <dialog-add-item :dialog.sync="dialog" />
       </v-main>
-      <bottom-navigation v-if="isMobile"/>
+      <bottom-navigation />
     </div>
   </v-app>
 </template>
 
 <script>
-import { debounce } from 'lodash';
-import { mapState } from 'vuex';
 import AppBar from '@/components/AppBar.vue';
 import BottomNavigation from '@/components/BottomNavigation.vue';
-import DialogAddItem from '@/components/DialogAddItem.vue';
 import Sidebar from '@/components/Sidebar.vue';
-import { GET_DOLLAR_RATE, GET_IS_MOBILE, GET_THEMES } from '@/store/types';
+import { GET_DOLLAR_RATE, GET_THEMES, SET_DARK_MODE } from '@/store/types';
 import isAuthentificated from './helpers/auth';
 
 export default {
@@ -44,43 +25,35 @@ export default {
   components: {
     AppBar,
     BottomNavigation,
-    DialogAddItem,
     Sidebar,
   },
 
-  data: () => ({
-    scrolledToBottom: false,
-    dialog: false,
-    windowSize: {
-      x: 0,
-      y: 0,
-    },
-  }),
-
-  methods: {
-    onResize: debounce(function () {
-      this.windowSize = { x: window.innerWidth, y: window.innerHeight };
-      this.$store.commit(GET_IS_MOBILE, this.windowSize.x < 600);
-    }, 300),
-
-    scroll() {
-      console.log(window.scrollY === document.documentElement.offsetHeight - window.innerHeight);
-    },
-  },
-
   computed: {
-    ...mapState({ isMobile: (state) => state.isMobile }),
-
     isAuthentificated() {
       return isAuthentificated();
     },
   },
 
+  created() {
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+      if (!localStorage.getItem('darkMode')) {
+        if (e.matches) {
+          this.$store.dispatch(SET_DARK_MODE, true);
+        } else {
+          this.$store.dispatch(SET_DARK_MODE, false);
+        }
+      }
+    });
+  },
+
   mounted() {
     this.$store.dispatch(GET_THEMES);
     this.$store.dispatch(GET_DOLLAR_RATE);
-    this.$vuetify.theme.dark = this.$store.state.darkMode;
-    this.onResize();
+    this.$store.dispatch(SET_DARK_MODE, this.$store.state.darkMode);
+  },
+
+  destroyed() {
+    window.matchMedia('(prefers-color-scheme: dark)').removeEventListener('change');
   },
 };
 </script>

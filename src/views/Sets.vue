@@ -6,7 +6,10 @@
       :search="search"
     >
       <template #item="{ item }">
-        <card-item :item="item" :itemType="itemType">
+        <card-item
+          :item="item"
+          :itemType="itemType"
+        >
           <template #info>
             <div>
               <p v-if="item.price">Price: {{ item.price }}</p>
@@ -44,7 +47,8 @@
         </div>
       </template>
     </table-items>
-    <dialog-edit-item />
+    <dialog-add-item :itemType="itemType" />
+    <dialog-edit-item :itemType="itemType" />
   </div>
 </template>
 
@@ -53,6 +57,7 @@ import { mapState } from 'vuex';
 import { eventBus } from '@/main';
 import CardsItems from '@/components/CardsItems.vue';
 import CardItem from '@/components/CardItem.vue';
+import DialogAddItem from '@/components/DialogAddItem.vue';
 import DialogEditItem from '@/components/DialogEditItem.vue';
 import TableItems from '@/components/TableItems.vue';
 import { GET_SETS } from '@/store/types';
@@ -63,6 +68,7 @@ export default {
   components: {
     CardItem,
     CardsItems,
+    DialogAddItem,
     DialogEditItem,
     TableItems,
   },

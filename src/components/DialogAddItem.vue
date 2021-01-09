@@ -3,7 +3,6 @@
     <v-dialog
       v-model="dialog"
       max-width="600px"
-      persistent
     >
       <v-form
         v-model="valid"
@@ -22,6 +21,7 @@
                   <v-text-field
                     v-model="dialogData.itemId"
                     :rules="[computedRules]"
+                    @change="handleChange"
                     autofocus
                     label="Item ID"
                     required
@@ -84,12 +84,14 @@
 </template>
 
 <script>
+import { eventBus } from '@/main';
 import { ADD_MINIFIGURE, ADD_SET } from '@/store/types';
 
 export default {
   name: 'DialogAddItem',
 
   data: () => ({
+    dialog: false,
     valid: true,
     title: 'item',
     dialogData: {
@@ -100,24 +102,22 @@ export default {
     },
   }),
 
-  props: {
-    dialog: { type: Boolean, default: false },
-  },
-
   methods: {
     handleClose() {
-      this.$emit('update:dialog', false);
+      this.dialog = false;
       this.$refs.addForm.reset();
     },
 
     handleSave() {
-      const setter = this.$route.name === 'Minifigures' ? ADD_MINIFIGURE : ADD_SET;
-
       if (this.$refs.addForm.validate()) {
-        this.$store.dispatch(setter, this.dialogData)
+        this.$store.dispatch(this.actionTypes.add, this.dialogData)
           .then(() => this.handleClose())
           .catch(() => {});
       }
+    },
+
+    handleChange(value) {
+      this.dialogData.itemId = `${value}-1`;
     },
   },
 
@@ -126,8 +126,11 @@ export default {
       return this.$store.state.error && this.$store.state.error.message;
     },
 
-    message() {
-      return this.$route.name === 'Minifigures' ? 'e.g. sw1060' : 'e.g. 70666-1';
+    actionTypes() {
+      if (this.itemType === 'Minifig') return { add: ADD_MINIFIGURE };
+      if (this.itemType === 'Set') return { add: ADD_SET };
+
+      return {};
     },
 
     computedRules() {
@@ -146,9 +149,15 @@ export default {
           return 'ID is required';
         }
 
-        return null;
+        return true;
       };
     },
+  },
+
+  created() {
+    eventBus.$on('openAddDialog', (value) => {
+      this.dialog = value;
+    });
   },
 };
 </script>

@@ -21,8 +21,8 @@
     <table-items
       v-else
       :items="minifigures"
-      :search="search"
       :itemType="itemType"
+      :search="search"
     >
       <template #info="{ item }">
         <div>
@@ -32,7 +32,8 @@
         </div>
       </template>
     </table-items>
-    <dialog-edit-item />
+    <dialog-add-item :itemType="itemType" />
+    <dialog-edit-item :itemType="itemType" />
   </div>
 </template>
 
@@ -40,6 +41,7 @@
 import { eventBus } from '@/main';
 import CardsItems from '@/components/CardsItems.vue';
 import CardItem from '@/components/CardItem.vue';
+import DialogAddItem from '@/components/DialogAddItem.vue';
 import DialogEditItem from '@/components/DialogEditItem.vue';
 import TableItems from '@/components/TableItems.vue';
 import { GET_MINIFIGURES } from '@/store/types';
@@ -51,6 +53,7 @@ export default {
   components: {
     CardItem,
     CardsItems,
+    DialogAddItem,
     DialogEditItem,
     TableItems,
   },

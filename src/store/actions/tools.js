@@ -1,6 +1,12 @@
 import axios from 'axios';
+import Vuetify from '@/plugins/vuetify';
 import http from '../../axios';
-import { GET_DOLLAR_RATE, SET_CARD_LAYOUT, GET_THEMES } from '../types';
+import {
+  GET_DOLLAR_RATE,
+  SET_CARD_LAYOUT,
+  GET_THEMES,
+  SET_DARK_MODE,
+} from '../types';
 
 export default {
   async [GET_DOLLAR_RATE]({ commit }) {
@@ -23,8 +29,13 @@ export default {
   },
 
   [SET_CARD_LAYOUT]({ commit }, payload) {
-    localStorage.setItem('card_layout', payload);
+    localStorage.setItem('cardLayout', payload);
 
     commit(SET_CARD_LAYOUT, !!payload);
+  },
+
+  [SET_DARK_MODE]({ commit }, payload) {
+    Vuetify.framework.theme.dark = payload;
+    commit(SET_DARK_MODE, payload);
   },
 };

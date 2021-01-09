@@ -16,19 +16,30 @@ const routes = [
     path: '/minifigures',
     name: 'Minifigures',
     component: () => import('../views/Minifigures.vue'),
-    meta: { title: 'Minifigures', requiresAuth: true },
+    meta: {
+      requiresAuth: true,
+      title: 'Minifigures',
+      withExtensionBar: true,
+    },
   },
   {
     path: '/sets',
     name: 'Sets',
     component: () => import('../views/Sets.vue'),
-    meta: { title: 'Sets', requiresAuth: true },
+    meta: {
+      requiresAuth: true,
+      title: 'Sets',
+      withExtensionBar: true,
+    },
   },
   {
     path: '/statistics',
     name: 'Statistics',
     component: () => import('../views/Statistics.vue'),
-    meta: { title: 'Statistics', requiresAuth: true },
+    meta: {
+      title: 'Statistics',
+      requiresAuth: true,
+    },
   },
 ];
 
