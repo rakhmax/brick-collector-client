@@ -17,6 +17,7 @@ import {
   DELETE_SET,
   DELETE_SET_SUCCESS,
   DELETE_SET_ERROR,
+  ADD_MINIFIGURE,
 } from '../types';
 
 export default {
@@ -40,7 +41,11 @@ export default {
 
       const { data } = await addSet(payload);
       const idx = state.sets.findIndex((set) => set.itemId === data.set.itemId);
-      const el = state.sets.find((set) => set.itemId === data.set.itemId);
+      let el;
+
+      if (idx !== -1) {
+        el = state.sets.find((set) => set.itemId === data.set.itemId);
+      }
 
       if (el) {
         el.count += 1;
@@ -48,6 +53,8 @@ export default {
       } else {
         commit(ADD_SET, data.set);
       }
+
+      commit(ADD_MINIFIGURE, data.minifigures);
 
       commit(ADD_SET_SUCCESS);
     } catch (error) {

@@ -50,15 +50,15 @@ export default {
     this.$store.dispatch(GET_THEMES);
     this.$store.dispatch(GET_DOLLAR_RATE);
     this.$store.dispatch(SET_DARK_MODE, this.$store.state.darkMode);
-    this.$vuetify.theme.themes.light.primary = '#4caf50';
-    this.$vuetify.theme.themes.dark.primary = '#4caf50';
   },
 };
 </script>
 
 <style>
-  .v-image .v-responsive__content { width: auto !important }
-  .ps {
-    height: 5000px;
-  }
+.v-image .v-responsive__content {
+  width: auto !important;
+}
+.ps {
+  height: 5000px;
+}
 </style>

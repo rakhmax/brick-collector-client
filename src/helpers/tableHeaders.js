@@ -14,6 +14,7 @@ export default [
     text: 'Price (₽)',
     value: 'price',
     width: 105,
+    filterable: false,
   },
   // {
   //   sortable: false,

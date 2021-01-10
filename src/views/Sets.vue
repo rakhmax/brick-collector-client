@@ -2,7 +2,7 @@
   <div :style="{ marginBottom: '110px' }">
     <cards-items
       v-if="isCardLayout"
-      :items="sets"
+      :items="filteredSets"
       :search="search"
     >
       <template #item="{ item }">
@@ -29,7 +29,7 @@
     </cards-items>
     <table-items
       v-else
-      :items="sets"
+      :items="filteredSets"
       :itemType="itemType"
       :search="search"
     >
@@ -77,29 +77,42 @@ export default {
     itemType: 'Set',
     checkbox: false,
     search: null,
+    sets: [],
   }),
 
   methods: {
-    fetchSets() {
-      this.$store.dispatch(GET_SETS);
+    async fetchSets() {
+      await this.$store.dispatch(GET_SETS);
+      this.sets = this.$store.state.sets;
     },
   },
 
   computed: {
-    ...mapState({ isCardLayout: (state) => state.isCardLayout }),
+    ...mapState({
+      isCardLayout: ({ isCardLayout }) => isCardLayout,
+      sealedOnly: ({ sets }) => sets.filter((set) => set.sealed),
+      moreThenOne: ({ sets }) => sets.filter((set) => set.count > 1),
+    }),
 
-    sets() {
-      if (this.checkbox) {
-        return this.$store.state.sets.filter((set) => set.sealed);
-      }
-
-      return this.$store.state.sets;
+    filteredSets: {
+      get() {
+        return this.sets;
+      },
+      set(newVal) {
+        this.sets = newVal;
+      },
     },
   },
 
   created() {
     eventBus.$on('changeSearchValue', ({ search }) => {
       this.search = search;
+    });
+
+    eventBus.$on('changeFilter', (value) => {
+      if (value === 'sealedOnly') this.sets = this.sealedOnly;
+      else if (value === 'moreThenOneOnly') this.sets = this.moreThenOne;
+      else this.sets = this.$store.state.sets;
     });
   },
 

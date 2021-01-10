@@ -45,7 +45,6 @@ export default {
   },
   [ADD_SET_SUCCESS](state) {
     state.saving = false;
-    state.minifigures = [];
   },
   [ADD_SET_ERROR](state, payload) {
     state.saving = false;

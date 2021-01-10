@@ -2,12 +2,20 @@
   <v-navigation-drawer
     :style="{
       marginTop: $vuetify.breakpoint.mdAndUp
-        ? ($route.meta.withExtensionBar ? '112px' : '64px')
-        : ($route.meta.withExtensionBar ? '104px' : '64px'),
+        ? $route.meta.withExtensionBar
+          ? '112px'
+          : '64px'
+        : $route.meta.withExtensionBar
+        ? '104px'
+        : '56px',
       paddingBottom: $vuetify.breakpoint.mdAndUp
-        ? ($route.meta.withExtensionBar ? '112px' : '64px')
-        : ($route.meta.withExtensionBar ? '104px' : '64px'),
-      paddingTop: !$route.meta.withExtensionBar ? '48px' : 0
+        ? $route.meta.withExtensionBar
+          ? '112px'
+          : '64px'
+        : $route.meta.withExtensionBar
+        ? '104px'
+        : '56px',
+      paddingTop: !$route.meta.withExtensionBar ? '48px' : 0,
     }"
     color="light"
     fixed
@@ -36,18 +44,29 @@
     </v-list>
     <template #append>
       <v-list nav dense>
-        <v-list-item @click="handleSwitchDarkMode">
-          <v-list-item-icon class="mx-0">
-            <v-icon v-if="darkMode">mdi-weather-sunny</v-icon>
-            <v-icon v-else>mdi-weather-night</v-icon>
-          </v-list-item-icon>
-        </v-list-item>
+        <v-tooltip right>
+          <template #activator="{ on, attrs }">
+            <v-list-item v-bind="attrs" v-on="on" @click="handleSwitchDarkMode">
+              <v-list-item-icon class="mx-0">
+                <v-icon v-if="darkMode">mdi-weather-sunny</v-icon>
+                <v-icon v-else>mdi-weather-night</v-icon>
+              </v-list-item-icon>
+            </v-list-item>
+          </template>
+          <span v-if="darkMode">Apply light theme</span>
+          <span v-else>Apply dark theme</span>
+        </v-tooltip>
         <v-divider />
-        <v-list-item @click="handleLogout">
-          <v-list-item-icon class="mx-0">
-            <v-icon>mdi-logout</v-icon>
-          </v-list-item-icon>
-        </v-list-item>
+        <v-tooltip right>
+          <template #activator="{ on, attrs }">
+            <v-list-item v-bind="attrs" v-on="on" @click="handleLogout">
+              <v-list-item-icon class="mx-0">
+                <v-icon>mdi-logout</v-icon>
+              </v-list-item-icon>
+            </v-list-item>
+          </template>
+          <span>Log out</span>
+        </v-tooltip>
       </v-list>
     </template>
   </v-navigation-drawer>

@@ -2,7 +2,7 @@
   <div :style="{ marginBottom: '110px' }">
     <cards-items
       v-if="isCardLayout"
-      :items="minifigures"
+      :items="filteredMinifigures"
       :search="search"
     >
       <template #item="{ item }">
@@ -20,7 +20,7 @@
     </cards-items>
     <table-items
       v-else
-      :items="minifigures"
+      :items="filteredMinifigures"
       :itemType="itemType"
       :search="search"
     >
@@ -63,29 +63,40 @@ export default {
     checkbox: false,
     isCardView: true,
     search: null,
+    minifigures: [],
   }),
 
   methods: {
-    fetchMinifigures() {
-      this.$store.dispatch(GET_MINIFIGURES);
+    async fetchMinifigures() {
+      await this.$store.dispatch(GET_MINIFIGURES);
+      this.minifigures = this.$store.state.minifigures;
     },
   },
 
   computed: {
-    minifigures() {
-      if (this.checkbox) {
-        return this.$store.state.minifigures.filter((minifig) => minifig.count > 1);
-      }
+    ...mapState({
+      isCardLayout: (state) => state.isCardLayout,
+      moreThenOne: ({ minifigures }) => minifigures.filter((minifig) => minifig.count > 1),
+    }),
 
-      return this.$store.state.minifigures;
+    filteredMinifigures: {
+      get() {
+        return this.minifigures;
+      },
+      set(newVal) {
+        this.minifigures = newVal;
+      },
     },
-
-    ...mapState({ isCardLayout: (state) => state.isCardLayout }),
   },
 
   created() {
     eventBus.$on('changeSearchValue', ({ search }) => {
       this.search = search;
+    });
+
+    eventBus.$on('changeFilter', (value) => {
+      if (value === 'moreThenOneOnly') this.minifigures = this.moreThenOne;
+      else this.minifigures = this.$store.state.minifigures;
     });
   },
 
