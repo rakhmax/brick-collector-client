@@ -26,13 +26,13 @@
       hide-on-scroll
       @update:input-value="test"
     >
-      <v-btn to="/minifigures">
-        <span>{{ $t('minifigures') }}</span>
-        <v-icon>mdi-human-male</v-icon>
-      </v-btn>
       <v-btn to="/sets">
         <span>{{ $t('sets') }}</span>
         <v-icon>mdi-toy-brick</v-icon>
+      </v-btn>
+      <v-btn to="/minifigures">
+        <span>{{ $t('minifigures') }}</span>
+        <v-icon>mdi-human-male</v-icon>
       </v-btn>
       <v-btn to="/statistics">
         <span>{{ $t('statistics') }}</span>
