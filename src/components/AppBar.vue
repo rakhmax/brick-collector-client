@@ -37,6 +37,7 @@
         :items="filters"
         @change="handleFilter"
         dense
+        flat
         hide-details
         label="Filter"
         solo
