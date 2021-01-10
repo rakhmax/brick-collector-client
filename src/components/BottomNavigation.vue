@@ -27,15 +27,15 @@
       @update:input-value="test"
     >
       <v-btn to="/minifigures">
-        <span>Minifigures</span>
+        <span>{{ $t('minifigures') }}</span>
         <v-icon>mdi-human-male</v-icon>
       </v-btn>
       <v-btn to="/sets">
-        <span>Sets</span>
+        <span>{{ $t('sets') }}</span>
         <v-icon>mdi-toy-brick</v-icon>
       </v-btn>
       <v-btn to="/statistics">
-        <span>Statistics</span>
+        <span>{{ $t('statistics') }}</span>
         <v-icon>mdi-chart-arc</v-icon>
       </v-btn>
     </v-bottom-navigation>
@@ -60,13 +60,6 @@ export default {
     test(val) {
       this.navIsVisible = val;
     },
-  },
-
-  created() {
-    this.$emit('update:input-value', (value) => {
-      debugger;
-      console.log(value);
-    });
   },
 };
 </script>

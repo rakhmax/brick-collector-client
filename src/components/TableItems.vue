@@ -6,11 +6,11 @@
       :items="items"
       :items-per-page="itemsPerPage"
       :loading="$store.state.loading"
+      :loading-text="`${$t('loading')}...`"
       :search="search"
       @click:row="handleClickRow"
       hide-default-footer
       item-key="itemId"
-      loading-text="Loading..."
       single-expand
       sort-by="itemId"
     >

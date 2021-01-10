@@ -12,7 +12,7 @@
       >
         <v-card>
           <v-card-title>
-            <span class="headline">{{ 'Add ' + title }}</span>
+            <span class="headline">{{ $t(`add${$route.name.slice(0, -1)}`) }}</span>
           </v-card-title>
           <v-card-text>
             <v-container>
@@ -22,7 +22,7 @@
                     v-model="dialogData.itemId"
                     :rules="[computedRules]"
                     autofocus
-                    label="Item ID"
+                    label="ID"
                     required
                   />
                 </v-col>
@@ -33,7 +33,7 @@
                 >
                   <v-text-field
                     v-model="dialogData.price"
-                    label="Price"
+                    :label="$t('price')"
                     required
                     type="number"
                   />
@@ -46,13 +46,13 @@
                   <v-checkbox
                     v-if="$route.name === 'Sets'"
                     v-model="dialogData.sealed"
-                    label="Sealed"
+                    :label="$t('sealed')"
                   />
                 </v-col>
                 <v-col cols="12">
                   <v-text-field
                     v-model="dialogData.comment"
-                    label="Comment (optional)"
+                    :label="$t('comment')"
                   />
                 </v-col>
               </v-row>
@@ -64,7 +64,7 @@
               @click="handleClose"
               text
             >
-              Close
+              {{ $t('close') }}
             </v-btn>
             <v-btn
               :disabled="!valid"
@@ -73,7 +73,7 @@
               text
               type="submit"
             >
-              Save
+              {{ $t('add') }}
             </v-btn>
           </v-card-actions>
         </v-card>
@@ -94,7 +94,6 @@ export default {
   data: () => ({
     dialog: false,
     valid: true,
-    title: 'item',
     dialogData: {
       sealed: null,
       itemId: null,
@@ -123,6 +122,10 @@ export default {
       return this.$store.state.error && this.$store.state.error.message;
     },
 
+    title() {
+      return this.$t(this.$route.meta.title).toLowerCase();
+    },
+
     actionTypes() {
       if (this.itemType === 'Minifig') return { add: ADD_MINIFIGURE };
       if (this.itemType === 'Set') return { add: ADD_SET };
@@ -139,11 +142,11 @@ export default {
         if (sets.find((set) => set.itemId === lowerValue)
           || minifigures.find((minifig) => minifig.itemId === lowerValue)
         ) {
-          return 'You already have this item';
+          return this.$t(`youAlreadyHaveThis${this.$route.name.slice(0, -1)}`);
         }
 
         if (!lowerValue) {
-          return 'ID is required';
+          return `ID ${this.$t('isRequired').toLowerCase()}`;
         }
 
         return true;

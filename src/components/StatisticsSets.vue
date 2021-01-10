@@ -1,6 +1,6 @@
 <template>
   <v-card flat :rounded="false" class="mt-6">
-    <v-card-title>Sets</v-card-title>
+    <v-card-title>{{ $t('sets') }}</v-card-title>
     <v-row>
       <v-col
         cols="12"

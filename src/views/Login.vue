@@ -7,15 +7,15 @@
   >
     <v-text-field
       v-model="username"
+      :label="$t('username')"
       :rules="usernameRules"
-      label="Username"
       outlined
       required
     />
     <v-text-field
       v-model="password"
+      :label="$t('password')"
       :rules="passwordRules"
-      label="Password"
       outlined
       required
       type="password"
@@ -25,7 +25,7 @@
       block
       outlined
       type="submit"
-    >Login</v-btn>
+    >{{ $t('login') }}</v-btn>
   </v-form>
 </template>
 
@@ -36,12 +36,7 @@ export default {
   data: () => ({
     loading: false,
     username: null,
-    usernameRules: [(v) => !!v || 'Username is required'],
     password: null,
-    passwordRules: [
-      (v) => !!v || 'Password is required',
-      (v) => (!!v && v.length > 3) || 'Min length is 4',
-    ],
   }),
 
   methods: {
@@ -66,6 +61,17 @@ export default {
           this.loading = false;
         }
       }
+    },
+  },
+  computed: {
+    usernameRules() {
+      return [(v) => !!v || `${this.$t('username')} ${this.$t('isRequired').toLowerCase()}`];
+    },
+    passwordRules() {
+      return [
+        (v) => !!v || `${this.$t('password')} ${this.$t('isRequired').toLowerCase()}`,
+        (v) => (!!v && v.length > 3) || `${this.$t('minLenIs')} 4`,
+      ];
     },
   },
 };

@@ -21,7 +21,7 @@
         @click="expanded = !expanded"
         text
       >
-        {{ expanded ? 'Less' : 'More' }}
+        {{ expanded ? $t('less') : $t('more') }}
       </v-btn>
       <v-spacer />
       <actions :item="item" :itemType="itemType" />

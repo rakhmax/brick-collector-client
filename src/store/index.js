@@ -41,19 +41,19 @@ export default new Vuex.Store({
     setsStatistics({ statistics }) {
       return [
         {
-          title: 'Total',
+          title: Vue.prototype.$t('total'),
           value: statistics.sets.total || 0,
         },
         {
-          title: 'Unique',
+          title: Vue.prototype.$t('unique'),
           value: statistics.sets.unique || 0,
         },
         {
-          title: 'Duplicates',
+          title: Vue.prototype.$t('dups'),
           value: statistics.sets.total - statistics.sets.unique || 0,
         },
         {
-          title: 'Overall Price',
+          title: Vue.prototype.$t('overallPrice'),
           value: statistics.sets.totalPrice || 0,
         },
       ];
@@ -62,19 +62,19 @@ export default new Vuex.Store({
     minifiguresStatistics({ statistics }) {
       return [
         {
-          title: 'Total',
+          title: Vue.prototype.$t('total'),
           value: statistics.minifigures.total || 0,
         },
         {
-          title: 'Unique',
+          title: Vue.prototype.$t('unique'),
           value: statistics.minifigures.unique || 0,
         },
         {
-          title: 'Duplicates',
+          title: Vue.prototype.$t('dups'),
           value: statistics.minifigures.total - statistics.minifigures.unique || 0,
         },
         {
-          title: 'Overall Price',
+          title: Vue.prototype.$t('overallPrice'),
           value: statistics.minifigures.totalPrice || 0,
         },
       ];

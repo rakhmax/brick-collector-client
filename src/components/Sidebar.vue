@@ -53,8 +53,8 @@
               </v-list-item-icon>
             </v-list-item>
           </template>
-          <span v-if="darkMode">Apply light theme</span>
-          <span v-else>Apply dark theme</span>
+          <span v-if="darkMode">{{ $t('applyLightTheme') }}</span>
+          <span v-else>{{ $t('applyDarkTheme') }}</span>
         </v-tooltip>
         <v-divider />
         <v-tooltip right>
@@ -65,7 +65,7 @@
               </v-list-item-icon>
             </v-list-item>
           </template>
-          <span>Log out</span>
+          <span>{{ $t('logout') }}</span>
         </v-tooltip>
       </v-list>
     </template>

@@ -12,7 +12,7 @@
       >
         <v-card>
           <v-card-title>
-            <span class="headline">{{ 'Edit ' + dialogData.itemId }}</span>
+            <span class="headline">{{ $t('edit') + ' ' + dialogData.itemId }}</span>
           </v-card-title>
           <v-card-text>
             <v-container>
@@ -23,7 +23,7 @@
                 >
                   <v-text-field
                     v-model="dialogData.price"
-                    label="Price"
+                    :label="$t('price')"
                     required
                     type="number"
                   />
@@ -35,13 +35,13 @@
                   <v-checkbox
                     v-if="itemType === 'Set'"
                     v-model="dialogData.sealed"
-                    label="Sealed"
+                    :label="$t('sealed')"
                   />
                 </v-col>
                 <v-col cols="12">
                   <v-text-field
                     v-model="dialogData.comment"
-                    label="Comment (optional)"
+                    :label="$t('comment')"
                     required
                   />
                 </v-col>
@@ -54,7 +54,7 @@
               @click="handleClose"
               text
             >
-              Close
+              {{ $t('close') }}
             </v-btn>
             <v-btn
               :loading="$store.state.saving"
@@ -62,7 +62,7 @@
               text
               type="submit"
             >
-              Save
+              {{ $t('save') }}
             </v-btn>
           </v-card-actions>
         </v-card>

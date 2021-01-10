@@ -7,7 +7,7 @@
   >
     <div v-if="$vuetify.breakpoint.smAndUp" class="d-flex align-center">
       <v-icon class="mr-3" color="green" x-large>mdi-toy-brick-marker</v-icon>
-      <v-app-bar-title>{{ $route.name || "LEGO Database" }}</v-app-bar-title>
+      <v-app-bar-title>{{ $t($route.meta.title) || 'Brick Collector' }}</v-app-bar-title>
     </div>
     <v-spacer />
     <div
@@ -15,15 +15,15 @@
       :style="{ width: $vuetify.breakpoint.xsOnly ? '100%' : 'auto' }"
     >
       <v-text-field
-        full-width
-        label="Search collection"
         v-model="searchText"
+        :label="$t('searchCollection')"
         @blur="clearSearch"
         @input="handleSearch"
         clearable
         color="green"
         dense
         flat
+        full-width
         hide-details
         prepend-inner-icon="mdi-magnify"
         single-line
@@ -75,16 +75,7 @@ export default {
   name: 'AppBar',
 
   data: () => ({
-    filters: [
-      {
-        text: 'All',
-        value: 'all',
-      },
-      {
-        text: 'More then 1 only',
-        value: 'moreThenOneOnly',
-      },
-    ],
+    filters: [],
     filterValue: 'all',
     isSearch: false,
     searchText: null,
@@ -96,13 +87,19 @@ export default {
       if (name === 'Sets') {
         this.filters.push(
           {
-            text: 'Sealed only',
+            text: this.$t('sealedOnly'),
             value: 'sealedOnly',
           },
         );
       } else {
         this.filters = this.filters.filter((filter) => filter.value !== 'sealedOnly');
       }
+    },
+    '$vuetify.lang.current': function () {
+      this.filters = this.filters.map(({ value }) => ({
+        value,
+        text: this.$t(value),
+      }));
     },
   },
 
@@ -131,6 +128,19 @@ export default {
     ...mapState({
       isCardLayout: (state) => state.isCardLayout,
     }),
+  },
+
+  mounted() {
+    this.filters = [
+      {
+        text: this.$t('all'),
+        value: 'all',
+      },
+      {
+        text: this.$t('moreThenOneOnly'),
+        value: 'moreThenOneOnly',
+      },
+    ];
   },
 };
 </script>

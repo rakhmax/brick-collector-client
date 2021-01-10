@@ -6,26 +6,26 @@
       :loading="loading"
       @click="getPriceGuide"
       outlined
-    >Get price guide</v-btn>
+    >{{ $t('getPriceGuide') }}</v-btn>
     <div v-else>
-      <h3>Price guide</h3>
+      <h3>{{ $t('priceGuide') }}</h3>
       <v-simple-table dense>
         <template #default>
           <thead>
             <tr>
               <th class="text-left" />
-              <th class="text-left">Min</th>
-              <th class="text-left">Avg</th>
+              <th class="text-left">{{ $t('min') }}</th>
+              <th class="text-left">{{ $t('avg') }}</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td>New</td>
+              <td>{{ $t('new') }}</td>
               <td>{{ priceGuide.new.min }}</td>
               <td>{{ priceGuide.new.avg }}</td>
             </tr>
             <tr>
-              <td>Used</td>
+              <td>{{ $t('used') }}</td>
               <td>{{ priceGuide.used.min }}</td>
               <td>{{ priceGuide.used.avg }}</td>
             </tr>

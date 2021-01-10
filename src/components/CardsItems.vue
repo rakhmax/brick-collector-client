@@ -5,10 +5,10 @@
         :items="items"
         :items-per-page="itemsPerPage"
         :loading="$store.state.loading"
+        :loading-text="`${$t('loading')}...`"
         :search="search"
         hide-default-footer
         item-key="itemId"
-        loading-text="Loading..."
         sort-by="itemId"
       >
         <template #default="{ items }">

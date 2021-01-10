@@ -18,7 +18,7 @@ const routes = [
     component: () => import('../views/Minifigures.vue'),
     meta: {
       requiresAuth: true,
-      title: 'Minifigures',
+      title: 'minifigures',
       withExtensionBar: true,
     },
   },
@@ -28,7 +28,7 @@ const routes = [
     component: () => import('../views/Sets.vue'),
     meta: {
       requiresAuth: true,
-      title: 'Sets',
+      title: 'sets',
       withExtensionBar: true,
     },
   },
@@ -38,7 +38,7 @@ const routes = [
     component: () => import('../views/Statistics.vue'),
     meta: {
       requiresAuth: true,
-      title: 'Statistics',
+      title: 'statistics',
     },
   },
 ];
@@ -53,7 +53,7 @@ router.beforeEach((to, from, next) => {
   if (to.meta.requiresAuth && !isAuthentificated()) next({ name: 'Login' });
   else if (to.name === 'Login' && isAuthentificated()) next({ name: from.name || 'Statistics' });
   else {
-    document.title = to.meta.title || 'BrickCollector';
+    document.title = Vue.prototype.$t(to.meta.title) || 'BrickCollector';
     next();
   }
 });

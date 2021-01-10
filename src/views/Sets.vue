@@ -12,16 +12,18 @@
         >
           <template #info>
             <div>
-              <p v-if="item.price">Price: {{ item.price }}</p>
-              <p v-if="item.minifiguresCount">Minifigures: {{ item.minifiguresCount }}</p>
-              <p>Parts: {{ item.pieces }}</p>
-              <p v-if="item.price">
-                Price per piece: {{ Number(item.price / item.pieces).toFixed(2) }}
+              <p>{{ $t('releaseYear') }}: {{ item.year }}</p>
+              <p v-if="item.minifiguresCount">
+                {{ $t('minifigures') }}: {{ item.minifiguresCount }}
               </p>
-              <p v-if="item.extraPieces">Extra parts: {{ item.extraPieces }}</p>
-              <p>Release year: {{ item.year }}</p>
-              <p>Count: {{ item.count }}</p>
-              <p v-if="item.comment">Comment: {{ item.comment }}</p>
+              <p>{{ $t('parts') }}: {{ item.pieces }}</p>
+              <p v-if="item.extraPieces">{{ $t('extraParts') }}: {{ item.extraPieces }}</p>
+              <p v-if="item.price">{{ $t('price') }}: {{ item.price }}</p>
+              <p v-if="item.price">
+                {{ $t('ppp') }}: {{ Number(item.price / item.pieces).toFixed(2) }}
+              </p>
+              <p>{{ $t('qty') }}: {{ item.count }}</p>
+              <p v-if="item.comment">{{ $t('comment') }}: {{ item.comment }}</p>
             </div>
           </template>
         </card-item>
@@ -35,15 +37,15 @@
     >
       <template #info="{ item }">
         <div>
-          <p v-if="item.minifiguresCount">Minifigures: {{ item.minifiguresCount }}</p>
-          <p>Parts: {{ item.pieces }}</p>
+          <p>{{ $t('releaseYear') }}: {{ item.year }}</p>
+          <p v-if="item.minifiguresCount">{{ $t('minifigures') }}: {{ item.minifiguresCount }}</p>
+          <p>{{ $t('parts') }}: {{ item.pieces }}</p>
+          <p v-if="item.extraPieces">{{ $t('extraParts') }}: {{ item.extraPieces }}</p>
           <p v-if="item.price">
-            Price per piece: {{ Number(item.price / item.pieces).toFixed(2) }}
+            {{ $t('ppp') }}: {{ Number(item.price / item.pieces).toFixed(2) }}
           </p>
-          <p v-if="item.extraPieces">Extra parts: {{ item.extraPieces }}</p>
-          <p>Release year: {{ item.year }}</p>
-          <p>Count: {{ item.count }}</p>
-          <p v-if="item.comment">Comment: {{ item.comment }}</p>
+          <p>{{ $t('qty') }}: {{ item.count }}</p>
+          <p v-if="item.comment">{{ $t('comment') }}: {{ item.comment }}</p>
         </div>
       </template>
     </table-items>

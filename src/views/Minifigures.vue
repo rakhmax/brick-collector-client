@@ -9,10 +9,10 @@
         <card-item :item="item" :itemType="itemType">
           <template #info>
             <div>
-              <p v-if="item.price">Price: {{ item.price }}</p>
-              <p>Release year: {{ item.year }}</p>
-              <p>Count: {{ item.count }}</p>
-              <p v-if="item.comment">Comment: {{ item.comment }}</p>
+              <p>{{ $t('releaseYear') }}: {{ item.year }}</p>
+              <p v-if="item.price">{{ $t('price') }}: {{ item.price }}</p>
+              <p>{{ $t('qty') }}: {{ item.count }}</p>
+              <p v-if="item.comment">{{ $t('comment') }}: {{ item.comment }}</p>
             </div>
           </template>
         </card-item>
@@ -26,9 +26,9 @@
     >
       <template #info="{ item }">
         <div>
-          <p>Release year: {{ item.year }}</p>
-          <p>Count: {{ item.count }}</p>
-          <p v-if="item.comment">Comment: {{ item.comment }}</p>
+          <p>{{ $t('releaseYear') }}: {{ item.year }}</p>
+          <p>{{ $t('qty') }}: {{ item.count }}</p>
+          <p v-if="item.comment">{{ $t('comment') }}: {{ item.comment }}</p>
         </div>
       </template>
     </table-items>
