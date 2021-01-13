@@ -1,6 +1,6 @@
 <template>
   <div :style="{ marginBottom: '110px' }">
-    <cards-view
+    <card-view
       v-if="layout === '0'"
       :items="sets"
       :search="search"
@@ -8,7 +8,7 @@
       <template #item="{ item }">
         <card-item
           :item="item"
-          :itemType="itemType"
+          :item-type="itemType"
         >
           <template #info>
             <div>
@@ -33,15 +33,18 @@
           </template>
         </card-item>
       </template>
-    </cards-view>
+    </card-view>
     <list-view
       v-if="layout === '1'"
+      :item-type="itemType"
       :items="sets"
-      :itemType="itemType"
       :search="search"
     >
       <template #item="{ item }">
-        <list-item :item="item" :itemType="itemType">
+        <list-item
+          :item="item"
+          :item-type="itemType"
+        >
           <template #info>
             <div>
               <p>{{ $t('releaseYear') }}: {{ item.year }}</p>
@@ -68,14 +71,14 @@
     </list-view>
     <table-view
       v-if="layout === '2'"
+      :item-type="itemType"
       :items="sets"
-      :itemType="itemType"
       :search="search"
     >
       <template #item="{ item }">
         <table-item
           :item="item"
-          :itemType="itemType"
+          :item-type="itemType"
         >
           <template #info>
             <div>
@@ -100,8 +103,8 @@
         </table-item>
       </template>
     </table-view>
-    <dialog-add-item :itemType="itemType" />
-    <dialog-edit-item :itemType="itemType" />
+    <dialog-add-item :item-type="itemType"></dialog-add-item>
+    <dialog-edit-item :item-type="itemType"></dialog-edit-item>
   </div>
 </template>
 
@@ -113,10 +116,9 @@ import ListItem from '@/components/ListItem.vue';
 import TableItem from '@/components/TableItem.vue';
 import DialogAddItem from '@/components/DialogAddItem.vue';
 import DialogEditItem from '@/components/DialogEditItem.vue';
-import CardsView from '@/views/CardsView.vue';
-import TableView from '@/views/TableView.vue';
+import CardView from '@/views/CardView.vue';
 import ListView from '@/views/ListView.vue';
-
+import TableView from '@/views/TableView.vue';
 import { GET_SETS } from '@/store/types';
 
 export default {
@@ -124,7 +126,7 @@ export default {
 
   components: {
     CardItem,
-    CardsView,
+    CardView,
     DialogAddItem,
     DialogEditItem,
     TableView,

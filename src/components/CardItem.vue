@@ -1,17 +1,20 @@
 <template>
-  <v-card class="mx-auto" outlined>
+  <v-card
+    class="mx-auto"
+    outlined
+  >
     <v-img
-      :src="item.image.base"
-      :style="{ background: '#fff' }"
       contain
       height="200px"
-      width="auto"
       light
-    />
+      :src="item.image.base"
+      :style="{ background: '#fff' }"
+      width="auto"
+    ></v-img>
     <v-card-title
+      class="d-block"
       :style="{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }"
       :title="item.name"
-      class="d-block"
     >
       {{ item.name }}
     </v-card-title>
@@ -20,25 +23,27 @@
     </v-card-subtitle>
     <v-card-actions>
       <v-btn
-        @click="expanded = !expanded"
         text
+        @click="expanded = !expanded"
       >
         {{ expanded ? $t('less') : $t('more') }}
       </v-btn>
-      <v-spacer />
-      <actions :item="item" :itemType="itemType" />
+      <v-spacer></v-spacer>
+      <actions
+        :item="item"
+        :item-type="itemType"
+      ></actions>
     </v-card-actions>
     <v-expand-transition>
       <div v-show="expanded">
-        <v-divider />
+        <v-divider></v-divider>
         <v-card-text>
-          <slot name="info" />
+          <slot name="info"></slot>
           <table-price-guide
             :item="item"
-            :itemType="itemType"
-          />
+            :item-type="itemType"
+          ></table-price-guide>
         </v-card-text>
-
       </div>
     </v-expand-transition>
   </v-card>
@@ -46,10 +51,10 @@
 
 <script>
 import Actions from '@/components/Actions.vue';
-import TablePriceGuide from './TablePriceGuide.vue';
+import TablePriceGuide from '@/components/TablePriceGuide.vue';
 
 export default {
-  name: 'CardMinifigure',
+  name: 'CardItem',
 
   components: {
     Actions,

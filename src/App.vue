@@ -1,13 +1,13 @@
 <template>
   <v-app>
-    <router-view name="login" />
+    <router-view name="login"></router-view>
     <div v-if="isAuthentificated">
-      <sidebar v-if="$vuetify.breakpoint.smAndUp" />
+      <sidebar v-if="$vuetify.breakpoint.smAndUp"></sidebar>
       <v-main :class="$vuetify.breakpoint.smAndUp && 'ml-14'">
-        <app-bar />
-        <router-view />
+        <app-bar></app-bar>
+        <router-view></router-view>
       </v-main>
-      <bottom-navigation />
+      <bottom-navigation></bottom-navigation>
     </div>
   </v-app>
 </template>
@@ -17,7 +17,7 @@ import AppBar from '@/components/AppBar.vue';
 import BottomNavigation from '@/components/BottomNavigation.vue';
 import Sidebar from '@/components/Sidebar.vue';
 import { GET_DOLLAR_RATE, GET_THEMES, SET_DARK_MODE } from '@/store/types';
-import isAuthentificated from './helpers/auth';
+import isAuthentificated from '@/helpers/auth';
 
 export default {
   name: 'App',

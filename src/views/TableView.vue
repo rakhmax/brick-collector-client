@@ -3,16 +3,16 @@
     <v-data-table
       :expanded="expanded"
       :headers="headers"
+      hide-default-footer
+      item-key="itemId"
       :items="items"
       :items-per-page="itemsPerPage"
       :loading="$store.state.loading"
       :loading-text="`${$t('loading')}...`"
       :search="search"
-      @click:row="handleClickRow"
-      hide-default-footer
-      item-key="itemId"
       single-expand
       sort-by="itemId"
+      @click:row="handleClickRow"
     >
       <template #item.itemId="{ item }">
         {{ formatSetId(item.itemId) }}
@@ -26,10 +26,16 @@
         </span>
       </template>
       <template #item.actions="{ item }">
-        <actions :item="item" :itemType="itemType" />
+        <actions
+          :item="item"
+          :item-type="itemType"
+        ></actions>
       </template>
       <template #expanded-item="{ item }">
-        <slot :item="item" name="item" />
+        <slot
+          :item="item"
+          name="item"
+        ></slot>
       </template>
     </v-data-table>
   </div>
@@ -40,7 +46,7 @@ import Actions from '@/components/Actions.vue';
 import tableHeaders from '@/helpers/tableHeaders';
 
 export default {
-  name: 'TableMinifigures',
+  name: 'TableView',
 
   components: {
     Actions,

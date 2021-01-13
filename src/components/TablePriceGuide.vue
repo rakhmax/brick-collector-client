@@ -4,8 +4,8 @@
       v-if="!priceGuide.used"
       :block="block"
       :loading="loading"
-      @click="getPriceGuide"
       outlined
+      @click="getPriceGuide"
     >{{ $t('getPriceGuide') }}</v-btn>
     <div v-else>
       <h3>{{ $t('priceGuide') }}</h3>
@@ -13,7 +13,7 @@
         <template #default>
           <thead>
             <tr>
-              <th class="text-left" />
+              <th class="text-left"></th>
               <th class="text-left">{{ $t('min') }}</th>
               <th class="text-left">{{ $t('avg') }}</th>
             </tr>

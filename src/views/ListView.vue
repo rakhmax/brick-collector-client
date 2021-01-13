@@ -2,13 +2,13 @@
   <div v-scroll="scroll">
     <v-container fluid>
       <v-data-iterator
+        hide-default-footer
+        item-key="itemId"
         :items="items"
         :items-per-page="itemsPerPage"
         :loading="$store.state.loading"
         :loading-text="`${$t('loading')}...`"
         :search="search"
-        hide-default-footer
-        item-key="itemId"
         sort-by="itemId"
       >
         <template #default="{ items }">
@@ -17,11 +17,14 @@
               v-for="item in items"
               :key="item.itemId"
               cols="12"
-              sm="6"
               lg="4"
+              sm="6"
               xl="3"
             >
-              <slot :item="item" name="item" />
+              <slot
+                :item="item"
+                name="item"
+              ></slot>
             </v-col>
           </v-row>
         </template>
@@ -31,13 +34,11 @@
               v-for="item in 8"
               :key="item.itemId"
               cols="12"
-              sm="6"
               lg="4"
+              sm="6"
               xl="3"
             >
-              <v-skeleton-loader
-                type="list-item-avatar-three-line, actions"
-              />
+              <v-skeleton-loader type="list-item-avatar-three-line, actions"></v-skeleton-loader>
             </v-col>
           </v-row>
         </template>
@@ -50,7 +51,7 @@
 import tableHeaders from '@/helpers/tableHeaders';
 
 export default {
-  name: 'TableMinifigures',
+  name: 'ListView',
 
   props: {
     items: Array,

@@ -1,28 +1,28 @@
 <template>
   <v-form
+    ref="loginForm"
+    class="ma-auto pa-3"
     :style="{ width: '100vw', maxWidth: '450px' }"
     @submit.prevent="handleLogin"
-    class="ma-auto pa-3"
-    ref="loginForm"
   >
     <v-text-field
       v-model="username"
       :label="$t('username')"
-      :rules="usernameRules"
       outlined
       required
-    />
+      :rules="usernameRules"
+    ></v-text-field>
     <v-text-field
       v-model="password"
       :label="$t('password')"
-      :rules="passwordRules"
       outlined
       required
+      :rules="passwordRules"
       type="password"
-    />
+    ></v-text-field>
     <v-btn
-      :loading="loading"
       block
+      :loading="loading"
       outlined
       type="submit"
     >{{ $t('login') }}</v-btn>

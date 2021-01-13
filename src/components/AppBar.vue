@@ -1,79 +1,89 @@
 <template>
   <v-app-bar
-    :hide-on-scroll="$vuetify.breakpoint.xsOnly"
     app
     color="light"
     elevate-on-scroll
+    :hide-on-scroll="$vuetify.breakpoint.xsOnly"
   >
-    <div v-if="$vuetify.breakpoint.smAndUp" class="d-flex align-center">
-      <v-icon class="mr-3" color="green" x-large>mdi-toy-brick-marker</v-icon>
+    <div
+      v-if="$vuetify.breakpoint.smAndUp"
+      class="d-flex align-center"
+    >
+      <v-icon
+        class="mr-3"
+        color="green"
+        x-large
+      >mdi-toy-brick-marker</v-icon>
       <v-app-bar-title>{{ $t($route.meta.title) || 'Brick Collector' }}</v-app-bar-title>
     </div>
-    <v-spacer />
+    <v-spacer></v-spacer>
     <div
       v-if="$route.meta.withExtensionBar"
       :style="{ width: $vuetify.breakpoint.xsOnly ? '100%' : 'auto' }"
     >
       <v-text-field
         v-model="searchText"
-        :label="$t('searchCollection')"
-        @blur="clearSearch"
-        @input="handleSearch"
         clearable
         color="green"
         dense
         flat
         full-width
         hide-details
+        :label="$t('searchCollection')"
         prepend-inner-icon="mdi-magnify"
         single-line
         solo
-      />
+        @blur="clearSearch"
+        @input="handleSearch"
+      ></v-text-field>
     </div>
-    <template v-slot:extension v-if="$route.meta.withExtensionBar">
+    <template
+      v-if="$route.meta.withExtensionBar"
+      v-slot:extension
+    >
       <v-select
-        v-model="filterValue"
         v-if="$vuetify.breakpoint.xsOnly"
-        :items="filters"
-        @change="handleFilter"
+        v-model="filterValue"
         dense
         flat
         hide-details
+        :items="filters"
         label="Filter"
         solo
-      />
+        @change="handleFilter"
+      ></v-select>
       <v-radio-group
         v-else
         v-model="filterValue"
-        @change="handleFilter"
         hide-details
         row
+        @change="handleFilter"
       >
         <v-radio
           v-for="filter in filters"
           :key="filter.value"
           :label="filter.text"
           :value="filter.value"
-        />
+        ></v-radio>
       </v-radio-group>
-      <v-spacer v-if="$vuetify.breakpoint.smAndUp" />
+      <v-spacer v-if="$vuetify.breakpoint.smAndUp"></v-spacer>
       <v-select
-        :items="themes"
-        :label="$t('theme')"
-        :style="{ maxWidth: '300px' }"
-        @change="handleThemeFilter"
         class="mr-2"
         clearable
         dense
         flat
         hide-details
-        solo
+        :items="themes"
+        :label="$t('theme')"
         multiple
-      />
+        solo
+        :style="{ maxWidth: '300px' }"
+        @change="handleThemeFilter"
+      ></v-select>
       <v-btn-toggle
         v-model="layout"
-        @change="handleChangeLayout"
         dense
+        @change="handleChangeLayout"
       >
         <v-btn>
           <v-icon>mdi-view-grid</v-icon>

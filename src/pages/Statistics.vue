@@ -1,7 +1,10 @@
 <template>
-  <v-container :style="{ marginBottom: '110px' }" fluid>
-    <statistics-minifigures v-if="$store.state.statistics.minifigures" />
-    <statistics-sets v-if="$store.state.statistics.sets" />
+  <v-container
+    fluid
+    :style="{ marginBottom: '110px' }"
+  >
+    <statistics-minifigures v-if="$store.state.statistics.minifigures"></statistics-minifigures>
+    <statistics-sets v-if="$store.state.statistics.sets"></statistics-sets>
   </v-container>
 </template>
 

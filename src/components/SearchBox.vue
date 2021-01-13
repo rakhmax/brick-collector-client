@@ -1,33 +1,36 @@
 <template>
   <v-autocomplete
     v-model="select"
-    :items="items"
-    :loading="loading"
-    :rules="[computedRules]"
-    :search-input.sync="search"
-    @change="handleSelect"
     autofocus
     clearable
     flat
     hide-no-data
     item-text="name"
+    :items="items"
     label="ID"
+    :loading="loading"
     no-filter
-    return-object
     required
+    return-object
+    :rules="[computedRules]"
+    :search-input.sync="search"
+    @change="handleSelect"
   >
     <template v-slot:item="{ item }">
-      <v-avatar class="mr-3 my-2" :color="!item.image ? 'gray' : 'white'">
+      <v-avatar
+        class="mr-3 my-2"
+        :color="!item.image ? 'gray' : 'white'"
+      >
         <v-img
           v-if="item.image"
           :alt="item.name"
-          :src="item.image"
           contain
-        />
+          :src="item.image"
+        ></v-img>
         <span v-else>{{ item.name.charAt(0) }}</span>
       </v-avatar>
       <v-list-item-content>
-        <v-list-item-title v-text="item.name" />
+        <v-list-item-title v-text="item.name"></v-list-item-title>
       </v-list-item-content>
     </template>
   </v-autocomplete>
@@ -35,8 +38,8 @@
 
 <script>
 import debounce from 'lodash.debounce';
-import { eventBus } from '../main';
-import searchData from '../api/search';
+import { eventBus } from '@/main';
+import searchData from '@/api/search';
 
 export default {
   name: 'SearchBox',

@@ -5,10 +5,10 @@
       max-width="600px"
     >
       <v-form
-        v-model="valid"
-        @submit.prevent="handleSave"
-        lazy-validation
         ref="addForm"
+        v-model="valid"
+        lazy-validation
+        @submit.prevent="handleSave"
       >
         <v-card>
           <v-card-title>
@@ -18,12 +18,12 @@
             <v-container>
               <v-row>
                 <v-col cols="12">
-                  <search-box />
+                  <search-box></search-box>
                 </v-col>
                 <v-col
                   cols="12"
-                  sm="6"
                   md="3"
+                  sm="6"
                 >
                   <v-text-field
                     v-model="dialogData.price"
@@ -31,24 +31,24 @@
                     min="0"
                     required
                     type="number"
-                  />
+                  ></v-text-field>
                 </v-col>
                 <v-col
                   cols="12"
-                  sm="6"
                   md="3"
+                  sm="6"
                 >
                   <v-checkbox
                     v-if="$route.name === 'Sets'"
                     v-model="dialogData.sealed"
                     :label="$t('sealed')"
-                  />
+                  ></v-checkbox>
                 </v-col>
                 <v-col cols="12">
                   <v-text-field
                     v-model="dialogData.comment"
                     :label="$t('comment')"
-                  />
+                  ></v-text-field>
                 </v-col>
               </v-row>
             </v-container>
@@ -56,15 +56,15 @@
           <v-card-actions>
             <v-spacer></v-spacer>
             <v-btn
-              @click="handleClose"
               text
+              @click="handleClose"
             >
               {{ $t('close') }}
             </v-btn>
             <v-btn
+              color="green"
               :disabled="!valid"
               :loading="$store.state.saving"
-              color="green"
               text
               type="submit"
             >
@@ -79,8 +79,8 @@
 
 <script>
 import { eventBus } from '@/main';
-import { ADD_MINIFIGURE, ADD_SET } from '@/store/types';
 import SearchBox from '@/components/SearchBox.vue';
+import { ADD_MINIFIGURE, ADD_SET } from '@/store/types';
 
 export default {
   name: 'DialogAddItem',

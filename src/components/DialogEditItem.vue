@@ -5,10 +5,10 @@
       max-width="600px"
     >
       <v-form
-        v-model="valid"
-        @submit.prevent="handleSave"
-        lazy-validation
         ref="editForm"
+        v-model="valid"
+        lazy-validation
+        @submit.prevent="handleSave"
       >
         <v-card>
           <v-card-title>
@@ -27,7 +27,7 @@
                     min="0"
                     required
                     type="number"
-                  />
+                  ></v-text-field>
                 </v-col>
                 <v-col
                   cols="12"
@@ -37,29 +37,29 @@
                     v-if="itemType === 'Set'"
                     v-model="dialogData.sealed"
                     :label="$t('sealed')"
-                  />
+                  ></v-checkbox>
                 </v-col>
                 <v-col cols="12">
                   <v-text-field
                     v-model="dialogData.comment"
                     :label="$t('comment')"
                     required
-                  />
+                  ></v-text-field>
                 </v-col>
               </v-row>
             </v-container>
           </v-card-text>
           <v-card-actions>
-            <v-spacer />
+            <v-spacer></v-spacer>
             <v-btn
-              @click="handleClose"
               text
+              @click="handleClose"
             >
               {{ $t('close') }}
             </v-btn>
             <v-btn
-              :loading="$store.state.saving"
               color="green"
+              :loading="$store.state.saving"
               text
               type="submit"
             >

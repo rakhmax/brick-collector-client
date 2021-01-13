@@ -1,23 +1,29 @@
 <template>
-  <v-card class="mx-auto" outlined>
+  <v-card
+    class="mx-auto"
+    outlined
+  >
     <v-list-item three-line>
       <v-list-item-avatar
-        tile
-        size="80"
         color="grey"
+        size="80"
+        tile
       >
       <v-img
-        :src="item.image.thumbnail"
-        :style="{ background: '#fff' }"
         contain
         light
-      />
+        :src="item.image.thumbnail"
+        :style="{ background: '#fff' }"
+      ></v-img>
       </v-list-item-avatar>
       <v-list-item-content>
         <div class="overline mb-4">
           {{ formatSetId(item.itemId) }}
         </div>
-        <v-list-item-title :title="item.name" class="headline mb-1">
+        <v-list-item-title
+          class="headline mb-1"
+          :title="item.name"
+        >
           {{ item.name }}
         </v-list-item-title>
         <v-list-item-subtitle>
@@ -27,25 +33,27 @@
     </v-list-item>
     <v-card-actions>
       <v-btn
-        @click="expanded = !expanded"
         text
+        @click="expanded = !expanded"
       >
         {{ expanded ? $t('less') : $t('more') }}
       </v-btn>
-      <v-spacer />
-      <actions :item="item" :itemType="itemType" />
+      <v-spacer></v-spacer>
+      <actions
+        :item="item"
+        :item-type="itemType"
+      ></actions>
     </v-card-actions>
     <v-expand-transition>
       <div v-show="expanded">
-        <v-divider />
+        <v-divider></v-divider>
         <v-card-text>
-          <slot name="info" />
+          <slot name="info"></slot>
           <table-price-guide
             :item="item"
-            :itemType="itemType"
-          />
+            :item-type="itemType"
+          ></table-price-guide>
         </v-card-text>
-
       </div>
     </v-expand-transition>
   </v-card>
@@ -53,10 +61,10 @@
 
 <script>
 import Actions from '@/components/Actions.vue';
-import TablePriceGuide from './TablePriceGuide.vue';
+import TablePriceGuide from '@/components/TablePriceGuide.vue';
 
 export default {
-  name: 'CardMinifigure',
+  name: 'ListItem',
 
   components: {
     Actions,

@@ -3,27 +3,27 @@
     <v-fab-transition>
       <v-btn
         v-if="$route.name !== 'Statistics'"
-        :class="$vuetify.breakpoint.xsOnly && navIsVisible && 'mb-3'"
-        :style="{ zIndex: 5, transitionProperty: 'margin-bottom' }"
-        @click="openAddDialog"
         bottom
+        :class="$vuetify.breakpoint.xsOnly && navIsVisible && 'mb-3'"
         color="green"
         dark
         fab
         fixed
         right
+        :style="{ zIndex: 5, transitionProperty: 'margin-bottom' }"
+        @click="openAddDialog"
       >
         <v-icon dark>mdi-plus</v-icon>
       </v-btn>
     </v-fab-transition>
     <v-bottom-navigation
-      :input-value="true"
       v-if="$vuetify.breakpoint.xsOnly"
-      :style="{ paddingRight: $route.meta.withExtensionBar ? '88px' : 0 }"
       color="green"
       fixed
       grow
       hide-on-scroll
+      :input-value="true"
+      :style="{ paddingRight: $route.meta.withExtensionBar ? '88px' : 0 }"
       @update:input-value="test"
     >
       <v-btn to="/sets">

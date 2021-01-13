@@ -1,22 +1,25 @@
 <template>
-  <v-card flat :rounded="false">
-    <v-card-title>{{ $t('minifigures') }}</v-card-title>
+  <v-card
+    flat
+    :rounded="false"
+  >
+    <v-card-title>{{ $t("minifigures") }}</v-card-title>
     <v-row>
       <v-col
-        cols="12"
-        sm="6"
-        md="3"
         v-for="(stat, idx) in minifiguresStatistics"
         :key="stat.title + idx"
+        cols="12"
+        md="3"
+        sm="6"
       >
         <v-card-text>
           <div>{{ stat.title }}</div>
           <p class="display-1 text--primary">
             <number
+              easing="Power1.easeOut"
               :from="0"
               :to="stat.value"
-              easing="Power1.easeOut"
-            />
+            ></number>
           </p>
         </v-card-text>
       </v-col>

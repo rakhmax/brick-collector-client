@@ -1,12 +1,15 @@
 <template>
   <div :style="{ marginBottom: '110px' }">
-    <cards-view
+    <card-view
       v-if="layout === '0'"
       :items="minifigures"
       :search="search"
     >
       <template #item="{ item }">
-        <card-item :item="item" :itemType="itemType">
+        <card-item
+          :item="item"
+          :item-type="itemType"
+        >
           <template #info>
             <div>
               <p>{{ $t('releaseYear') }}: {{ item.year }}</p>
@@ -17,15 +20,18 @@
           </template>
         </card-item>
       </template>
-    </cards-view>
+    </card-view>
     <list-view
       v-if="layout === '1'"
+      :item-type="itemType"
       :items="minifigures"
-      :itemType="itemType"
       :search="search"
     >
       <template #item="{ item }">
-        <list-item :item="item" :itemType="itemType">
+        <list-item
+          :item="item"
+          :item-type="itemType"
+        >
           <template #info>
             <div>
               <p>{{ $t('releaseYear') }}: {{ item.year }}</p>
@@ -39,12 +45,15 @@
     </list-view>
     <table-view
       v-if="layout === '2'"
+      :item-type="itemType"
       :items="minifigures"
-      :itemType="itemType"
       :search="search"
     >
       <template #item="{ item }">
-        <table-item :item="item" :itemType="itemType">
+        <table-item
+          :item="item"
+          :item-type="itemType"
+        >
           <template #info>
             <div>
               <p>{{ $t('releaseYear') }}: {{ item.year }}</p>
@@ -53,35 +62,38 @@
             </div>
           </template>
           <template #actions="{ item }">
-            <actions :item="item" :itemType="itemType" />
+            <actions
+              :item="item"
+              :item-type="itemType"
+            ></actions>
           </template>
         </table-item>
       </template>
     </table-view>
-    <dialog-add-item :itemType="itemType" />
-    <dialog-edit-item :itemType="itemType" />
+    <dialog-add-item :item-type="itemType"></dialog-add-item>
+    <dialog-edit-item :item-type="itemType"></dialog-edit-item>
   </div>
 </template>
 
 <script>
+import { mapState } from 'vuex';
 import { eventBus } from '@/main';
 import CardItem from '@/components/CardItem.vue';
+import ListItem from '@/components/ListItem.vue';
+import TableItem from '@/components/TableItem.vue';
 import DialogAddItem from '@/components/DialogAddItem.vue';
 import DialogEditItem from '@/components/DialogEditItem.vue';
-import CardsView from '@/views/CardsView.vue';
+import CardView from '@/views/CardView.vue';
 import ListView from '@/views/ListView.vue';
 import TableView from '@/views/TableView.vue';
 import { GET_MINIFIGURES } from '@/store/types';
-import { mapState } from 'vuex';
-import TableItem from '@/components/TableItem.vue';
-import ListItem from '@/components/ListItem.vue';
 
 export default {
   name: 'Minifigures',
 
   components: {
     CardItem,
-    CardsView,
+    CardView,
     ListView,
     DialogAddItem,
     DialogEditItem,

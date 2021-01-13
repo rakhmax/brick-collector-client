@@ -3,27 +3,25 @@
     <template #activator="{ on, attrs }">
       <v-btn
         v-bind="attrs"
-        v-on="on"
         :disabled="$store.state.loading"
         icon
+        v-on="on"
       >
-        <v-icon :small="layout === '2'">
-          mdi-dots-vertical
-        </v-icon>
+        <v-icon :small="layout === '2'"> mdi-dots-vertical </v-icon>
       </v-btn>
     </template>
     <v-list>
       <v-list-item @click="openEditDialog(item)">
-        <v-list-item-title>{{ $t('edit') }}</v-list-item-title>
+        <v-list-item-title>{{ $t("edit") }}</v-list-item-title>
       </v-list-item>
       <v-list-item @click="deleteItem(item.itemId)">
-        <v-list-item-title>{{ $t('delete') }}</v-list-item-title>
+        <v-list-item-title>{{ $t("delete") }}</v-list-item-title>
       </v-list-item>
       <v-list-item
         v-if="item.minifiguresCount"
         @click="deleteItem(item.itemId, true)"
       >
-        <v-list-item-title>{{ $t('deleteWithMinifigures') }}</v-list-item-title>
+        <v-list-item-title>{{ $t("deleteWithMinifigures") }}</v-list-item-title>
       </v-list-item>
     </v-list>
   </v-menu>
@@ -35,7 +33,7 @@ import { eventBus } from '@/main';
 import { DELETE_MINIFIGURE, DELETE_SET } from '@/store/types';
 
 export default {
-  name: 'TableActions',
+  name: 'Actions',
 
   props: {
     item: Object,
@@ -51,7 +49,10 @@ export default {
     },
 
     deleteItem(itemId, withMinifigures = false) {
-      this.$store.dispatch(this.actionTypes.delete, { itemId, withMinifigures });
+      this.$store.dispatch(this.actionTypes.delete, {
+        itemId,
+        withMinifigures,
+      });
     },
   },
 
