@@ -24,6 +24,7 @@
                   <v-text-field
                     v-model="dialogData.price"
                     :label="$t('price')"
+                    min="0"
                     required
                     type="number"
                   />

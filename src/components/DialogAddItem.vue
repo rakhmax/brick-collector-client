@@ -18,13 +18,7 @@
             <v-container>
               <v-row>
                 <v-col cols="12">
-                  <v-text-field
-                    v-model="dialogData.itemId"
-                    :rules="[computedRules]"
-                    autofocus
-                    label="ID"
-                    required
-                  />
+                  <search-box />
                 </v-col>
                 <v-col
                   cols="12"
@@ -34,6 +28,7 @@
                   <v-text-field
                     v-model="dialogData.price"
                     :label="$t('price')"
+                    min="0"
                     required
                     type="number"
                   />
@@ -85,9 +80,14 @@
 <script>
 import { eventBus } from '@/main';
 import { ADD_MINIFIGURE, ADD_SET } from '@/store/types';
+import SearchBox from '@/components/SearchBox.vue';
 
 export default {
   name: 'DialogAddItem',
+
+  components: {
+    SearchBox,
+  },
 
   props: { itemType: String },
 
@@ -132,31 +132,15 @@ export default {
 
       return {};
     },
-
-    computedRules() {
-      return (value) => {
-        const lowerValue = value && value.toLowerCase();
-
-        const { sets, minifigures } = this.$store.state;
-
-        if (sets.find((set) => set.itemId === lowerValue)
-          || minifigures.find((minifig) => minifig.itemId === lowerValue)
-        ) {
-          return this.$t(`youAlreadyHaveThis${this.$route.name.slice(0, -1)}`);
-        }
-
-        if (!lowerValue) {
-          return `ID ${this.$t('isRequired').toLowerCase()}`;
-        }
-
-        return true;
-      };
-    },
   },
 
   created() {
     eventBus.$on('openAddDialog', (value) => {
       this.dialog = value;
+    });
+
+    eventBus.$on('select', ({ select }) => {
+      this.dialogData.itemId = select.itemId;
     });
   },
 };

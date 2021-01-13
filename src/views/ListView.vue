@@ -18,8 +18,8 @@
               :key="item.itemId"
               cols="12"
               sm="6"
-              md="4"
-              lg="3"
+              lg="4"
+              xl="3"
             >
               <slot :item="item" name="item" />
             </v-col>
@@ -32,12 +32,11 @@
               :key="item.itemId"
               cols="12"
               sm="6"
-              md="4"
-              lg="3"
+              lg="4"
+              xl="3"
             >
               <v-skeleton-loader
-                class="mx-auto"
-                type="card"
+                type="list-item-avatar-three-line, actions"
               />
             </v-col>
           </v-row>

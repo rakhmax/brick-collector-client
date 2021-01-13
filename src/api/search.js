@@ -1,11 +1,11 @@
 import http from '@/axios';
 
-async function searchData(query) {
+async function searchData(query, type) {
   try {
-    const { data } = await http.get(`search?query=${query}`);
+    const { data } = await http.get(`search?query=${query}&type=${type}`);
     return data || [];
   } catch (error) {
-    return error;
+    throw new Error(error);
   }
 }
 

@@ -46,5 +46,6 @@
   "isRequired": "Обязателен",
   "username": "Логин",
   "password": "Пароль",
-  "minLenIs": "Минимальная длина"
+  "minLenIs": "Минимальная длина",
+  "instruction": "Инструкция"
 }

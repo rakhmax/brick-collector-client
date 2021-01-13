@@ -7,7 +7,7 @@
         :disabled="$store.state.loading"
         icon
       >
-        <v-icon :small="!isCardLayout">
+        <v-icon :small="layout === '2'">
           mdi-dots-vertical
         </v-icon>
       </v-btn>
@@ -56,7 +56,7 @@ export default {
   },
 
   computed: {
-    ...mapState({ isCardLayout: (state) => state.isCardLayout }),
+    ...mapState({ layout: ({ layout }) => layout }),
 
     actionTypes() {
       if (this.itemType === 'Minifig') return { delete: DELETE_MINIFIGURE };

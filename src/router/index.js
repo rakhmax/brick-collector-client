@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import Login from '@/views/Login.vue';
+import Login from '@/pages/Login.vue';
 import isAuthentificated from '@/helpers/auth';
 
 Vue.use(VueRouter);
@@ -15,7 +15,7 @@ const routes = [
   {
     path: '/minifigures',
     name: 'Minifigures',
-    component: () => import('../views/Minifigures.vue'),
+    component: () => import('../pages/Minifigures.vue'),
     meta: {
       requiresAuth: true,
       title: 'minifigures',
@@ -25,7 +25,7 @@ const routes = [
   {
     path: '/sets',
     name: 'Sets',
-    component: () => import('../views/Sets.vue'),
+    component: () => import('../pages/Sets.vue'),
     meta: {
       requiresAuth: true,
       title: 'sets',
@@ -35,7 +35,7 @@ const routes = [
   {
     path: '/statistics',
     name: 'Statistics',
-    component: () => import('../views/Statistics.vue'),
+    component: () => import('../pages/Statistics.vue'),
     meta: {
       requiresAuth: true,
       title: 'statistics',

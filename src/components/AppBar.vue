@@ -57,19 +57,42 @@
         />
       </v-radio-group>
       <v-spacer v-if="$vuetify.breakpoint.smAndUp" />
-      <v-btn icon @click="handleChangeLayout">
-        <v-icon>
-          {{ isCardLayout ? "mdi-table-large" : "mdi-view-grid" }}
-        </v-icon>
-      </v-btn>
+      <v-select
+        :items="themes"
+        :label="$t('theme')"
+        :style="{ maxWidth: '300px' }"
+        @change="handleThemeFilter"
+        class="mr-2"
+        clearable
+        dense
+        flat
+        hide-details
+        solo
+        multiple
+      />
+      <v-btn-toggle
+        v-model="layout"
+        @change="handleChangeLayout"
+        dense
+      >
+        <v-btn>
+          <v-icon>mdi-view-grid</v-icon>
+        </v-btn>
+        <v-btn>
+          <v-icon>mdi-view-list</v-icon>
+        </v-btn>
+        <v-btn>
+          <v-icon>mdi-table-large</v-icon>
+        </v-btn>
+      </v-btn-toggle>
     </template>
   </v-app-bar>
 </template>
 
 <script>
-import { eventBus } from '@/main';
 import { mapState } from 'vuex';
-import { SET_CARD_LAYOUT } from '@/store/types';
+import { eventBus } from '@/main';
+import { SET_LAYOUT } from '@/store/types';
 
 export default {
   name: 'AppBar',
@@ -77,13 +100,16 @@ export default {
   data: () => ({
     filters: [],
     filterValue: 'all',
+    filterThemes: -1,
     isSearch: false,
     searchText: null,
+    layout: null,
   }),
 
   watch: {
     $route({ name }) {
       this.filterValue = 'all';
+
       if (name === 'Sets') {
         this.filters.push(
           {
@@ -106,27 +132,49 @@ export default {
   methods: {
     handleSearch() {
       eventBus.$emit('changeSearchValue', {
-        search: this.searchText,
+        search: this.searchText.trim(),
       });
     },
 
     handleFilter(value) {
-      this.radioGroup = value;
       eventBus.$emit('changeFilter', value);
+    },
+
+    handleThemeFilter(value) {
+      eventBus.$emit('changeThemeFilter', value);
     },
 
     clearSearch() {
       this.isSearch = false;
     },
 
-    handleChangeLayout() {
-      this.$store.dispatch(SET_CARD_LAYOUT, Number(!this.isCardLayout));
+    handleChangeLayout(value) {
+      if (value !== undefined) {
+        this.$store.dispatch(SET_LAYOUT, value);
+      }
     },
   },
 
   computed: {
     ...mapState({
-      isCardLayout: (state) => state.isCardLayout,
+      themes(state) {
+        if (this.$route.name === 'Sets') {
+          return Array.from(new Set(state.sets.map((set) => set.categoryId)),
+            (theme) => ({
+              text: this.categoryName(theme),
+              value: theme,
+            }));
+        }
+        if (this.$route.name === 'Minifigures') {
+          return Array.from(new Set(state.minifigures.map((minifig) => minifig.categoryId)),
+            (theme) => ({
+              text: this.categoryName(theme),
+              value: theme,
+            }));
+        }
+
+        return [];
+      },
     }),
   },
 
@@ -141,6 +189,8 @@ export default {
         value: 'moreThenOneOnly',
       },
     ];
+
+    this.layout = Number(this.$store.state.layout);
   },
 };
 </script>

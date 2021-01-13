@@ -1,22 +1,30 @@
 <template>
   <v-card class="mx-auto" outlined>
-    <v-img
-      :src="item.image.base"
-      :style="{ background: '#fff' }"
-      contain
-      height="200px"
-      width="auto"
-      light
-    />
-    <v-card-title
-      :style="{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }"
-      class="d-block"
-    >
-      {{ item.name }}
-    </v-card-title>
-    <v-card-subtitle :title="item.name">
-      {{ formatSetId(item.itemId) }} | {{ categoryName(item.categoryId) }}
-    </v-card-subtitle>
+    <v-list-item three-line>
+      <v-list-item-avatar
+        tile
+        size="80"
+        color="grey"
+      >
+      <v-img
+        :src="item.image.thumbnail"
+        :style="{ background: '#fff' }"
+        contain
+        light
+      />
+      </v-list-item-avatar>
+      <v-list-item-content>
+        <div class="overline mb-4">
+          {{ formatSetId(item.itemId) }}
+        </div>
+        <v-list-item-title :title="item.name" class="headline mb-1">
+          {{ item.name }}
+        </v-list-item-title>
+        <v-list-item-subtitle>
+          {{ categoryName(item.categoryId) }}
+        </v-list-item-subtitle>
+      </v-list-item-content>
+    </v-list-item>
     <v-card-actions>
       <v-btn
         @click="expanded = !expanded"

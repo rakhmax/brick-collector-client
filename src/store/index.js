@@ -14,7 +14,7 @@ export default new Vuex.Store({
     error: null,
     loading: false,
     minifigures: [],
-    isCardLayout: !!Number(localStorage.getItem('cardLayout')),
+    layout: localStorage.getItem('layout'),
     isMobile: window.innerWidth < 600,
     statistics: {
       minifigures: {},

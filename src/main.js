@@ -6,6 +6,8 @@ import store from './store';
 import vuetify from './plugins/vuetify';
 import animateNumber from './plugins/animateNumber';
 import translator from './plugins/translator';
+import categoryName from './plugins/categoryName';
+import formatters from './plugins/formatters';
 
 Vue.config.productionTip = false;
 
@@ -17,5 +19,7 @@ new Vue({
   vuetify,
   animateNumber,
   translator,
+  categoryName,
+  ...formatters,
   render: (h) => h(App),
 }).$mount('#app');

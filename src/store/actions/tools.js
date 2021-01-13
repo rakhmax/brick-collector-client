@@ -3,7 +3,7 @@ import Vuetify from '@/plugins/vuetify';
 import http from '../../axios';
 import {
   GET_DOLLAR_RATE,
-  SET_CARD_LAYOUT,
+  SET_LAYOUT,
   GET_THEMES,
   SET_DARK_MODE,
 } from '../types';
@@ -28,10 +28,10 @@ export default {
     commit(GET_THEMES, themes);
   },
 
-  [SET_CARD_LAYOUT]({ commit }, payload) {
-    localStorage.setItem('cardLayout', payload);
+  [SET_LAYOUT]({ commit }, payload) {
+    localStorage.setItem('layout', payload);
 
-    commit(SET_CARD_LAYOUT, !!payload);
+    commit(SET_LAYOUT, String(payload));
   },
 
   [SET_DARK_MODE]({ commit }, payload) {

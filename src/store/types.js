@@ -37,4 +37,4 @@ export const GET_DOLLAR_RATE = 'GET_DOLLAR_RATE';
 export const GET_THEMES = 'GET_THEMES';
 export const SET_DARK_MODE = 'SET_DARK_MODE';
 export const GET_IS_MOBILE = 'GET_IS_MOBILE';
-export const SET_CARD_LAYOUT = 'SET_CARD_LAYOUT';
+export const SET_LAYOUT = 'SET_LAYOUT';
