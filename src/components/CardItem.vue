@@ -10,11 +10,12 @@
     />
     <v-card-title
       :style="{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }"
+      :title="item.name"
       class="d-block"
     >
       {{ item.name }}
     </v-card-title>
-    <v-card-subtitle :title="item.name">
+    <v-card-subtitle>
       {{ formatSetId(item.itemId) }} | {{ categoryName(item.categoryId) }}
     </v-card-subtitle>
     <v-card-actions>

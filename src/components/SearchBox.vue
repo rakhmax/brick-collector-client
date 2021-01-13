@@ -35,7 +35,6 @@
 
 <script>
 import debounce from 'lodash.debounce';
-import { ADD_SET_ERROR } from '@/store/types';
 import { eventBus } from '../main';
 import searchData from '../api/search';
 
@@ -68,7 +67,7 @@ export default {
 
       searchData(v, this.$route.name.charAt(0))
         .then((data) => { this.items = data; })
-        .catch((err) => { this.$store.commit(ADD_SET_ERROR, err); })
+        .catch((err) => { console.log(err); })
         .finally(() => { this.loading = false; });
     }, 500),
 
