@@ -13,7 +13,7 @@ export default [
     width: '60%',
   },
   {
-    text: Vue.prototype.$t('theme'),
+    text: Vue.prototype.$t('category'),
     value: 'categoryId',
   },
   {

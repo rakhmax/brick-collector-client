@@ -16,7 +16,7 @@
 import AppBar from '@/components/AppBar.vue';
 import BottomNavigation from '@/components/BottomNavigation.vue';
 import Sidebar from '@/components/Sidebar.vue';
-import { GET_DOLLAR_RATE, GET_THEMES, SET_DARK_MODE } from '@/store/types';
+import { GET_DOLLAR_RATE, GET_CATEGORIES, SET_DARK_MODE } from '@/store/types';
 import isAuthentificated from '@/helpers/auth';
 
 export default {
@@ -47,7 +47,7 @@ export default {
   },
 
   mounted() {
-    this.$store.dispatch(GET_THEMES);
+    this.$store.dispatch(GET_CATEGORIES);
     this.$store.dispatch(GET_DOLLAR_RATE);
     this.$store.dispatch(SET_DARK_MODE, this.$store.state.darkMode);
   },

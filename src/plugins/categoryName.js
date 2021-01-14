@@ -4,10 +4,10 @@ const CategoryFormatter = {
   install(VueClass) {
     // eslint-disable-next-line no-param-reassign
     VueClass.prototype.categoryName = function (categoryId) {
-      const themeToConvert = this.$store.state.themes
-        .find((theme) => theme.id === categoryId) || {};
+      const categoryToConvert = this.$store.state.categories
+        .find((category) => category.id === categoryId) || {};
 
-      return themeToConvert.name;
+      return categoryToConvert.name;
     };
   },
 };

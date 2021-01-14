@@ -23,7 +23,7 @@ export default new Vuex.Store({
     },
     saving: false,
     sets: [],
-    themes: [],
+    categories: [],
   },
   mutations: {
     ...minifiguresMutations,

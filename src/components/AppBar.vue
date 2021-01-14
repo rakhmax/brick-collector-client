@@ -73,8 +73,8 @@
         dense
         flat
         hide-details
-        :items="themes"
-        :label="$t('theme')"
+        :items="categories"
+        :label="$t('category')"
         multiple
         solo
         :style="{ maxWidth: '300px' }"
@@ -110,7 +110,6 @@ export default {
   data: () => ({
     filters: [],
     filterValue: 'all',
-    filterThemes: -1,
     isSearch: false,
     searchText: null,
     layout: null,
@@ -167,19 +166,19 @@ export default {
 
   computed: {
     ...mapState({
-      themes(state) {
+      categories(state) {
         if (this.$route.name === 'Sets') {
           return Array.from(new Set(state.sets.map((set) => set.categoryId)),
-            (theme) => ({
-              text: this.categoryName(theme),
-              value: theme,
+            (category) => ({
+              text: this.categoryName(category),
+              value: category,
             }));
         }
         if (this.$route.name === 'Minifigures') {
           return Array.from(new Set(state.minifigures.map((minifig) => minifig.categoryId)),
-            (theme) => ({
-              text: this.categoryName(theme),
-              value: theme,
+            (category) => ({
+              text: this.categoryName(category),
+              value: category,
             }));
         }
 

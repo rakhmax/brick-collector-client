@@ -4,7 +4,7 @@ import http from '../../axios';
 import {
   GET_DOLLAR_RATE,
   SET_LAYOUT,
-  GET_THEMES,
+  GET_CATEGORIES,
   SET_DARK_MODE,
 } from '../types';
 
@@ -14,18 +14,18 @@ export default {
     commit(GET_DOLLAR_RATE, data.rates.USD);
   },
 
-  async [GET_THEMES]({ commit }) {
-    let themes = null;
+  async [GET_CATEGORIES]({ commit }) {
+    let categories = null;
 
     if (!localStorage.getItem('categories')) {
-      const { data } = await http.get('/themes');
-      themes = data;
-      localStorage.setItem('categories', JSON.stringify(themes));
+      const { data } = await http.get('/categories');
+      categories = data;
+      localStorage.setItem('categories', JSON.stringify(categories));
     } else {
-      themes = JSON.parse(localStorage.getItem('categories'));
+      categories = JSON.parse(localStorage.getItem('categories'));
     }
 
-    commit(GET_THEMES, themes);
+    commit(GET_CATEGORIES, categories);
   },
 
   [SET_LAYOUT]({ commit }, payload) {
