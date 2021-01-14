@@ -2,6 +2,8 @@
   <v-card
     class="mx-auto"
     outlined
+    :ripple="false"
+    @click="expanded = !expanded"
   >
     <v-list-item three-line>
       <v-list-item-avatar
@@ -17,9 +19,17 @@
       ></v-img>
       </v-list-item-avatar>
       <v-list-item-content>
-        <div class="overline mb-4">
-          {{ formatSetId(item.itemId) }}
-        </div>
+        <v-row
+          align="center"
+          class="px-3 pt-1"
+          justify="space-between"
+        >
+          <span class="overline">{{ formatSetId(item.itemId) }}</span>
+          <actions
+            :item="item"
+            :item-type="itemType"
+          ></actions>
+        </v-row>
         <v-list-item-title
           class="headline mb-1"
           :title="item.name"
@@ -31,19 +41,6 @@
         </v-list-item-subtitle>
       </v-list-item-content>
     </v-list-item>
-    <v-card-actions>
-      <v-btn
-        text
-        @click="expanded = !expanded"
-      >
-        {{ expanded ? $t('less') : $t('more') }}
-      </v-btn>
-      <v-spacer></v-spacer>
-      <actions
-        :item="item"
-        :item-type="itemType"
-      ></actions>
-    </v-card-actions>
     <v-expand-transition>
       <div v-show="expanded">
         <v-divider></v-divider>

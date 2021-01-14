@@ -5,7 +5,7 @@
       :block="block"
       :loading="loading"
       outlined
-      @click="getPriceGuide"
+      @click.stop="getPriceGuide"
     >{{ $t('getPriceGuide') }}</v-btn>
     <div v-else>
       <h3>{{ $t('priceGuide') }}</h3>
