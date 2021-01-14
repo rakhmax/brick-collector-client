@@ -168,7 +168,7 @@ export default {
       else this.sets = this.allSets;
     });
 
-    eventBus.$on('changeThemeFilter', (value) => {
+    eventBus.$on('changeCategoryFilter', (value) => {
       if (!value || !value.length) this.sets = this.allSets;
       else {
         this.sets = this.allSets

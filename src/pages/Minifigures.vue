@@ -133,7 +133,7 @@ export default {
       else this.minifigures = this.allMinifigs;
     });
 
-    eventBus.$on('changeThemeFilter', (value) => {
+    eventBus.$on('changeCategoryFilter', (value) => {
       if (!value || !value.length) this.minifigures = this.allMinifigs;
       else {
         this.minifigures = this.allMinifigs

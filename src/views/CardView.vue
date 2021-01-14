@@ -38,6 +38,7 @@
               lg="3"
               md="4"
               sm="6"
+              xl="2"
             >
               <v-skeleton-loader
                 class="mx-auto"
