@@ -102,15 +102,20 @@
 
 <script>
 import { mapState } from 'vuex';
+import { logout } from '@/api/auth';
 import { SET_DARK_MODE } from '@/store/types';
 
 export default {
   name: 'Sidebar',
 
   methods: {
-    handleLogout() {
-      localStorage.removeItem('accessString');
-      window.location.reload();
+    async handleLogout() {
+      try {
+        await logout();
+        window.location.reload();
+      } catch (error) {
+        console.log(error);
+      }
     },
 
     handleSwitchDarkMode() {

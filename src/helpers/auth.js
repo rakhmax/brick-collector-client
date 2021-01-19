@@ -1,5 +1,5 @@
 function isAuthentificated() {
-  return !!localStorage.getItem('accessString');
+  return !!localStorage.getItem('creds');
 }
 
 export default isAuthentificated;

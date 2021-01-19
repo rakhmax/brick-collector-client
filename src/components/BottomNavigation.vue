@@ -106,7 +106,7 @@ export default {
     },
 
     handleLogout() {
-      localStorage.removeItem('accessString');
+      localStorage.removeItem('creds');
       window.location.reload();
     },
 

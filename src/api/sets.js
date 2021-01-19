@@ -10,25 +10,25 @@ export async function getSets() {
   }
 }
 
-export async function addSet(data) {
+export async function addSet(payload) {
   try {
-    return await http.post(pathname, data);
+    return await http.post(pathname, payload);
   } catch (error) {
     throw new Error(error);
   }
 }
 
-export async function updateSet(data) {
+export async function updateSet(payload) {
   try {
-    return await http.patch(pathname, data);
+    return await http.patch(pathname, payload);
   } catch (error) {
     throw new Error(error);
   }
 }
 
-export async function deleteSet(data) {
+export async function deleteSet(payload) {
   try {
-    return await http.delete(pathname, { data });
+    return await http.delete(pathname, { payload });
   } catch (error) {
     throw new Error(error);
   }

@@ -3,7 +3,7 @@
     ref="loginForm"
     class="ma-auto pa-3"
     :style="{ width: '100vw', maxWidth: '450px' }"
-    @submit.prevent="handleLogin"
+    @submit.prevent="handleAuth"
   >
     <v-text-field
       v-model="username"
@@ -14,6 +14,7 @@
     ></v-text-field>
     <v-text-field
       v-model="password"
+      :error-messages="message"
       :label="$t('password')"
       outlined
       required
@@ -25,44 +26,72 @@
       :loading="loading"
       outlined
       type="submit"
-    >{{ $t('login') }}</v-btn>
+    >{{ login ? $t('login') : $t('signup') }}</v-btn>
+    <p
+      class="text--secondary text-center pt-2 text-caption"
+      @click="login = !login"
+    >
+      {{ login ? $t('notRegistered?') : $t('alreadyRegistered?') }}
+      <a>{{ login ? $t('signup') : $t('login') }}</a>
+    </p>
   </v-form>
 </template>
 
 <script>
+import { login, signup } from '@/api/auth';
+
 export default {
   name: 'Login',
 
   data: () => ({
+    message: '',
+    login: true,
     loading: false,
     username: null,
     password: null,
   }),
 
   methods: {
+    handleAuth() {
+      if (this.login) {
+        this.handleLogin();
+      } else {
+        this.handleSignup();
+      }
+    },
+
     async handleLogin() {
       if (this.$refs.loginForm.validate()) {
         this.loading = true;
 
         try {
-          const textToEncode = (this.username + this.password).toLowerCase();
-          const data = new TextEncoder().encode(textToEncode);
-          const hashBuffer = await crypto.subtle.digest('SHA-1', data);
-          const hashArray = Array.from(new Uint8Array(hashBuffer));
-          const hashHex = hashArray
-            .map((b) => b.toString(16).padStart(2, '0'))
-            .join('');
+          await login({ username: this.username, password: this.password });
 
-          localStorage.setItem('accessString', hashHex);
+          this.loading = false;
 
           window.location.reload();
         } catch (error) {
-          console.log(error);
+          this.message = error.response.data;
+          this.loading = false;
+        }
+      }
+    },
+
+    async handleSignup() {
+      if (this.$refs.loginForm.validate()) {
+        this.loading = true;
+
+        try {
+          await signup({ username: this.username, password: this.password });
+          this.handleLogin();
+        } catch (error) {
+          this.message = error.response.message;
           this.loading = false;
         }
       }
     },
   },
+
   computed: {
     usernameRules() {
       return [(v) => !!v || `${this.$t('username')} ${this.$t('isRequired').toLowerCase()}`];

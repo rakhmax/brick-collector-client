@@ -28,6 +28,7 @@
   "extraParts": "Extra parts",
   "login": "Log in",
   "logout": "Log out",
+  "signup": "Sign up",
   "total": "Total",
   "unique": "Unique",
   "dups": "Duplicates",
@@ -47,5 +48,7 @@
   "username": "Username",
   "password": "Password",
   "minLenIs": "Min length is",
-  "instruction": "Build instruction"
+  "instruction": "Build instruction",
+  "alreadyRegistered?": "Already registered?",
+  "notRegistered?": "Not registered yet?"
 }

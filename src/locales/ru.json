@@ -28,6 +28,7 @@
   "extraParts": "Запасных деталей",
   "login": "Войти",
   "logout": "Выйти",
+  "signup": "Зарегистироваться",
   "total": "Всего",
   "unique": "Уникальных",
   "dups": "Повторяющихся",
@@ -47,5 +48,7 @@
   "username": "Логин",
   "password": "Пароль",
   "minLenIs": "Минимальная длина",
-  "instruction": "Инструкция"
+  "instruction": "Инструкция",
+  "alreadyRegistered?": "Уже зарегистрированы?",
+  "notRegistered?": "Еще нет аккаунта?"
 }
