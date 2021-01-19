@@ -28,7 +28,7 @@ export async function updateSet(payload) {
 
 export async function deleteSet(payload) {
   try {
-    return await http.delete(pathname, { payload });
+    return await http.delete(pathname, { data: payload });
   } catch (error) {
     throw new Error(error);
   }

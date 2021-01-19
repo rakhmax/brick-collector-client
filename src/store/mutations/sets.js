@@ -66,6 +66,7 @@ export default {
     state.sets = data;
   },
   [DELETE_SET_SUCCESS](state) {
+    state.minifigures = [];
     state.loading = false;
   },
   [DELETE_SET_ERROR](state, payload) {

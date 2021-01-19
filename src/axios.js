@@ -54,9 +54,9 @@ http.interceptors.response.use((response) => response, async (error) => {
         userId: keys.userId,
         ...data,
       }));
-
-      return http(originalRequest);
     }
+
+    return http(originalRequest);
   }
   return Promise.reject(error);
 });
