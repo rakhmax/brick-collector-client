@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Login from '@/pages/Login.vue';
-import isAuthentificated from '@/helpers/auth';
+import AuthHelper from '@/helpers/auth';
 
 Vue.use(VueRouter);
 
@@ -49,9 +49,11 @@ const router = new VueRouter({
   routes,
 });
 
+const auth = new AuthHelper();
+
 router.beforeEach((to, from, next) => {
-  if (to.meta.requiresAuth && !isAuthentificated()) next({ name: 'Login' });
-  else if (to.name === 'Login' && isAuthentificated()) next({ name: from.name || 'Statistics' });
+  if (to.meta.requiresAuth && !auth.isAuthentificated()) next({ name: 'Login' });
+  else if (to.name === 'Login' && auth.isAuthentificated()) next({ name: from.name || 'Statistics' });
   else {
     document.title = Vue.prototype.$t(to.meta.title) || 'BrickCollector';
     next();

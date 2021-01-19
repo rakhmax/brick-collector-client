@@ -82,6 +82,7 @@ import { eventBus } from '@/main';
 import FilterCategory from '@/components/FilterCategory.vue';
 import SwitcherView from '@/components/SwitcherView.vue';
 import { SET_DARK_MODE } from '@/store/types';
+import AuthHelper from '@/helpers/auth';
 
 export default {
   name: 'BottomNavigation',
@@ -106,7 +107,7 @@ export default {
     },
 
     handleLogout() {
-      localStorage.removeItem('creds');
+      new AuthHelper().removeTokens();
       window.location.reload();
     },
 

@@ -1,16 +1,19 @@
 import http from '@/axios';
+import AuthHelper from '@/helpers/auth';
 
 const pathname = '/auth';
 
+const auth = new AuthHelper();
+
 export async function login(payload) {
   const { data } = await http.post(`${pathname}/login`, payload);
-  localStorage.setItem('creds', JSON.stringify(data));
+  auth.setTokens(data);
 }
 
 export async function logout() {
-  const token = JSON.parse(localStorage.getItem('creds')).refreshToken;
+  const token = auth.getRefreshToken();
   await http.post(`${pathname}/logout`, { refreshToken: token });
-  localStorage.removeItem('creds');
+  auth.removeTokens();
 }
 
 export async function signup(payload) {

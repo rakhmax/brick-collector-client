@@ -17,7 +17,7 @@ import AppBar from '@/components/AppBar.vue';
 import BottomNavigation from '@/components/BottomNavigation.vue';
 import Sidebar from '@/components/Sidebar.vue';
 import { GET_DOLLAR_RATE, GET_CATEGORIES, SET_DARK_MODE } from '@/store/types';
-import isAuthentificated from '@/helpers/auth';
+import AuthHelper from '@/helpers/auth';
 
 export default {
   name: 'App',
@@ -30,7 +30,7 @@ export default {
 
   computed: {
     isAuthentificated() {
-      return isAuthentificated();
+      return new AuthHelper().isAuthentificated();
     },
   },
 
@@ -57,8 +57,5 @@ export default {
 <style>
 .v-image .v-responsive__content {
   width: auto !important;
-}
-.ps {
-  height: 5000px;
 }
 </style>
