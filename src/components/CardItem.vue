@@ -21,12 +21,16 @@
       {{ formatSetId(item.itemId) }} | {{ categoryName(item.categoryId) }}
     </v-card-subtitle>
     <v-card-actions>
-      <v-btn
+      <!-- <v-btn
         text
         @click="expanded = !expanded"
       >
         {{ expanded ? $t('less') : $t('more') }}
-      </v-btn>
+      </v-btn> -->
+      <v-card-subtitle class="pa-2">
+        {{ $t('qty') }}: {{ item.qty }}
+        <!-- {{ formatSetId(item.itemId) }} | {{ categoryName(item.categoryId) }} -->
+      </v-card-subtitle>
       <v-spacer></v-spacer>
       <actions
         :item="item"

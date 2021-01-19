@@ -10,11 +10,16 @@ export default [
     text: Vue.prototype.$t('name'),
     align: 'start',
     value: 'name',
-    width: '60%',
   },
   {
     text: Vue.prototype.$t('category'),
     value: 'categoryId',
+  },
+  {
+    text: Vue.prototype.$t('qty'),
+    value: 'qty',
+    width: 120,
+    filterable: false,
   },
   {
     text: `${Vue.prototype.$t('price')} (₽)`,

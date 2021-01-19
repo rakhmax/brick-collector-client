@@ -2,8 +2,6 @@
   <v-card
     class="mx-auto"
     outlined
-    :ripple="false"
-    @click="expanded = !expanded"
   >
     <v-list-item three-line>
       <v-list-item-avatar
@@ -37,6 +35,9 @@
         ></v-list-item-title>
         <v-list-item-subtitle>
           {{ categoryName(item.categoryId) }}
+        </v-list-item-subtitle>
+        <v-list-item-subtitle>
+          {{ $t('qty') }}: {{ item.qty }}
         </v-list-item-subtitle>
       </v-list-item-content>
     </v-list-item>

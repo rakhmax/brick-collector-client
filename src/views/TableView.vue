@@ -12,7 +12,6 @@
       :search="search"
       single-expand
       sort-by="itemId"
-      @click:row="handleClickRow"
     >
       <template #item.itemId="{ item }">
         {{ formatSetId(item.itemId) }}
