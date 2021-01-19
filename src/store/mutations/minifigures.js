@@ -15,12 +15,7 @@ import {
 
 export default {
   [GET_MINIFIGURES](state, { data }) {
-    state.minifigures = data.minifigs;
-    state.statistics.minifigures = {
-      total: data.total,
-      unique: data.minifigs.length,
-      totalPrice: state.minifigures.reduce((acc, minifig) => acc + Number(minifig.price), 0),
-    };
+    state.minifigures = data;
   },
   [GET_MINIFIGURES_SUCCESS](state) {
     state.loading = false;

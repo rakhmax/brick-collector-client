@@ -13,16 +13,17 @@
           <template #info>
             <div>
               <p>{{ $t('releaseYear') }}: {{ item.year }}</p>
-              <p v-if="item.minifiguresCount">
-                {{ $t('minifigures') }}: {{ item.minifiguresCount }}
+              <p v-if="item.minifigures">
+                {{ $t('minifigures') }}:
+                {{ item.minifigures.reduce((acc, minifig) => acc + minifig.qty, 0) }}
               </p>
               <p>{{ $t('parts') }}: {{ item.pieces }}</p>
               <p v-if="item.extraPieces">{{ $t('extraParts') }}: {{ item.extraPieces }}</p>
-              <p v-if="item.price">{{ $t('price') }}: {{ formatPrice(item.price) }}</p>
+              <p v-if="item.price">{{ $t('price') }}: {{ item.price }}</p>
               <p v-if="item.price">
-                {{ $t('ppp') }}: {{ formatPrice(item.price / item.pieces) }}
+                {{ $t('ppp') }}: {{ item.price / item.pieces }}
               </p>
-              <p>{{ $t('qty') }}: {{ item.count }}</p>
+              <p>{{ $t('qty') }}: {{ item.qty }}</p>
               <p v-if="item.comment">{{ $t('comment') }}: {{ item.comment }}</p>
               <p>
                 <a :href="'https://www.lego.com/en-us/service/buildinginstructions/' + formatSetId(item.itemId)">
@@ -48,16 +49,18 @@
           <template #info>
             <div>
               <p>{{ $t('releaseYear') }}: {{ item.year }}</p>
-              <p v-if="item.minifiguresCount">
-                {{ $t('minifigures') }}: {{ item.minifiguresCount }}
+              <p v-if="item.minifigures">
+                {{ $t('minifigures') }}:
+                {{ item.minifigures.reduce((acc, minifig) => acc + minifig.qty, 0) }}
+
               </p>
               <p>{{ $t('parts') }}: {{ item.pieces }}</p>
               <p v-if="item.extraPieces">{{ $t('extraParts') }}: {{ item.extraPieces }}</p>
-              <p v-if="item.price">{{ $t('price') }}: {{ formatPrice(item.price) }}</p>
+              <p v-if="item.price">{{ $t('price') }}: {{ item.price }}</p>
               <p v-if="item.price">
-                {{ $t('ppp') }}: {{ formatPrice(item.price / item.pieces) }}
+                {{ $t('ppp') }}: {{ item.price / item.pieces }}
               </p>
-              <p>{{ $t('qty') }}: {{ item.count }}</p>
+              <p>{{ $t('qty') }}: {{ item.qty }}</p>
               <p v-if="item.comment">{{ $t('comment') }}: {{ item.comment }}</p>
               <p>
                 <a :href="'https://www.lego.com/en-us/service/buildinginstructions/' + formatSetId(item.itemId)">
@@ -83,15 +86,16 @@
           <template #info>
             <div>
               <p>{{ $t('releaseYear') }}: {{ item.year }}</p>
-              <p v-if="item.minifiguresCount">
-                {{ $t('minifigures') }}: {{ item.minifiguresCount }}
+              <p v-if="item.minifigures">
+                {{ $t('minifigures') }}:
+                {{ item.minifigures.reduce((acc, minifig) => acc + minifig.qty, 0) }}
               </p>
               <p>{{ $t('parts') }}: {{ item.pieces }}</p>
               <p v-if="item.extraPieces">{{ $t('extraParts') }}: {{ item.extraPieces }}</p>
               <p v-if="item.price">
-                {{ $t('ppp') }}: {{ formatPrice(item.price / item.pieces) }}
+                {{ $t('ppp') }}: {{ item.price / item.pieces }}
               </p>
-              <p>{{ $t('qty') }}: {{ item.count }}</p>
+              <p>{{ $t('qty') }}: {{ item.qty }}</p>
               <p v-if="item.comment">{{ $t('comment') }}: {{ item.comment }}</p>
               <p>
                 <a :href="'https://www.lego.com/en-us/service/buildinginstructions/' + formatSetId(item.itemId)">
@@ -148,12 +152,18 @@ export default {
     },
   },
 
+  watch: {
+    allSets(newVal) {
+      this.sets = newVal;
+    },
+  },
+
   computed: {
     ...mapState({
-      layout: ({ layout }) => layout,
+      layout: 'layout',
+      allSets: 'sets',
       sealedOnly: ({ sets }) => sets.filter((set) => set.sealed),
-      moreThenOne: ({ sets }) => sets.filter((set) => set.count > 1),
-      allSets: ({ sets }) => sets,
+      moreThenOne: ({ sets }) => sets.filter((set) => set.qty > 1),
     }),
   },
 

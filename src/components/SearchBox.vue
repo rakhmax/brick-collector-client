@@ -88,8 +88,8 @@ export default {
 
         const { sets, minifigures } = this.$store.state;
 
-        if (sets.find((set) => set.itemId === lowerValue)
-          || minifigures.find((minifig) => minifig.itemId === lowerValue)
+        if (sets?.find((set) => set.itemId === lowerValue)
+          || minifigures?.find((minifig) => minifig.itemId === lowerValue)
         ) {
           return this.$t(`youAlreadyHaveThis${this.$route.name.slice(0, -1)}`);
         }

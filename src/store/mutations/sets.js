@@ -15,10 +15,10 @@ import {
 
 export default {
   [GET_SETS](state, { data }) {
-    state.sets = data.sets;
+    state.sets = data;
     state.statistics.sets = {
       total: data.total,
-      unique: data.sets.length,
+      unique: data.length,
       totalPrice: state.sets.reduce((acc, set) => acc + Number(set.price), 0),
     };
     state.statistics.parts = {
@@ -67,7 +67,6 @@ export default {
   },
   [DELETE_SET_SUCCESS](state) {
     state.loading = false;
-    state.minifigures = [];
   },
   [DELETE_SET_ERROR](state, payload) {
     state.loading = false;

@@ -43,7 +43,7 @@ export default {
       const el = state.minifigures.find((minifig) => minifig.itemId === data.itemId);
 
       if (el) {
-        el.count += 1;
+        el.qty += 1;
         commit(ADD_MINIFIGURE, { idx, el });
       } else {
         commit(ADD_MINIFIGURE, data);
@@ -75,7 +75,7 @@ export default {
     try {
       state.loading = true;
 
-      const { data } = await deleteMinifigure(itemId);
+      const { data } = await deleteMinifigure({ itemId });
       const filteredData = state.minifigures
         .filter((minifig) => minifig.itemId !== data.itemId);
 

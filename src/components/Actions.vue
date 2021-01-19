@@ -18,8 +18,8 @@
         <v-list-item-title>{{ $t("delete") }}</v-list-item-title>
       </v-list-item>
       <v-list-item
-        v-if="item.minifiguresCount"
-        @click="deleteItem(item.itemId, true)"
+        v-if="item.minifigures"
+        @click="deleteItem(item.itemId, item.minifigures, true)"
       >
         <v-list-item-title>{{ $t("deleteWithMinifigures") }}</v-list-item-title>
       </v-list-item>
@@ -48,9 +48,10 @@ export default {
       });
     },
 
-    deleteItem(itemId, withMinifigures = false) {
+    deleteItem(itemId, minifigures = [], withMinifigures = false) {
       this.$store.dispatch(this.actionTypes.delete, {
         itemId,
+        minifigures,
         withMinifigures,
       });
     },

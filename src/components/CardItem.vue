@@ -15,9 +15,8 @@
       class="d-block"
       :style="{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }"
       :title="item.name"
-    >
-      {{ item.name }}
-    </v-card-title>
+      v-html="item.name"
+    ></v-card-title>
     <v-card-subtitle>
       {{ formatSetId(item.itemId) }} | {{ categoryName(item.categoryId) }}
     </v-card-subtitle>

@@ -94,12 +94,7 @@ export default {
   data: () => ({
     dialog: false,
     valid: true,
-    dialogData: {
-      sealed: null,
-      itemId: null,
-      comment: null,
-      price: null,
-    },
+    dialogData: {},
   }),
 
   methods: {

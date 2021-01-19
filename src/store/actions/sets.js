@@ -40,15 +40,15 @@ export default {
       state.saving = true;
 
       const { data } = await addSet(payload);
-      const idx = state.sets.findIndex((set) => set.itemId === data.set.itemId);
+      const idx = state.sets.findIndex((set) => set.itemId === data.itemId);
       let el;
 
       if (idx !== -1) {
-        el = state.sets.find((set) => set.itemId === data.set.itemId);
+        el = state.sets.find((set) => set.itemId === data.itemId);
       }
 
       if (el) {
-        el.count += 1;
+        el.qty += 1;
         commit(ADD_SET, { idx, el });
       } else {
         commit(ADD_SET, data.set);
@@ -84,7 +84,14 @@ export default {
 
       const { data } = await deleteSet(payload);
       const filteredData = state.sets
-        .filter((set) => set.itemId !== data.itemId);
+        .filter((set) => set.itemId !== data.set.itemId);
+
+      if (data.minifigures) {
+        data.minifigures.forEach((minifig) => {
+          const idx = state.minifigures.findIndex((item) => item.itemId === minifig.itemId);
+          state.minifigures.splice(idx, 1, minifig);
+        });
+      }
 
       commit(DELETE_SET, filteredData);
       commit(DELETE_SET_SUCCESS);

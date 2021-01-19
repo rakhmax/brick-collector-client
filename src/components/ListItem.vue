@@ -33,9 +33,8 @@
         <v-list-item-title
           class="headline mb-1"
           :title="item.name"
-        >
-          {{ item.name }}
-        </v-list-item-title>
+          v-html="item.name"
+        ></v-list-item-title>
         <v-list-item-subtitle>
           {{ categoryName(item.categoryId) }}
         </v-list-item-subtitle>

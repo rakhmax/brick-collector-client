@@ -13,8 +13,8 @@
           <template #info>
             <div>
               <p>{{ $t('releaseYear') }}: {{ item.year }}</p>
-              <p v-if="item.price">{{ $t('price') }}: {{ formatPrice(item.price) }}</p>
-              <p>{{ $t('qty') }}: {{ item.count }}</p>
+              <p v-if="item.price">{{ $t('price') }}: {{ item.price }}</p>
+              <p>{{ $t('qty') }}: {{ item.qty }}</p>
               <p v-if="item.comment">{{ $t('comment') }}: {{ item.comment }}</p>
             </div>
           </template>
@@ -35,8 +35,8 @@
           <template #info>
             <div>
               <p>{{ $t('releaseYear') }}: {{ item.year }}</p>
-              <p v-if="item.price">{{ $t('price') }}: {{ formatPrice(item.price) }}</p>
-              <p>{{ $t('qty') }}: {{ item.count }}</p>
+              <p v-if="item.price">{{ $t('price') }}: {{ item.price }}</p>
+              <p>{{ $t('qty') }}: {{ item.qty }}</p>
               <p v-if="item.comment">{{ $t('comment') }}: {{ item.comment }}</p>
             </div>
           </template>
@@ -57,7 +57,7 @@
           <template #info>
             <div>
               <p>{{ $t('releaseYear') }}: {{ item.year }}</p>
-              <p>{{ $t('qty') }}: {{ item.count }}</p>
+              <p>{{ $t('qty') }}: {{ item.qty }}</p>
               <p v-if="item.comment">{{ $t('comment') }}: {{ item.comment }}</p>
             </div>
           </template>
@@ -115,11 +115,17 @@ export default {
     },
   },
 
+  watch: {
+    allMinifigs(newVal) {
+      this.minifigures = newVal;
+    },
+  },
+
   computed: {
     ...mapState({
-      layout: ({ layout }) => layout,
-      moreThenOne: ({ minifigures }) => minifigures.filter((minifig) => minifig.count > 1),
-      allMinifigs: ({ minifigures }) => minifigures,
+      layout: 'layout',
+      allMinifigs: 'minifigures',
+      moreThenOne: ({ minifigures }) => minifigures.filter((minifig) => minifig.qty > 1),
     }),
   },
 

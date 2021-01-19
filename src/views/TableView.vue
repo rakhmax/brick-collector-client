@@ -17,13 +17,11 @@
       <template #item.itemId="{ item }">
         {{ formatSetId(item.itemId) }}
       </template>
+      <template #item.name="{ item }">
+        <span v-html="item.name"></span>
+      </template>
       <template #item.categoryId="{ item }">
         {{ categoryName(item.categoryId) }}
-      </template>
-      <template #item.price="{ item }">
-        <span v-if="item.price">
-          {{ formatPrice(item.price) }}
-        </span>
       </template>
       <template #item.actions="{ item }">
         <actions
