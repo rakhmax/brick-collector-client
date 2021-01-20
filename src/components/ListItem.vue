@@ -12,7 +12,7 @@
       <v-img
         contain
         light
-        :src="item.image.thumbnail"
+        :src="`https://img.bricklink.com/${itemType.charAt(0)}/${item.itemId}.jpg`"
         :style="{ background: '#fff' }"
       ></v-img>
       </v-list-item-avatar>

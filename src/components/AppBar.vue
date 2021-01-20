@@ -44,6 +44,7 @@
       <filter-items></filter-items>
       <v-spacer v-if="$vuetify.breakpoint.smAndUp"></v-spacer>
       <filter-category v-if="$vuetify.breakpoint.smAndUp"></filter-category>
+      <filter-year v-if="$vuetify.breakpoint.smAndUp"></filter-year>
       <v-btn
         v-if="$vuetify.breakpoint.xsOnly"
         icon
@@ -62,6 +63,7 @@ import { eventBus } from '@/main';
 import FilterCategory from '@/components/FilterCategory.vue';
 import FilterItems from '@/components/FilterItems.vue';
 import SwitcherView from '@/components/SwitcherView.vue';
+import FilterYear from '@/components/FilterYear.vue';
 
 export default {
   name: 'AppBar',
@@ -69,6 +71,7 @@ export default {
   components: {
     FilterCategory,
     FilterItems,
+    FilterYear,
     SwitcherView,
   },
 

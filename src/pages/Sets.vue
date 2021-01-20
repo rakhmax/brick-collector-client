@@ -9,30 +9,7 @@
         <card-item
           :item="item"
           :item-type="itemType"
-        >
-          <template #info>
-            <div>
-              <p>{{ $t('releaseYear') }}: {{ item.year }}</p>
-              <p v-if="item.minifigures">
-                {{ $t('minifigures') }}:
-                {{ item.minifigures.reduce((acc, minifig) => acc + minifig.qty, 0) }}
-              </p>
-              <p>{{ $t('parts') }}: {{ item.pieces }}</p>
-              <p v-if="item.extraPieces">{{ $t('extraParts') }}: {{ item.extraPieces }}</p>
-              <p v-if="item.price">{{ $t('price') }}: {{ item.price }}</p>
-              <p v-if="item.price">
-                {{ $t('ppp') }}: {{ item.price / item.pieces }}
-              </p>
-              <p>{{ $t('qty') }}: {{ item.qty }}</p>
-              <p v-if="item.comment">{{ $t('comment') }}: {{ item.comment }}</p>
-              <p>
-                <a :href="'https://www.lego.com/en-us/service/buildinginstructions/' + formatSetId(item.itemId)">
-                  {{ $t('instruction') }}
-                </a>
-              </p>
-            </div>
-          </template>
-        </card-item>
+        ></card-item>
       </template>
     </card-view>
     <list-view
@@ -45,31 +22,7 @@
         <list-item
           :item="item"
           :item-type="itemType"
-        >
-          <template #info>
-            <div>
-              <p>{{ $t('releaseYear') }}: {{ item.year }}</p>
-              <p v-if="item.minifigures">
-                {{ $t('minifigures') }}:
-                {{ item.minifigures.reduce((acc, minifig) => acc + minifig.qty, 0) }}
-
-              </p>
-              <p>{{ $t('parts') }}: {{ item.pieces }}</p>
-              <p v-if="item.extraPieces">{{ $t('extraParts') }}: {{ item.extraPieces }}</p>
-              <p v-if="item.price">{{ $t('price') }}: {{ item.price }}</p>
-              <p v-if="item.price">
-                {{ $t('ppp') }}: {{ item.price / item.pieces }}
-              </p>
-              <p>{{ $t('qty') }}: {{ item.qty }}</p>
-              <p v-if="item.comment">{{ $t('comment') }}: {{ item.comment }}</p>
-              <p>
-                <a :href="'https://www.lego.com/en-us/service/buildinginstructions/' + formatSetId(item.itemId)">
-                  {{ $t('instruction') }}
-                </a>
-              </p>
-            </div>
-          </template>
-        </list-item>
+        ></list-item>
       </template>
     </list-view>
     <table-view
@@ -82,29 +35,7 @@
         <table-item
           :item="item"
           :item-type="itemType"
-        >
-          <template #info>
-            <div>
-              <p>{{ $t('releaseYear') }}: {{ item.year }}</p>
-              <p v-if="item.minifigures">
-                {{ $t('minifigures') }}:
-                {{ item.minifigures.reduce((acc, minifig) => acc + minifig.qty, 0) }}
-              </p>
-              <p>{{ $t('parts') }}: {{ item.pieces }}</p>
-              <p v-if="item.extraPieces">{{ $t('extraParts') }}: {{ item.extraPieces }}</p>
-              <p v-if="item.price">
-                {{ $t('ppp') }}: {{ item.price / item.pieces }}
-              </p>
-              <p>{{ $t('qty') }}: {{ item.qty }}</p>
-              <p v-if="item.comment">{{ $t('comment') }}: {{ item.comment }}</p>
-              <p>
-                <a :href="'https://www.lego.com/en-us/service/buildinginstructions/' + formatSetId(item.itemId)">
-                  {{ $t('instruction') }}
-                </a>
-              </p>
-            </div>
-          </template>
-        </table-item>
+        ></table-item>
       </template>
     </table-view>
     <dialog-add-item :item-type="itemType"></dialog-add-item>
@@ -178,10 +109,18 @@ export default {
       else this.sets = this.allSets;
     });
 
+    eventBus.$on('changeYearFilter', (value) => {
+      if (!value || !value.length) this.sets = this.allSets;
+      else {
+        this.sets = this.sets
+          .filter((set) => value.includes(set.year));
+      }
+    });
+
     eventBus.$on('changeCategoryFilter', (value) => {
       if (!value || !value.length) this.sets = this.allSets;
       else {
-        this.sets = this.allSets
+        this.sets = this.sets
           .filter((set) => value.includes(set.categoryId));
       }
     });

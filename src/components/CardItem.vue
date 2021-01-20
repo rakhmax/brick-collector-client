@@ -7,7 +7,7 @@
       contain
       height="200px"
       light
-      :src="item.image.base"
+      :src="`https://img.bricklink.com/${itemType.charAt(0)}L/${item.itemId}.jpg`"
       :style="{ background: '#fff' }"
       width="auto"
     ></v-img>

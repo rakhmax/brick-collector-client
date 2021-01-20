@@ -35,6 +35,11 @@ http.interceptors.response.use((response) => response, async (error) => {
 
   const auth = new AuthHelper();
 
+  if (error.response.status === 400) {
+    auth.removeTokens();
+    window.location.reload();
+  }
+
   if (error.response.status === 401 && !originalRequest._retry) {
     originalRequest._retry = true;
 

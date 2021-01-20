@@ -9,16 +9,7 @@
         <card-item
           :item="item"
           :item-type="itemType"
-        >
-          <template #info>
-            <div>
-              <p>{{ $t('releaseYear') }}: {{ item.year }}</p>
-              <p v-if="item.price">{{ $t('price') }}: {{ item.price }}</p>
-              <p>{{ $t('qty') }}: {{ item.qty }}</p>
-              <p v-if="item.comment">{{ $t('comment') }}: {{ item.comment }}</p>
-            </div>
-          </template>
-        </card-item>
+        ></card-item>
       </template>
     </card-view>
     <list-view
@@ -31,16 +22,7 @@
         <list-item
           :item="item"
           :item-type="itemType"
-        >
-          <template #info>
-            <div>
-              <p>{{ $t('releaseYear') }}: {{ item.year }}</p>
-              <p v-if="item.price">{{ $t('price') }}: {{ item.price }}</p>
-              <p>{{ $t('qty') }}: {{ item.qty }}</p>
-              <p v-if="item.comment">{{ $t('comment') }}: {{ item.comment }}</p>
-            </div>
-          </template>
-        </list-item>
+        ></list-item>
       </template>
     </list-view>
     <table-view
@@ -53,21 +35,7 @@
         <table-item
           :item="item"
           :item-type="itemType"
-        >
-          <template #info>
-            <div>
-              <p>{{ $t('releaseYear') }}: {{ item.year }}</p>
-              <p>{{ $t('qty') }}: {{ item.qty }}</p>
-              <p v-if="item.comment">{{ $t('comment') }}: {{ item.comment }}</p>
-            </div>
-          </template>
-          <template #actions="{ item }">
-            <actions
-              :item="item"
-              :item-type="itemType"
-            ></actions>
-          </template>
-        </table-item>
+        ></table-item>
       </template>
     </table-view>
     <dialog-add-item :item-type="itemType"></dialog-add-item>
@@ -139,10 +107,18 @@ export default {
       else this.minifigures = this.allMinifigs;
     });
 
+    eventBus.$on('changeYearFilter', (value) => {
+      if (!value || !value.length) this.minifigures = this.allMinifigs;
+      else {
+        this.minifigures = this.minifigures
+          .filter((minifig) => value.includes(minifig.year));
+      }
+    });
+
     eventBus.$on('changeCategoryFilter', (value) => {
       if (!value || !value.length) this.minifigures = this.allMinifigs;
       else {
-        this.minifigures = this.allMinifigs
+        this.minifigures = this.minifigures
           .filter((minifig) => value.includes(minifig.categoryId));
       }
     });

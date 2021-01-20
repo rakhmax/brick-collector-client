@@ -16,9 +16,9 @@ export default [
     value: 'categoryId',
   },
   {
-    text: Vue.prototype.$t('qty'),
+    text: Vue.prototype.$t('qtyShort'),
     value: 'qty',
-    width: 120,
+    width: 90,
     filterable: false,
   },
   {

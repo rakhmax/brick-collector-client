@@ -18,6 +18,7 @@
   "name": "Name",
   "category": "Category",
   "qty": "Quantity",
+  "qtyShort": "Qty",
   "more": "More",
   "less": "Less",
   "releaseYear": "Release year",

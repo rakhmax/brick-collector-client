@@ -28,12 +28,6 @@
           :item-type="itemType"
         ></actions>
       </template>
-      <template #expanded-item="{ item }">
-        <slot
-          :item="item"
-          name="item"
-        ></slot>
-      </template>
     </v-data-table>
   </div>
 </template>
