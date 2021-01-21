@@ -35,25 +35,21 @@ http.interceptors.response.use((response) => response, async (error) => {
 
   const auth = new AuthHelper();
 
-  if (error.response.status === 400) {
-    auth.removeTokens();
-    window.location.reload();
-  }
+  // if (error.response.status === 400) {
+  //   auth.removeTokens();
+  //   window.location.reload();
+  // }
 
   if (error.response.status === 401 && !originalRequest._retry) {
     originalRequest._retry = true;
 
-    if (auth.isAuthentificated()) {
-      const { data } = await http.post('/auth/token', {
-        userId: auth.getUserId(),
-        username: auth.getUsername(),
-        refreshToken: auth.getRefreshToken(),
-      });
+    const { data } = await http.post('/auth/token', {
+      refreshToken: auth.getRefreshToken(),
+    });
 
-      axios.defaults.headers.common.Authorization = `Bearer ${data.accessToken}`;
+    axios.defaults.headers.common.Authorization = `Bearer ${data.accessToken}`;
 
-      auth.setTokens(data);
-    }
+    auth.setTokens(data);
 
     return http(originalRequest);
   }

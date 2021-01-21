@@ -12,6 +12,7 @@
       :search="search"
       single-expand
       sort-by="itemId"
+      @click:row="handleClickRow"
     >
       <template #item.itemId="{ item }">
         {{ formatSetId(item.itemId) }}
@@ -57,12 +58,13 @@ export default {
   }),
 
   methods: {
-    handleClickRow(item, { expand, isExpanded }) {
-      if (isExpanded) {
-        this.expanded = [];
-      } else {
-        expand();
-      }
+    handleClickRow(item) {
+      this.$router.push({
+        name: this.$router.currentRoute.name.slice(0, -1),
+        params: {
+          ...item,
+        },
+      });
     },
 
     scroll() {

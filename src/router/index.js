@@ -23,6 +23,16 @@ const routes = [
     },
   },
   {
+    path: '/minifigures/:itemId',
+    name: 'Minifigure',
+    component: () => import('../pages/MinifigureItem.vue'),
+    meta: {
+      requiresAuth: true,
+      title: 'minifigure',
+      // withExtensionBar: true,
+    },
+  },
+  {
     path: '/sets',
     name: 'Sets',
     component: () => import('../pages/Sets.vue'),
@@ -30,6 +40,16 @@ const routes = [
       requiresAuth: true,
       title: 'sets',
       withExtensionBar: true,
+    },
+  },
+  {
+    path: '/sets/:itemId',
+    name: 'Set',
+    component: () => import('../pages/SetItem.vue'),
+    meta: {
+      requiresAuth: true,
+      title: 'set',
+      // withExtensionBar: true,
     },
   },
   {

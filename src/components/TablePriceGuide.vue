@@ -1,12 +1,8 @@
 <template>
   <div>
-    <v-btn
-      v-if="!priceGuide.used"
-      :block="block"
-      :loading="loading"
-      outlined
-      @click.stop="getPriceGuide"
-    >{{ $t('getPriceGuide') }}</v-btn>
+    <div v-if="!priceGuide.used">
+      <h3>{{ $t('loading') }}</h3>
+    </div>
     <div v-else>
       <h3>{{ $t('priceGuide') }}</h3>
       <v-simple-table dense>
@@ -62,12 +58,6 @@ export default {
     },
   },
 
-  watch: {
-    item() {
-      this.priceGuide = {};
-    },
-  },
-
   computed: {
     block() {
       const { layout } = this.$store.state;
@@ -77,6 +67,10 @@ export default {
         || this.$vuetify.breakpoint.xsOnly
         || false;
     },
+  },
+
+  created() {
+    this.getPriceGuide();
   },
 };
 </script>

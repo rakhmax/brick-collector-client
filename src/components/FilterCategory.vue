@@ -1,7 +1,6 @@
 <template>
   <div>
     <v-list
-      v-if="$vuetify.breakpoint.xsOnly"
       dense
       flat
       :style="{ textAlign: 'left' }"
@@ -31,7 +30,7 @@
         </v-list-item>
       </v-list-item-group>
     </v-list>
-    <v-select
+    <!-- <v-select
       v-else
       v-model="categoryFilter"
       class="mr-2"
@@ -45,7 +44,7 @@
       solo
       :style="{ maxWidth: '300px' }"
       @change="handleCategoryFilter"
-    ></v-select>
+    ></v-select> -->
   </div>
 </template>
 

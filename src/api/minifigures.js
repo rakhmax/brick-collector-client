@@ -10,6 +10,14 @@ export async function getMinifigures() {
   }
 }
 
+export async function getSingleMinifigure(itemId) {
+  try {
+    return await http.get(`${pathname}/${itemId}`);
+  } catch (error) {
+    throw new Error(error);
+  }
+}
+
 export async function addMinifigure(payload) {
   try {
     return await http.post(pathname, payload);

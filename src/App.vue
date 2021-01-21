@@ -2,8 +2,8 @@
   <v-app>
     <router-view name="login"></router-view>
     <div v-if="isAuthentificated">
-      <sidebar v-if="$vuetify.breakpoint.smAndUp"></sidebar>
-      <v-main :class="$vuetify.breakpoint.smAndUp && 'ml-14'">
+      <!-- <sidebar v-if="$vuetify.breakpoint.smAndUp"></sidebar> -->
+      <v-main>
         <app-bar></app-bar>
         <router-view></router-view>
       </v-main>
@@ -15,7 +15,7 @@
 <script>
 import AppBar from '@/components/AppBar.vue';
 import BottomNavigation from '@/components/BottomNavigation.vue';
-import Sidebar from '@/components/Sidebar.vue';
+// import Sidebar from '@/components/Sidebar.vue';
 import { GET_DOLLAR_RATE, GET_CATEGORIES, SET_DARK_MODE } from '@/store/types';
 import AuthHelper from '@/helpers/auth';
 
@@ -25,7 +25,7 @@ export default {
   components: {
     AppBar,
     BottomNavigation,
-    Sidebar,
+    // Sidebar,
   },
 
   computed: {

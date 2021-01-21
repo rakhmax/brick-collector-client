@@ -1,12 +1,11 @@
 <template>
   <div>
     <v-list
-      v-if="$vuetify.breakpoint.xsOnly"
       dense
       flat
       :style="{ textAlign: 'left' }"
     >
-      <v-subheader>{{ $t('year') }}</v-subheader>
+      <v-subheader>Год</v-subheader>
       <v-list-item-group
         v-model="yearFilter"
         multiple
@@ -14,12 +13,12 @@
       >
         <v-list-item
           v-for="year in years"
-          :key="year"
-          :value="year"
+          :key="year.value"
+          :value="year.value"
         >
           <template #default="{ active }">
             <v-list-item-content>
-              <v-list-item-title>{{ year }}</v-list-item-title>
+              <v-list-item-title>{{ year.text }}</v-list-item-title>
             </v-list-item-content>
             <v-list-item-action>
               <v-checkbox
@@ -31,7 +30,7 @@
         </v-list-item>
       </v-list-item-group>
     </v-list>
-    <v-select
+    <!-- <v-select
       v-else
       v-model="yearFilter"
       class="mr-2"
@@ -45,7 +44,7 @@
       solo
       :style="{ maxWidth: '300px' }"
       @change="handleYearFilter"
-    ></v-select>
+    ></v-select> -->
   </div>
 </template>
 

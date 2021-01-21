@@ -2,6 +2,10 @@
   <v-card
     class="mx-auto"
     outlined
+    :to="{
+      path: `${$route.path}/${item.itemId}`,
+      params: item
+    }"
   >
     <v-list-item three-line>
       <v-list-item-avatar
@@ -11,6 +15,7 @@
       >
       <v-img
         contain
+        :lazy-src="`https://img.bricklink.com/${itemType.charAt(0)}/${item.itemId}.jpg`"
         light
         :src="`https://img.bricklink.com/${itemType.charAt(0)}/${item.itemId}.jpg`"
         :style="{ background: '#fff' }"

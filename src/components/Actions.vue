@@ -1,11 +1,15 @@
 <template>
-  <v-menu bottom>
+  <v-menu
+    bottom
+    @click.native.stop.prevent
+  >
     <template #activator="{ on, attrs }">
       <v-btn
         v-bind="attrs"
         :disabled="$store.state.loading"
         icon
         v-on="on"
+        @click.native.stop.prevent
       >
         <v-icon :small="layout === '2'"> mdi-dots-vertical </v-icon>
       </v-btn>

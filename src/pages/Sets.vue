@@ -74,6 +74,7 @@ export default {
     itemType: 'Set',
     search: null,
     sets: [],
+    filterRules: {},
   }),
 
   methods: {
@@ -109,19 +110,20 @@ export default {
       else this.sets = this.allSets;
     });
 
-    eventBus.$on('changeYearFilter', (value) => {
-      if (!value || !value.length) this.sets = this.allSets;
-      else {
-        this.sets = this.sets
-          .filter((set) => value.includes(set.year));
-      }
-    });
+    // eventBus.$on('changeYearFilter', (value) => {
+    //   if (!value || !value.length) this.sets = this.allSets;
+    //   else {
+    //     this.sets = this.sets
+    //       .filter((set) => value.includes(set.year));
+    //   }
+    // });
 
     eventBus.$on('changeCategoryFilter', (value) => {
+      // this.filterRules
       if (!value || !value.length) this.sets = this.allSets;
       else {
         this.sets = this.sets
-          .filter((set) => value.includes(set.categoryId));
+          .filter((set) => value.includes(set.categoryId) && value.includes(set.categoryId));
       }
     });
   },

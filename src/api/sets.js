@@ -10,6 +10,14 @@ export async function getSets() {
   }
 }
 
+export async function getSingleSet(itemId) {
+  try {
+    return await http.get(`${pathname}/${itemId}`);
+  } catch (error) {
+    throw new Error(error);
+  }
+}
+
 export async function addSet(payload) {
   try {
     return await http.post(pathname, payload);

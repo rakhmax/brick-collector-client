@@ -7,27 +7,60 @@
   >
     <div
       v-if="$vuetify.breakpoint.smAndUp"
-      class="d-flex align-center"
-    >
+      class="d-flex align-center">
       <v-icon
         class="mr-3"
         color="green"
-        x-large
-      >mdi-toy-brick-marker</v-icon>
-      <v-app-bar-title>{{ $t($route.meta.title) || 'Brick Collector' }}</v-app-bar-title>
+        x-large>mdi-toy-brick-marker</v-icon>
+      <v-app-bar-title> Brick Collector </v-app-bar-title>
+    </div>
+    <div class="ml-4">
+      <v-btn
+        exact
+        text
+        to="/minifigures">
+        {{ $t("minifigures") }}
+      </v-btn>
+      <v-btn
+        exact
+        text
+        to="/sets">
+        {{ $t("sets") }}
+      </v-btn>
     </div>
     <v-spacer></v-spacer>
-    <div
+    <v-row
       v-if="$route.meta.withExtensionBar"
-      :style="{ width: $vuetify.breakpoint.xsOnly ? '100%' : 'auto' }"
-    >
+      align="center">
+      <v-menu
+        bottom
+        min-width="200px"
+        offset-y
+        rounded>
+        <template v-slot:activator="{ on }">
+          <v-btn
+            icon
+            v-on="on">
+            <v-icon>mdi-tune</v-icon>
+          </v-btn>
+        </template>
+        <v-card min-width="500px">
+          <v-row>
+            <v-col>
+              <filter-category></filter-category>
+            </v-col>
+            <v-col>
+              <filter-year></filter-year>
+            </v-col>
+          </v-row>
+        </v-card>
+      </v-menu>
       <v-text-field
         v-model="searchText"
         clearable
         color="green"
         dense
         flat
-        full-width
         hide-details
         :label="$t('searchCollection')"
         prepend-inner-icon="mdi-magnify"
@@ -36,44 +69,93 @@
         @blur="clearSearch"
         @input="handleSearch"
       ></v-text-field>
+    </v-row>
+    <div class="ml-4">
+      <v-menu
+        bottom
+        min-width="200px"
+        offset-y
+        rounded>
+        <template v-slot:activator="{ on }">
+          <v-btn
+            icon
+            x-large
+            v-on="on">
+            <v-avatar
+              color="brown"
+              size="48">
+              <span class="white--text headline">
+                {{ username.charAt(0) }}
+              </span>
+            </v-avatar>
+          </v-btn>
+        </template>
+        <v-card>
+          <v-list-item-content class="justify-center">
+            <div class="mx-auto text-center">
+              <v-avatar
+                class="mb-2"
+                color="brown">
+                <span class="white--text headline">
+                  {{ username.charAt(0).toUpperCase() }}
+                </span>
+              </v-avatar>
+              <h3>{{ username }}</h3>
+              <v-divider class="my-3"></v-divider>
+              <!-- <v-list
+                flat
+                >
+                <v-subheader>General</v-subheader>
+                  <v-list-item>
+                    <template #default="{ active }">
+                      <v-list-item-action>
+                        <v-checkbox
+                          class="pa-2"
+                          hide-details
+                          :input-value="active"
+                          @change="handleSwitchDarkMode"
+                        ></v-checkbox>
+                      </v-list-item-action>
+                      <v-list-item-content>
+                        <v-list-item-title>Темная тема</v-list-item-title>
+                      </v-list-item-content>
+                    </template>
+                  </v-list-item>
+              </v-list> -->
+              <v-checkbox
+                class="pa-2"
+                hide-details
+                :input-value="darkMode"
+                label="Темная тема"
+                @change="handleSwitchDarkMode"
+              ></v-checkbox>
+              <v-divider class="my-3"></v-divider>
+              <v-btn
+                depressed
+                rounded
+                text
+                @click="handleLogout"
+              >{{ $t("logout") }}</v-btn>
+            </div>
+          </v-list-item-content>
+        </v-card>
+      </v-menu>
     </div>
-    <template
-      v-if="$route.meta.withExtensionBar"
-      #extension
-    >
-      <filter-items></filter-items>
-      <v-spacer v-if="$vuetify.breakpoint.smAndUp"></v-spacer>
-      <filter-category v-if="$vuetify.breakpoint.smAndUp"></filter-category>
-      <filter-year v-if="$vuetify.breakpoint.smAndUp"></filter-year>
-      <v-btn
-        v-if="$vuetify.breakpoint.xsOnly"
-        icon
-        @click="openMobileSettings"
-      >
-        <v-icon>mdi-tune</v-icon>
-      </v-btn>
-      <switcher-view v-else></switcher-view>
-    </template>
   </v-app-bar>
 </template>
 
 <script>
 import { mapState } from 'vuex';
 import { eventBus } from '@/main';
-import FilterCategory from '@/components/FilterCategory.vue';
-import FilterItems from '@/components/FilterItems.vue';
-import SwitcherView from '@/components/SwitcherView.vue';
-import FilterYear from '@/components/FilterYear.vue';
+import { logout } from '@/api/auth';
+import AuthHelper from '@/helpers/auth';
+import { SET_DARK_MODE } from '@/store/types';
+import FilterCategory from './FilterCategory.vue';
+import FilterYear from './FilterYear.vue';
 
 export default {
+  components: { FilterCategory, FilterYear },
   name: 'AppBar',
-
-  components: {
-    FilterCategory,
-    FilterItems,
-    FilterYear,
-    SwitcherView,
-  },
 
   data: () => ({
     isSearch: false,
@@ -85,6 +167,15 @@ export default {
       this.isSearch = false;
     },
 
+    async handleLogout() {
+      try {
+        await logout();
+        window.location.reload();
+      } catch (error) {
+        console.log(error);
+      }
+    },
+
     handleSearch() {
       eventBus.$emit('changeSearchValue', {
         search: this.searchText.trim(),
@@ -94,29 +185,45 @@ export default {
     openMobileSettings() {
       eventBus.$emit('openMobileSettings', true);
     },
+
+    handleSwitchDarkMode(val) {
+      console.log(val);
+      localStorage.setItem('darkMode', Number(!this.$vuetify.theme.dark));
+      this.$store.dispatch(SET_DARK_MODE, !this.$vuetify.theme.dark);
+    },
   },
 
   computed: {
     ...mapState({
+      darkMode: 'darkMode',
       categories(state) {
         if (this.$route.name === 'Sets') {
-          return Array.from(new Set(state.sets.map((set) => set.categoryId)),
+          return Array.from(
+            new Set(state.sets.map((set) => set.categoryId)),
             (category) => ({
               text: this.categoryName(category),
               value: category,
-            }));
+            }),
+          );
         }
         if (this.$route.name === 'Minifigures') {
-          return Array.from(new Set(state.minifigures.map((minifig) => minifig.categoryId)),
+          return Array.from(
+            new Set(state.minifigures.map((minifig) => minifig.categoryId)),
             (category) => ({
               text: this.categoryName(category),
               value: category,
-            }));
+            }),
+          );
         }
 
         return [];
       },
     }),
+    username() {
+      const auth = new AuthHelper();
+
+      return auth.getUsername();
+    },
   },
 };
 </script>

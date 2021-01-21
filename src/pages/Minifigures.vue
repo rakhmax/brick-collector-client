@@ -74,6 +74,7 @@ export default {
     itemType: 'Minifig',
     minifigures: [],
     search: null,
+    filterRules: [],
   }),
 
   methods: {
@@ -107,13 +108,13 @@ export default {
       else this.minifigures = this.allMinifigs;
     });
 
-    eventBus.$on('changeYearFilter', (value) => {
-      if (!value || !value.length) this.minifigures = this.allMinifigs;
-      else {
-        this.minifigures = this.minifigures
-          .filter((minifig) => value.includes(minifig.year));
-      }
-    });
+    // eventBus.$on('changeYearFilter', (value) => {
+    //   if (!value || !value.length) this.minifigures = this.allMinifigs;
+    //   else {
+    //     this.minifigures = this.minifigures
+    //       .filter((minifig) => value.includes(minifig.year));
+    //   }
+    // });
 
     eventBus.$on('changeCategoryFilter', (value) => {
       if (!value || !value.length) this.minifigures = this.allMinifigs;
