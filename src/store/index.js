@@ -1,8 +1,18 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 
-import { minifiguresActions, setsActions, toolsActions } from './actions';
-import { minifiguresMutations, setsMutations, toolsMutations } from './mutations';
+import {
+  minifiguresActions,
+  setsActions,
+  toolsActions,
+  wishlistActions,
+} from './actions';
+import {
+  minifiguresMutations,
+  setsMutations,
+  toolsMutations,
+  wishlistMutations,
+} from './mutations';
 
 Vue.use(Vuex);
 
@@ -24,16 +34,22 @@ export default new Vuex.Store({
     saving: false,
     sets: [],
     categories: [],
+    wishlist: {
+      minifigures: [],
+      sets: [],
+    },
   },
   mutations: {
     ...minifiguresMutations,
     ...setsMutations,
     ...toolsMutations,
+    ...wishlistMutations,
   },
   actions: {
     ...minifiguresActions,
     ...setsActions,
     ...toolsActions,
+    ...wishlistActions,
   },
   modules: {
   },

@@ -80,7 +80,11 @@
 <script>
 import { eventBus } from '@/main';
 import SearchBox from '@/components/SearchBox.vue';
-import { ADD_MINIFIGURE, ADD_SET } from '@/store/types';
+import {
+  ADD_MINIFIGURE,
+  ADD_SET,
+  ADD_WISHLIST,
+} from '@/store/types';
 
 export default {
   name: 'DialogAddItem',
@@ -124,6 +128,7 @@ export default {
     actionTypes() {
       if (this.itemType === 'Minifig') return { add: ADD_MINIFIGURE };
       if (this.itemType === 'Set') return { add: ADD_SET };
+      if (this.itemType === 'Wishlist') return { add: ADD_WISHLIST };
 
       return {};
     },
@@ -136,6 +141,7 @@ export default {
 
     eventBus.$on('select', ({ select }) => {
       this.dialogData.itemId = select.itemId;
+      this.dialogData.type = select.type;
     });
   },
 };

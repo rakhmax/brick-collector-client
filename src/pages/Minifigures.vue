@@ -30,14 +30,7 @@
       :item-type="itemType"
       :items="minifigures"
       :search="search"
-    >
-      <template #item="{ item }">
-        <table-item
-          :item="item"
-          :item-type="itemType"
-        ></table-item>
-      </template>
-    </table-view>
+    ></table-view>
     <dialog-add-item :item-type="itemType"></dialog-add-item>
     <dialog-edit-item :item-type="itemType"></dialog-edit-item>
   </div>
@@ -48,7 +41,6 @@ import { mapState } from 'vuex';
 import { eventBus } from '@/main';
 import CardItem from '@/components/CardItem.vue';
 import ListItem from '@/components/ListItem.vue';
-import TableItem from '@/components/TableItem.vue';
 import DialogAddItem from '@/components/DialogAddItem.vue';
 import DialogEditItem from '@/components/DialogEditItem.vue';
 import CardView from '@/views/CardView.vue';
@@ -66,7 +58,6 @@ export default {
     DialogAddItem,
     DialogEditItem,
     TableView,
-    TableItem,
     ListItem,
   },
 

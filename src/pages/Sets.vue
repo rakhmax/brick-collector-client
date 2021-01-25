@@ -48,7 +48,6 @@ import { mapState } from 'vuex';
 import { eventBus } from '@/main';
 import CardItem from '@/components/CardItem.vue';
 import ListItem from '@/components/ListItem.vue';
-import TableItem from '@/components/TableItem.vue';
 import DialogAddItem from '@/components/DialogAddItem.vue';
 import DialogEditItem from '@/components/DialogEditItem.vue';
 import CardView from '@/views/CardView.vue';
@@ -65,7 +64,6 @@ export default {
     DialogAddItem,
     DialogEditItem,
     TableView,
-    TableItem,
     ListItem,
     ListView,
   },
@@ -80,7 +78,9 @@ export default {
   methods: {
     async fetchSets() {
       await this.$store.dispatch(GET_SETS);
+      console.log(this.sets);
       this.sets = this.allSets;
+      console.log(this.sets);
     },
   },
 

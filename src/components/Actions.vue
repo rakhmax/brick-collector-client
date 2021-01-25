@@ -16,16 +16,16 @@
     </template>
     <v-list>
       <v-list-item @click="openEditDialog(item)">
-        <v-list-item-title>{{ $t("edit") }}</v-list-item-title>
+        <v-list-item-title>{{ $t('edit') }}</v-list-item-title>
       </v-list-item>
       <v-list-item @click="deleteItem(item.itemId)">
-        <v-list-item-title>{{ $t("delete") }}</v-list-item-title>
+        <v-list-item-title>{{ $t('delete') }}</v-list-item-title>
       </v-list-item>
       <v-list-item
         v-if="item.minifigures"
         @click="deleteItem(item.itemId, item.minifigures, true)"
       >
-        <v-list-item-title>{{ $t("deleteWithMinifigures") }}</v-list-item-title>
+        <v-list-item-title>{{ $t('deleteWithMinifigures') }}</v-list-item-title>
       </v-list-item>
     </v-list>
   </v-menu>

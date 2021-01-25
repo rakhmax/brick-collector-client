@@ -18,6 +18,7 @@ import {
   DELETE_SET_SUCCESS,
   DELETE_SET_ERROR,
   ADD_MINIFIGURE,
+  DELETE_WISHLIST,
 } from '../types';
 
 export default {
@@ -85,6 +86,8 @@ export default {
       const { data } = await deleteSet(payload);
       const filteredData = state.sets
         .filter((set) => set.itemId !== data.set.itemId);
+      const filteredWishlist = state.wishlist.sets
+        .filter((minifig) => minifig.itemId !== data.itemId);
 
       if (data.minifigures) {
         data.minifigures.forEach((minifig) => {
@@ -92,8 +95,11 @@ export default {
           state.minifigures.splice(idx, 1, minifig);
         });
       }
-
       commit(DELETE_SET, filteredData);
+      commit(DELETE_WISHLIST, {
+        minifigures: state.wishlist.minifigures,
+        sets: filteredWishlist,
+      });
       commit(DELETE_SET_SUCCESS);
     } catch (error) {
       commit(DELETE_SET_ERROR, error);

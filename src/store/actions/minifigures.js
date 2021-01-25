@@ -17,6 +17,7 @@ import {
   DELETE_MINIFIGURE,
   DELETE_MINIFIGURE_SUCCESS,
   DELETE_MINIFIGURE_ERROR,
+  DELETE_WISHLIST,
 } from '../types';
 
 export default {
@@ -78,8 +79,15 @@ export default {
       const { data } = await deleteMinifigure({ itemId });
       const filteredData = state.minifigures
         .filter((minifig) => minifig.itemId !== data.itemId);
+      const filteredWishlist = state.wishlist.minifigures
+        .filter((minifig) => minifig.itemId !== data.itemId);
 
       commit(DELETE_MINIFIGURE, filteredData);
+      commit(DELETE_WISHLIST, {
+        minifigures: filteredWishlist,
+        sets: state.wishlist.sets,
+      });
+
       commit(DELETE_MINIFIGURE_SUCCESS);
     } catch (error) {
       commit(DELETE_MINIFIGURE_ERROR, error);

@@ -51,5 +51,6 @@
   "minLenIs": "Min length is",
   "instruction": "Build instruction",
   "alreadyRegistered?": "Already registered?",
-  "notRegistered?": "Not registered yet?"
+  "notRegistered?": "Not registered yet?",
+  "wishlist": "Wishlist"
 }

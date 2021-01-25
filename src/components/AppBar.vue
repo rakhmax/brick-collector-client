@@ -11,36 +11,49 @@
       <v-icon
         class="mr-3"
         color="green"
-        x-large>mdi-toy-brick-marker</v-icon>
-      <v-app-bar-title> Brick Collector </v-app-bar-title>
+        x-large
+      >mdi-toy-brick-marker</v-icon>
+      <v-app-bar-title>Brick Collector</v-app-bar-title>
     </div>
     <div class="ml-4">
       <v-btn
         exact
         text
-        to="/minifigures">
-        {{ $t("minifigures") }}
+        to="/minifigures"
+      >
+        {{ $t('minifigures') }}
       </v-btn>
       <v-btn
         exact
         text
-        to="/sets">
-        {{ $t("sets") }}
+        to="/sets"
+      >
+        {{ $t('sets') }}
+      </v-btn>
+      <v-btn
+        exact
+        text
+        to="/wishlist"
+      >
+        {{ $t('wishlist') }}
       </v-btn>
     </div>
     <v-spacer></v-spacer>
     <v-row
       v-if="$route.meta.withExtensionBar"
-      align="center">
+      align="center"
+    >
       <v-menu
         bottom
         min-width="200px"
         offset-y
-        rounded>
+        rounded
+      >
         <template v-slot:activator="{ on }">
           <v-btn
             icon
-            v-on="on">
+            v-on="on"
+          >
             <v-icon>mdi-tune</v-icon>
           </v-btn>
         </template>
@@ -75,12 +88,14 @@
         bottom
         min-width="200px"
         offset-y
-        rounded>
+        rounded
+      >
         <template v-slot:activator="{ on }">
           <v-btn
             icon
             x-large
-            v-on="on">
+            v-on="on"
+          >
             <v-avatar
               color="brown"
               size="48">
@@ -95,33 +110,15 @@
             <div class="mx-auto text-center">
               <v-avatar
                 class="mb-2"
-                color="brown">
+                color="brown"
+              >
                 <span class="white--text headline">
                   {{ username.charAt(0).toUpperCase() }}
                 </span>
               </v-avatar>
               <h3>{{ username }}</h3>
               <v-divider class="my-3"></v-divider>
-              <!-- <v-list
-                flat
-                >
-                <v-subheader>General</v-subheader>
-                  <v-list-item>
-                    <template #default="{ active }">
-                      <v-list-item-action>
-                        <v-checkbox
-                          class="pa-2"
-                          hide-details
-                          :input-value="active"
-                          @change="handleSwitchDarkMode"
-                        ></v-checkbox>
-                      </v-list-item-action>
-                      <v-list-item-content>
-                        <v-list-item-title>Темная тема</v-list-item-title>
-                      </v-list-item-content>
-                    </template>
-                  </v-list-item>
-              </v-list> -->
+              <switcher-view></switcher-view>
               <v-checkbox
                 class="pa-2"
                 hide-details
@@ -135,7 +132,7 @@
                 rounded
                 text
                 @click="handleLogout"
-              >{{ $t("logout") }}</v-btn>
+              >{{ $t('logout') }}</v-btn>
             </div>
           </v-list-item-content>
         </v-card>
@@ -152,10 +149,16 @@ import AuthHelper from '@/helpers/auth';
 import { SET_DARK_MODE } from '@/store/types';
 import FilterCategory from './FilterCategory.vue';
 import FilterYear from './FilterYear.vue';
+import SwitcherView from './SwitcherView.vue';
 
 export default {
-  components: { FilterCategory, FilterYear },
   name: 'AppBar',
+
+  components: {
+    FilterCategory,
+    FilterYear,
+    SwitcherView,
+  },
 
   data: () => ({
     isSearch: false,

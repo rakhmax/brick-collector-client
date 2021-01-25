@@ -3,7 +3,7 @@
     class="mx-auto"
     outlined
     :to="{
-      path: `${$route.path}/${item.itemId}`,
+      name: itemType === 'Set' ? 'Set' : 'Minifigure',
       params: item
     }"
   >
@@ -46,40 +46,22 @@
         </v-list-item-subtitle>
       </v-list-item-content>
     </v-list-item>
-    <v-expand-transition>
-      <div v-show="expanded">
-        <v-divider></v-divider>
-        <v-card-text>
-          <slot name="info"></slot>
-          <table-price-guide
-            :item="item"
-            :item-type="itemType"
-          ></table-price-guide>
-        </v-card-text>
-      </div>
-    </v-expand-transition>
   </v-card>
 </template>
 
 <script>
 import Actions from '@/components/Actions.vue';
-import TablePriceGuide from '@/components/TablePriceGuide.vue';
 
 export default {
   name: 'ListItem',
 
   components: {
     Actions,
-    TablePriceGuide,
   },
 
   props: {
     item: Object,
     itemType: String,
   },
-
-  data: () => ({
-    expanded: false,
-  }),
 };
 </script>

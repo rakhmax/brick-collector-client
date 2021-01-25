@@ -17,7 +17,7 @@
       </v-col>
       <v-col>
         <h2 v-html="item.name"></h2>
-        <p>{{ item.itemId }} | {{ categoryName(item.categoryId) }}</p>
+        <p>{{ formatSetId(item.itemId) }} | {{ categoryName(item.categoryId) }}</p>
         <p v-if="item.price">{{ $t('price') }}: {{ formatPrice(item.price) }}</p>
         <p>{{ $t('qty') }}: {{ item.qty }}</p>
         <p>{{ $t('releaseYear') }}: {{ item.year }}</p>

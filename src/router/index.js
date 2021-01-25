@@ -53,6 +53,15 @@ const routes = [
     },
   },
   {
+    path: '/wishlist',
+    name: 'Wishlist',
+    component: () => import('../pages/Wishlist.vue'),
+    meta: {
+      requiresAuth: true,
+      title: 'wishlist',
+    },
+  },
+  {
     path: '/statistics',
     name: 'Statistics',
     component: () => import('../pages/Statistics.vue'),

@@ -51,5 +51,6 @@
   "minLenIs": "Минимальная длина",
   "instruction": "Инструкция",
   "alreadyRegistered?": "Уже зарегистрированы?",
-  "notRegistered?": "Еще нет аккаунта?"
+  "notRegistered?": "Еще нет аккаунта?",
+  "wishlist": "Желаемое"
 }

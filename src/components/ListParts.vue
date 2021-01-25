@@ -11,7 +11,7 @@
         v-if="minifigs.qty"
         class="mb-8"
       >
-        <h3 class="mb-4">{{ $t('minifigures') }} ({{ minifigs.qty }})</h3>
+        <h3 class="mb-1">{{ $t('minifigures') }} ({{ minifigs.qty }})</h3>
         <v-badge
           v-for="part in minifigs.items"
           :key="part.name + part.color"

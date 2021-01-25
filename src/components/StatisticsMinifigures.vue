@@ -3,7 +3,7 @@
     flat
     :rounded="false"
   >
-    <v-card-title>{{ $t("minifigures") }}</v-card-title>
+    <v-card-title>{{ $t('minifigures') }}</v-card-title>
     <v-row>
       <v-col
         v-for="(stat, idx) in minifiguresStatistics"

@@ -60,10 +60,8 @@ export default {
   methods: {
     handleClickRow(item) {
       this.$router.push({
-        name: this.$router.currentRoute.name.slice(0, -1),
-        params: {
-          ...item,
-        },
+        name: this.itemType === 'Set' ? 'Set' : 'Minifigure',
+        params: item,
       });
     },
 
