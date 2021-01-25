@@ -15,14 +15,23 @@
       </v-btn>
     </template>
     <v-list>
-      <v-list-item @click="openEditDialog(item)">
+      <v-list-item
+        v-if="$route.name === 'Wishlist'"
+        @click="moveToCollection(item.itemId)"
+      >
+        <v-list-item-title>{{ $t('moveToCol') }}</v-list-item-title>
+      </v-list-item>
+      <v-list-item
+        v-else
+        @click="openEditDialog(item)"
+      >
         <v-list-item-title>{{ $t('edit') }}</v-list-item-title>
       </v-list-item>
       <v-list-item @click="deleteItem(item.itemId)">
         <v-list-item-title>{{ $t('delete') }}</v-list-item-title>
       </v-list-item>
       <v-list-item
-        v-if="item.minifigures"
+        v-if="item.minifigures && $route.name !== 'Wishlist'"
         @click="deleteItem(item.itemId, item.minifigures, true)"
       >
         <v-list-item-title>{{ $t('deleteWithMinifigures') }}</v-list-item-title>
@@ -34,7 +43,7 @@
 <script>
 import { mapState } from 'vuex';
 import { eventBus } from '@/main';
-import { DELETE_MINIFIGURE, DELETE_SET } from '@/store/types';
+import { DELETE_MINIFIGURE, DELETE_SET, UPDATE_WISHLIST } from '@/store/types';
 
 export default {
   name: 'Actions',
@@ -49,6 +58,14 @@ export default {
       eventBus.$emit('openEditDialog', {
         item,
         dialog: true,
+      });
+    },
+
+    moveToCollection(itemId) {
+      this.$store.dispatch(UPDATE_WISHLIST, {
+        itemId,
+        type: this.itemType.charAt(0),
+        inWishlist: false,
       });
     },
 

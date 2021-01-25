@@ -52,5 +52,7 @@
   "instruction": "Инструкция",
   "alreadyRegistered?": "Уже зарегистрированы?",
   "notRegistered?": "Еще нет аккаунта?",
-  "wishlist": "Желаемое"
+  "wishlist": "Желаемое",
+  "addWishlis": "Добавить в желаемое",
+  "moveToCol": "Переместить в коллекцию"
 }

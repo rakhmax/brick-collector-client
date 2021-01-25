@@ -78,9 +78,7 @@ export default {
   methods: {
     async fetchSets() {
       await this.$store.dispatch(GET_SETS);
-      console.log(this.sets);
       this.sets = this.allSets;
-      console.log(this.sets);
     },
   },
 

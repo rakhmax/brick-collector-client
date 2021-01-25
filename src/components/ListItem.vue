@@ -2,6 +2,7 @@
   <v-card
     class="mx-auto"
     outlined
+    :ripple="false"
     :to="{
       name: itemType === 'Set' ? 'Set' : 'Minifigure',
       params: item

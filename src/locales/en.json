@@ -52,5 +52,7 @@
   "instruction": "Build instruction",
   "alreadyRegistered?": "Already registered?",
   "notRegistered?": "Not registered yet?",
-  "wishlist": "Wishlist"
+  "wishlist": "Wishlist",
+  "addWishlis": "Add to wishlist",
+  "moveToCol": "Move to collection"
 }

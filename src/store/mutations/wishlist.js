@@ -53,8 +53,15 @@ export default {
     state.error = payload;
   },
 
-  [UPDATE_WISHLIST](state, { idx, data }) {
-    state.minifigures.splice(idx, 1, data);
+  [UPDATE_WISHLIST](state, { idx, data, type }) {
+    if (type === 'M') {
+      state.minifigures.push(data);
+      state.wishlist.minifigures.splice(idx, 1);
+    }
+    if (type === 'S') {
+      state.sets.push(data);
+      state.wishlist.sets.splice(idx, 1);
+    }
   },
   [UPDATE_WISHLIST_SUCCESS](state) {
     state.saving = false;

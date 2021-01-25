@@ -71,9 +71,17 @@ export default {
       state.saving = true;
 
       const { data } = await updateWishlist(payload);
-      const idx = state.minifigures.findIndex((set) => set.itemId === data.itemId);
 
-      commit(UPDATE_WISHLIST, { idx, data });
+      let idx;
+
+      if (payload.type === 'M') {
+        idx = state.minifigures.findIndex((minifig) => minifig.itemId === data.itemId);
+      }
+      if (payload.type === 'S') {
+        idx = state.sets.findIndex((set) => set.itemId === data.itemId);
+      }
+
+      commit(UPDATE_WISHLIST, { idx, data, type: payload.type });
       commit(UPDATE_WISHLIST_SUCCESS);
     } catch (error) {
       commit(UPDATE_WISHLIST_ERROR, error);
