@@ -78,7 +78,11 @@ export default {
         idx = state.minifigures.findIndex((minifig) => minifig.itemId === data.itemId);
       }
       if (payload.type === 'S') {
-        idx = state.sets.findIndex((set) => set.itemId === data.itemId);
+        idx = {
+          minifigures: data.minifigures.map((minifig) => state.minifigures
+            .findIndex((mf) => minifig.itemId === mf.itemId)),
+          set: state.sets.findIndex((set) => set.itemId === data.set.itemId),
+        };
       }
 
       commit(UPDATE_WISHLIST, { idx, data, type: payload.type });

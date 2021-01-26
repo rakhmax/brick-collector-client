@@ -13,7 +13,7 @@
         color="green"
         x-large
       >mdi-toy-brick-marker</v-icon>
-      <v-app-bar-title>Brick Collector</v-app-bar-title>
+      <v-app-bar-title>BrickCollector</v-app-bar-title>
     </div>
     <div class="ml-4">
       <v-btn

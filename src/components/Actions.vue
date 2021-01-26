@@ -31,7 +31,7 @@
         <v-list-item-title>{{ $t('delete') }}</v-list-item-title>
       </v-list-item>
       <v-list-item
-        v-if="item.minifigures && $route.name !== 'Wishlist'"
+        v-if="item.minifigures && item.minifigures.length && $route.name !== 'Wishlist'"
         @click="deleteItem(item.itemId, item.minifigures, true)"
       >
         <v-list-item-title>{{ $t('deleteWithMinifigures') }}</v-list-item-title>

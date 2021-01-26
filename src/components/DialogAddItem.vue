@@ -21,6 +21,7 @@
                   <search-box></search-box>
                 </v-col>
                 <v-col
+                  v-if="$route.name !== 'Wishlist'"
                   cols="12"
                   md="3"
                   sm="6"

@@ -59,7 +59,9 @@ export default {
       state.wishlist.minifigures.splice(idx, 1);
     }
     if (type === 'S') {
-      state.sets.push(data);
+      state.minifigures.push(...data.minifigures);
+      state.wishlist.minifigures.splice(idx, 1);
+      state.sets.push(data.set);
       state.wishlist.sets.splice(idx, 1);
     }
   },

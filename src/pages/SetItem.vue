@@ -22,13 +22,33 @@
         <p>{{ $t('qty') }}: {{ item.qty }}</p>
         <p>{{ $t('releaseYear') }}: {{ item.year }}</p>
         <p>
-          <a :href="`https://www.lego.com/en-my/service/buildinginstructions/${formatSetId(item.itemId)}`">
+          <a
+            :href="`https://www.lego.com/en-my/service/buildinginstructions/${formatSetId(item.itemId)}`"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
             {{ $t('instruction') }}
+          </a>
+        </p>
+        <p>
+          <a
+            :href="`https://www.bricklink.com/v2/catalog/catalogitem.page?S=${item.itemId}#T=S&O={%22loc%22:%22RU%22,%22iconly%22:0}`"
+            rel="noopener noreferrer"
+            :style="{ display: 'inline-flex', alignItems: 'center' }"
+            target="_blank"
+            >
+            {{ $t('seeOnBL') }}
+            <v-img
+              class="ml-1"
+              height="16px"
+              src="http://static.bricklink.com/renovate/img/favicon/favicon-16x16.png"
+              width="16px"
+            ></v-img>
           </a>
         </p>
         <table-price-guide
           :item="item"
-          itemType="Set"
+          item-type="Set"
         ></table-price-guide>
       </v-col>
     </v-row>
