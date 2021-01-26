@@ -51,7 +51,7 @@ export default {
   },
 
   data: () => ({
-    itemsPerPage: 25,
+    itemsPerPage: 50,
     checkbox: false,
     expanded: [],
     headers: tableHeaders,
@@ -67,7 +67,7 @@ export default {
 
     scroll() {
       if (window.scrollY > document.documentElement.offsetHeight - window.innerHeight - 100) {
-        this.itemsPerPage += 15;
+        this.itemsPerPage += 25;
       }
     },
   },
