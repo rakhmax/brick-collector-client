@@ -70,6 +70,7 @@
         prepend-inner-icon="mdi-magnify"
         single-line
         solo
+        :style="{ width: '200px' }"
         @blur="clearSearch"
         @input="handleSearch"
       ></v-text-field>
