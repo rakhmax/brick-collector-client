@@ -88,7 +88,7 @@
       </v-expand-transition>
     </div>
     <dialog-add-item :item-type="itemType"></dialog-add-item>
-    <dialog-edit-item :item-type="itemType"></dialog-edit-item>
+    <!-- <dialog-edit-item :item-type="itemType"></dialog-edit-item> -->
   </v-container>
 </template>
 
@@ -101,7 +101,7 @@ import TableView from '@/views/TableView.vue';
 import CardItem from '@/components/CardItem.vue';
 import ListItem from '@/components/ListItem.vue';
 import DialogAddItem from '@/components/DialogAddItem.vue';
-import DialogEditItem from '@/components/DialogEditItem.vue';
+// import DialogEditItem from '@/components/DialogEditItem.vue';
 
 export default {
   name: 'Wishlist',
@@ -113,7 +113,7 @@ export default {
     CardItem,
     ListItem,
     DialogAddItem,
-    DialogEditItem,
+    // DialogEditItem,
   },
 
   data: () => ({

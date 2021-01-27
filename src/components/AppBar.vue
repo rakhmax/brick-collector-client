@@ -2,9 +2,21 @@
   <v-app-bar
     app
     color="light"
-    elevate-on-scroll
-    :hide-on-scroll="$vuetify.breakpoint.xsOnly"
+    flat
   >
+    <v-btn
+      v-if="singlePage"
+      icon
+      v-on="on"
+      @click="$router.go(-1)"
+    >
+      <v-icon>mdi-arrow-left</v-icon>
+    </v-btn>
+    <v-app-bar-nav-icon
+      v-if="$vuetify.breakpoint.smAndDown && !singlePage"
+      class="mr-3"
+      @click.stop="openSidebar"
+    ></v-app-bar-nav-icon>
     <div
       v-if="$vuetify.breakpoint.smAndUp"
       class="d-flex align-center">
@@ -15,35 +27,13 @@
       >mdi-toy-brick-marker</v-icon>
       <v-app-bar-title>BrickCollector</v-app-bar-title>
     </div>
-    <div class="ml-4">
-      <v-btn
-        exact
-        text
-        to="/minifigures"
-      >
-        {{ $t('minifigures') }}
-      </v-btn>
-      <v-btn
-        exact
-        text
-        to="/sets"
-      >
-        {{ $t('sets') }}
-      </v-btn>
-      <v-btn
-        exact
-        text
-        to="/wishlist"
-      >
-        {{ $t('wishlist') }}
-      </v-btn>
-    </div>
-    <v-spacer></v-spacer>
+    <v-spacer v-if="$vuetify.breakpoint.smAndUp"></v-spacer>
     <v-row
       v-if="$route.meta.withExtensionBar"
       align="center"
     >
       <v-menu
+        v-if="$vuetify.breakpoint.smAndUp"
         bottom
         min-width="200px"
         offset-y
@@ -74,6 +64,7 @@
         color="green"
         dense
         flat
+        full-width
         hide-details
         :label="$t('searchCollection')"
         prepend-inner-icon="mdi-magnify"
@@ -82,8 +73,19 @@
         @blur="clearSearch"
         @input="handleSearch"
       ></v-text-field>
+      <v-btn
+        v-if="$vuetify.breakpoint.xsOnly"
+        icon
+        v-on="on"
+        @click="openMobileSettings"
+      >
+        <v-icon>mdi-tune</v-icon>
+      </v-btn>
     </v-row>
-    <div class="ml-4">
+    <div
+      v-if="$vuetify.breakpoint.mdAndUp"
+      class="ml-4"
+    >
       <v-menu
         bottom
         min-width="200px"
@@ -97,7 +99,7 @@
             v-on="on"
           >
             <v-avatar
-              color="brown"
+              color="green"
               size="48">
               <span class="white--text headline">
                 {{ username.charAt(0) }}
@@ -110,7 +112,7 @@
             <div class="mx-auto text-center">
               <v-avatar
                 class="mb-2"
-                color="brown"
+                color="green"
               >
                 <span class="white--text headline">
                   {{ username.charAt(0).toUpperCase() }}
@@ -185,14 +187,17 @@ export default {
       });
     },
 
+    handleSwitchDarkMode() {
+      localStorage.setItem('darkMode', Number(!this.$vuetify.theme.dark));
+      this.$store.dispatch(SET_DARK_MODE, !this.$vuetify.theme.dark);
+    },
+
     openMobileSettings() {
       eventBus.$emit('openMobileSettings', true);
     },
 
-    handleSwitchDarkMode(val) {
-      console.log(val);
-      localStorage.setItem('darkMode', Number(!this.$vuetify.theme.dark));
-      this.$store.dispatch(SET_DARK_MODE, !this.$vuetify.theme.dark);
+    openSidebar() {
+      eventBus.$emit('openSidebar', true);
     },
   },
 
@@ -226,6 +231,11 @@ export default {
       const auth = new AuthHelper();
 
       return auth.getUsername();
+    },
+
+    singlePage() {
+      return this.$route.name === 'Minifigure'
+        || this.$route.name === 'Set';
     },
   },
 };

@@ -2,21 +2,19 @@
   <div>
     <v-fab-transition>
       <v-btn
-        v-if="$route.name !== 'Statistics'"
+        v-if="allowToAdd"
         bottom
-        :class="$vuetify.breakpoint.xsOnly && navIsVisible && 'mb-3'"
         color="green"
         dark
         fab
         fixed
         right
-        :style="{ zIndex: 5, transitionProperty: 'margin-bottom' }"
         @click="openAddDialog"
       >
         <v-icon dark>mdi-plus</v-icon>
       </v-btn>
     </v-fab-transition>
-    <v-bottom-navigation
+    <!-- <v-bottom-navigation
       v-if="$vuetify.breakpoint.xsOnly"
       color="green"
       fixed
@@ -39,7 +37,7 @@
         <span>{{ $t('statistics') }}</span>
         <v-icon>mdi-chart-arc</v-icon>
       </v-btn>
-    </v-bottom-navigation>
+    </v-bottom-navigation> -->
     <v-bottom-sheet
       v-if="$vuetify.breakpoint.xsOnly"
       v-model="mobileMenu"
@@ -54,12 +52,6 @@
             class="pa-3"
             justify="space-between"
           >
-            <v-btn
-              icon
-              @click="handleLogout"
-            >
-              <v-icon>mdi-logout</v-icon>
-            </v-btn>
             <switcher-view></switcher-view>
             <v-btn
               icon
@@ -79,7 +71,7 @@
 <script>
 import { mapState } from 'vuex';
 import { eventBus } from '@/main';
-import FilterCategory from '@/components/FilterCategory.vue';
+// import FilterCategory from '@/components/FilterCategory.vue';
 import SwitcherView from '@/components/SwitcherView.vue';
 import { SET_DARK_MODE } from '@/store/types';
 import AuthHelper from '@/helpers/auth';
@@ -88,7 +80,7 @@ export default {
   name: 'BottomNavigation',
 
   components: {
-    FilterCategory,
+    // FilterCategory,
     SwitcherView,
   },
 
@@ -117,20 +109,36 @@ export default {
     },
   },
 
+  computed: {
+    ...mapState({ darkMode: (state) => state.darkMode }),
+
+    allowToAdd() {
+      return this.$route.name === 'Minifigures'
+        || this.$route.name === 'Sets'
+        || this.$route.name === 'Wishlist';
+    },
+  },
+
   created() {
     eventBus.$on('openMobileSettings', (value) => {
       this.mobileMenu = value;
     });
   },
-
-  computed: {
-    ...mapState({ darkMode: (state) => state.darkMode }),
-  },
 };
 </script>
 
-<style>
+<style scoped>
 .v-bottom-navigation.v-item-group .v-btn {
   height: inherit !important;
+}
+.v-input__control {
+  width: 100% !important
+}
+.v-label {
+  width: 100% !important
+}
+
+.v-item-group > .v-btn {
+  width: 53%;
 }
 </style>

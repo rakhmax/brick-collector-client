@@ -7,6 +7,7 @@
       >
         <v-img
           aspect-ratio="1"
+          class="mx-auto"
           contain
           :lazy-src="`https://img.bricklink.com/SL/${$route.params.itemId}.jpg`"
           light
