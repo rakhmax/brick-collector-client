@@ -3,8 +3,8 @@
     fluid
     :style="{ marginBottom: '110px' }"
   >
-    <statistics-minifigures v-if="$store.state.statistics.minifigures"></statistics-minifigures>
-    <statistics-sets v-if="$store.state.statistics.sets"></statistics-sets>
+    <statistics-minifigures></statistics-minifigures>
+    <statistics-sets></statistics-sets>
   </v-container>
 </template>
 

@@ -7,7 +7,7 @@
     <v-card-title>{{ $t('sets') }}</v-card-title>
     <v-row>
       <v-col
-        v-for="(stat, idx) in setsStatistics"
+        v-for="(stat, idx) in stats"
         :key="stat.title + idx"
         cols="12"
         md="3"
@@ -30,14 +30,49 @@
 
 <script>
 import { GET_SETS } from '@/store/types';
+import { mapState } from 'vuex';
 
 export default {
   name: 'StatisticsSets',
 
   computed: {
-    setsStatistics() {
-      return this.$store.getters.setsStatistics;
-    },
+    ...mapState({
+      stats({ sets }) {
+        return [
+          {
+            title: this.$t('total'),
+            value: sets.reduce((acc, set) => {
+              if (set.qty) {
+                return acc + set.qty;
+              }
+              return acc;
+            }, 0),
+          },
+          {
+            title: this.$t('unique'),
+            value: sets.length || 0,
+          },
+          {
+            title: this.$t('dups'),
+            value: sets.reduce((acc, set) => {
+              if (set.qty) {
+                return acc + set.qty;
+              }
+              return acc;
+            }, 0) - sets.length,
+          },
+          {
+            title: this.$t('overallPrice'),
+            value: sets.reduce((acc, set) => {
+              if (set.price) {
+                return acc + set.price;
+              }
+              return acc;
+            }, 0),
+          },
+        ];
+      },
+    }),
   },
 
   created() {

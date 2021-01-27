@@ -6,7 +6,7 @@
     <v-card-title>{{ $t('minifigures') }}</v-card-title>
     <v-row>
       <v-col
-        v-for="(stat, idx) in minifiguresStatistics"
+        v-for="(stat, idx) in stats"
         :key="stat.title + idx"
         cols="12"
         md="3"
@@ -28,15 +28,50 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
 import { GET_MINIFIGURES } from '@/store/types';
 
 export default {
   name: 'StatisticsMinifigures',
 
   computed: {
-    minifiguresStatistics() {
-      return this.$store.getters.minifiguresStatistics;
-    },
+    ...mapState({
+      stats({ minifigures }) {
+        return [
+          {
+            title: this.$t('total'),
+            value: minifigures.reduce((acc, minifigure) => {
+              if (minifigure.qty) {
+                return acc + minifigure.qty;
+              }
+              return acc;
+            }, 0),
+          },
+          {
+            title: this.$t('unique'),
+            value: minifigures.length || 0,
+          },
+          {
+            title: this.$t('dups'),
+            value: minifigures.reduce((acc, minifigure) => {
+              if (minifigure.qty) {
+                return acc + minifigure.qty;
+              }
+              return acc;
+            }, 0) - minifigures.length,
+          },
+          {
+            title: this.$t('overallPrice'),
+            value: minifigures.reduce((acc, minifigure) => {
+              if (minifigure.price) {
+                return acc + minifigure.price;
+              }
+              return acc;
+            }, 0),
+          },
+        ];
+      },
+    }),
   },
 
   created() {

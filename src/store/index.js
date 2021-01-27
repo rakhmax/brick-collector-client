@@ -26,11 +26,6 @@ export default new Vuex.Store({
     minifigures: [],
     layout: localStorage.getItem('layout'),
     isMobile: window.innerWidth < 600,
-    statistics: {
-      minifigures: {},
-      sets: {},
-      parts: {},
-    },
     saving: false,
     sets: [],
     categories: [],
@@ -50,50 +45,5 @@ export default new Vuex.Store({
     ...setsActions,
     ...toolsActions,
     ...wishlistActions,
-  },
-  modules: {
-  },
-  getters: {
-    setsStatistics({ statistics }) {
-      return [
-        {
-          title: Vue.prototype.$t('total'),
-          value: statistics.sets.total || 0,
-        },
-        {
-          title: Vue.prototype.$t('unique'),
-          value: statistics.sets.unique || 0,
-        },
-        {
-          title: Vue.prototype.$t('dups'),
-          value: statistics.sets.total - statistics.sets.unique || 0,
-        },
-        {
-          title: Vue.prototype.$t('overallPrice'),
-          value: statistics.sets.totalPrice || 0,
-        },
-      ];
-    },
-
-    minifiguresStatistics({ statistics }) {
-      return [
-        {
-          title: Vue.prototype.$t('total'),
-          value: statistics.minifigures.total || 0,
-        },
-        {
-          title: Vue.prototype.$t('unique'),
-          value: statistics.minifigures.unique || 0,
-        },
-        {
-          title: Vue.prototype.$t('dups'),
-          value: statistics.minifigures.total - statistics.minifigures.unique || 0,
-        },
-        {
-          title: Vue.prototype.$t('overallPrice'),
-          value: statistics.minifigures.totalPrice || 0,
-        },
-      ];
-    },
   },
 });
