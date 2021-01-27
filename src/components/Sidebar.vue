@@ -25,7 +25,7 @@
         </v-list-item-avatar>
         <v-list-item-content>
           <v-list-item-title>{{ username }}</v-list-item-title>
-          <v-list-item-subtitle>Logged In</v-list-item-subtitle>
+          <!-- <v-list-item-subtitle>Logged In</v-list-item-subtitle> -->
         </v-list-item-content>
       </v-list-item>
       <v-divider></v-divider>
@@ -88,7 +88,7 @@
           outlined
           @click="handleLogout"
         >
-          Logout
+          {{ $t('logout') }}
         </v-btn>
       </div>
     </template>
