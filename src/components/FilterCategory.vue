@@ -72,7 +72,7 @@ export default {
           return Array.from(
             new Set(state.sets.map((set) => set.categoryId)),
             (category) => ({
-              text: this.categoryName(category),
+              text: `${this.categoryName(category)} (${state.sets.filter((set) => set.categoryId === category).length})`,
               value: category,
             }),
           );
@@ -81,7 +81,7 @@ export default {
           return Array.from(
             new Set(state.minifigures.map((minifig) => minifig.categoryId)),
             (category) => ({
-              text: this.categoryName(category),
+              text: `${this.categoryName(category)} (${state.minifigures.filter((minifig) => minifig.categoryId === category).length})`,
               value: category,
             }),
           );
