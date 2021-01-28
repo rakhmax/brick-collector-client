@@ -16,9 +16,9 @@
       >
       <v-img
         contain
-        :lazy-src="`https://img.bricklink.com/${itemType.charAt(0)}/${item.itemId}.jpg`"
+        :lazy-src="lazySrc"
         light
-        :src="`https://img.bricklink.com/${itemType.charAt(0)}/${item.itemId}.jpg`"
+        :src="src"
         :style="{ background: '#fff' }"
       ></v-img>
       </v-list-item-avatar>
@@ -63,6 +63,24 @@ export default {
   props: {
     item: Object,
     itemType: String,
+  },
+
+  computed: {
+    lazySrc() {
+      if (this.item.itemId.length === 6 && this.itemType === 'Set') {
+        return `https://img.bricklink.com/${this.itemType.charAt(0)}/${this.item.itemId}.gif`;
+      }
+
+      return `https://img.bricklink.com/${this.itemType.charAt(0)}/${this.item.itemId}.jpg`;
+    },
+
+    src() {
+      if (this.item.itemId.length === 6 && this.itemType === 'Set') {
+        return `https://img.bricklink.com/${this.itemType.charAt(0)}/${this.item.itemId}.gif`;
+      }
+
+      return `https://img.bricklink.com/${this.itemType.charAt(0)}/${this.item.itemId}.jpg`;
+    },
   },
 };
 </script>

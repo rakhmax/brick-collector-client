@@ -16,15 +16,6 @@ import {
 export default {
   [GET_SETS](state, { data }) {
     state.sets = data;
-    state.statistics.sets = {
-      total: data.total,
-      unique: data.length,
-      totalPrice: state.sets.reduce((acc, set) => acc + Number(set.price), 0),
-    };
-    state.statistics.parts = {
-      total: state.sets.reduce((acc, set) => acc + Number(set.pieces), 0),
-      totalExtra: state.sets.reduce((acc, set) => acc + Number(set.extraPieces), 0),
-    };
   },
   [GET_SETS_SUCCESS](state) {
     state.loading = false;

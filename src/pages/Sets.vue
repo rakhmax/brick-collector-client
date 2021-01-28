@@ -118,10 +118,11 @@ export default {
 
     eventBus.$on('changeCategoryFilter', (value) => {
       // this.filterRules
+      console.log(value);
       if (!value || !value.length) this.sets = this.allSets;
       else {
-        this.sets = this.sets
-          .filter((set) => value.includes(set.categoryId) && value.includes(set.categoryId));
+        this.sets = this.allSets
+          .filter((set) => value.includes(set.categoryId));
       }
     });
   },

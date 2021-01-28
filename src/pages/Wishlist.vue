@@ -1,11 +1,8 @@
 <template>
-  <v-container
-    fluid
-    :style="{ marginBottom: '110px' }"
-  >
+  <div class="py-3">
     <div class="mb-3">
       <span
-        class="text-h6"
+        class="text-h6 ml-3"
         @click="handleExpand(0)"
       >{{ $t('minifigures') }}<v-icon>mdi-menu-down</v-icon></span>
       <v-expand-transition>
@@ -18,7 +15,8 @@
             <template #item="{ item }">
               <card-item
                 :item="item"
-                item-type="Minifig"></card-item>
+                item-type="Minifig"
+              ></card-item>
             </template>
           </card-view>
           <list-view
@@ -30,7 +28,8 @@
             <template #item="{ item }">
               <list-item
                 :item="item"
-                item-type="Minifig"></list-item>
+                item-type="Minifig"
+              ></list-item>
             </template>
           </list-view>
           <table-view
@@ -42,7 +41,8 @@
             <template #item="{ item }">
               <table-item
                 :item="item"
-                item-type="Minifig"></table-item>
+                item-type="Minifig"
+              ></table-item>
             </template>
           </table-view>
         </div>
@@ -50,7 +50,7 @@
     </div>
     <div class="mb-3">
       <span
-        class="text-h6"
+        class="text-h6 ml-3"
         @click="handleExpand(1)"
       >{{ $t('sets') }}<v-icon>mdi-menu-down</v-icon></span>
       <v-expand-transition>
@@ -63,7 +63,8 @@
             <template #item="{ item }">
               <card-item
                 :item="item"
-                item-type="Set"></card-item>
+                item-type="Set"
+              ></card-item>
             </template>
           </card-view>
           <list-view
@@ -75,7 +76,8 @@
             <template #item="{ item }">
               <list-item
                 :item="item"
-                item-type="Set"></list-item>
+                item-type="Set"
+              ></list-item>
             </template>
           </list-view>
           <table-view
@@ -89,7 +91,7 @@
     </div>
     <dialog-add-item :item-type="itemType"></dialog-add-item>
     <!-- <dialog-edit-item :item-type="itemType"></dialog-edit-item> -->
-  </v-container>
+  </div>
 </template>
 
 <script>

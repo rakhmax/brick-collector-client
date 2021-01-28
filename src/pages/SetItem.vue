@@ -2,19 +2,29 @@
   <v-container>
     <v-row>
       <v-col
-      cols="12"
-      sm="auto"
+        cols="12"
+        sm="auto"
       >
-        <v-img
-          aspect-ratio="1"
-          class="mx-auto"
-          contain
-          :lazy-src="`https://img.bricklink.com/SL/${$route.params.itemId}.jpg`"
-          light
-          :src="`https://img.bricklink.com/SL/${$route.params.itemId}.jpg`"
-          :style="{ background: '#fff' }"
-          width="300px"
-        ></v-img>
+        <v-window
+          v-model="onboarding"
+          show-arrows
+        >
+          <v-window-item
+            v-for="image in images"
+            :key="image.url"
+          >
+            <v-img
+              aspect-ratio="1"
+              class="mx-auto"
+              contain
+              :lazy-src="image.url"
+              light
+              :src="image.url"
+              :style="{ background: '#fff' }"
+              width="300px"
+            ></v-img>
+          </v-window-item>
+        </v-window>
       </v-col>
       <v-col>
         <h2 v-html="item.name"></h2>
@@ -66,12 +76,17 @@ import ListParts from '@/components/ListParts.vue';
 import TablePriceGuide from '@/components/TablePriceGuide.vue';
 
 export default {
-  components: { ListParts, TablePriceGuide },
   name: 'SetItem',
+
+  components: {
+    ListParts,
+    TablePriceGuide,
+  },
 
   data: () => ({
     loading: false,
     item: {},
+    onboarding: 0,
   }),
 
   methods: {
@@ -85,6 +100,16 @@ export default {
       } catch (error) {
         this.loading = false;
       }
+    },
+  },
+
+  computed: {
+    images() {
+      return [
+        { url: `https://img.bricklink.com/SL/${this.$route.params.itemId}.jpg` },
+        { url: `https://img.bricklink.com/ItemImage/ON/0/${this.$route.params.itemId}.png` },
+        { url: `https://img.bricklink.com/ItemImage/IN/0/${this.$route.params.itemId}.png` },
+      ];
     },
   },
 

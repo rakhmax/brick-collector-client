@@ -1,16 +1,17 @@
 <template>
   <v-btn-toggle
     v-model="layout"
+    class="btn-group"
     dense
     @change="handleChangeLayout"
   >
-    <v-btn>
+    <v-btn class="btn-group__item">
       <v-icon>mdi-view-grid</v-icon>
     </v-btn>
-    <v-btn>
+    <v-btn class="btn-group__item">
       <v-icon>mdi-view-list</v-icon>
     </v-btn>
-    <v-btn>
+    <v-btn class="btn-group__item">
       <v-icon>mdi-table-large</v-icon>
     </v-btn>
   </v-btn-toggle>
@@ -39,3 +40,16 @@ export default {
   },
 };
 </script>
+
+<style scoped lang="scss">
+  @import '~vuetify/src/styles/styles.sass';
+  @media #{map-get($display-breakpoints, 'sm-and-down')} {
+    .btn-group {
+      width: calc(100% - 42px);
+
+      &__item {
+        width: calc(100% / 3)
+      }
+    }
+  }
+</style>

@@ -11,15 +11,19 @@
     <v-img
       contain
       height="200px"
-      :lazy-src="`https://img.bricklink.com/${itemType.charAt(0)}L/${item.itemId}.jpg`"
+      :lazy-src="lazySrc"
       light
-      :src="`https://img.bricklink.com/${itemType.charAt(0)}L/${item.itemId}.jpg`"
+      :src="src"
       :style="{ background: '#fff' }"
       width="auto"
     ></v-img>
     <v-card-title
       class="d-block"
-      :style="{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }"
+      :style="{
+        overflow: 'hidden',
+        textOverflow: 'ellipsis',
+        whiteSpace: 'nowrap'
+      }"
       :title="item.name"
       v-html="item.name"
     ></v-card-title>
@@ -52,6 +56,16 @@ export default {
   props: {
     item: Object,
     itemType: String,
+  },
+
+  computed: {
+    lazySrc() {
+      return `https://img.bricklink.com/${this.itemType.charAt(0)}L/${this.item.itemId}.jpg`;
+    },
+
+    src() {
+      return `https://img.bricklink.com/${this.itemType.charAt(0)}L/${this.item.itemId}.jpg`;
+    },
   },
 };
 </script>

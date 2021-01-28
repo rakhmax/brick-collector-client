@@ -1,7 +1,7 @@
 <template>
   <v-container
     fluid
-    :style="{ marginBottom: '110px' }"
+    :style="{ marginBottom: '12px' }"
   >
     <statistics-minifigures></statistics-minifigures>
     <statistics-sets></statistics-sets>
