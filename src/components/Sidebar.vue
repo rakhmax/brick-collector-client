@@ -79,7 +79,7 @@
       </v-list-item>
     </v-list>
     <template
-      v-if="$vuetify.breakpoint.xsOnly"
+      v-if="$vuetify.breakpoint.smAndDown"
       #append
     >
       <div class="pa-2">
