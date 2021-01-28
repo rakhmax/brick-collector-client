@@ -72,7 +72,13 @@ export default {
           return Array.from(
             new Set(state.sets.map((set) => set.categoryId)),
             (category) => ({
-              text: `${this.categoryName(category)} (${state.sets.filter((set) => set.categoryId === category).length})`,
+              text: `${this.categoryName(category)} (${state.sets.reduce((acc, set) => {
+                if (set.categoryId === category) {
+                  return acc + set.qty;
+                }
+
+                return acc;
+              }, 0)})`,
               value: category,
             }),
           );
@@ -81,7 +87,13 @@ export default {
           return Array.from(
             new Set(state.minifigures.map((minifig) => minifig.categoryId)),
             (category) => ({
-              text: `${this.categoryName(category)} (${state.minifigures.filter((minifig) => minifig.categoryId === category).length})`,
+              text: `${this.categoryName(category)} (${state.minifigures.reduce((acc, minifig) => {
+                if (minifig.categoryId === category) {
+                  return acc + minifig.qty;
+                }
+
+                return acc;
+              }, 0)})`,
               value: category,
             }),
           );
