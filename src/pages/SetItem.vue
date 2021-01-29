@@ -7,6 +7,7 @@
       >
         <v-window
           v-model="onboarding"
+          dark
           show-arrows
         >
           <v-window-item

@@ -60,22 +60,22 @@
       <v-list-item
         color="green"
         link
-        to="/statistics"
-      >
-        <v-list-item-icon>
-          <v-icon>mdi-chart-arc</v-icon>
-        </v-list-item-icon>
-        <v-list-item-title>{{ $t('statistics') }}</v-list-item-title>
-      </v-list-item>
-      <v-list-item
-        color="green"
-        link
         to="/wishlist"
       >
         <v-list-item-icon>
           <v-icon>mdi-playlist-star</v-icon>
         </v-list-item-icon>
         <v-list-item-title>{{ $t('wishlist') }}</v-list-item-title>
+      </v-list-item>
+      <v-list-item
+        color="green"
+        link
+        to="/statistics"
+      >
+        <v-list-item-icon>
+          <v-icon>mdi-chart-arc</v-icon>
+        </v-list-item-icon>
+        <v-list-item-title>{{ $t('statistics') }}</v-list-item-title>
       </v-list-item>
     </v-list>
     <template

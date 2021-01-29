@@ -2,7 +2,9 @@
   <v-app-bar
     app
     color="light"
-    flat
+    :elevate-on-scroll="$vuetify.breakpoint.smAndDown"
+    :elevation="$vuetify.breakpoint.smAndDown && 1"
+    :flat="$vuetify.breakpoint.mdAndUp"
   >
     <v-btn
       v-if="singlePage"
