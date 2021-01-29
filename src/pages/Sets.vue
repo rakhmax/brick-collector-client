@@ -117,8 +117,6 @@ export default {
     // });
 
     eventBus.$on('changeCategoryFilter', (value) => {
-      // this.filterRules
-      console.log(value);
       if (!value || !value.length) this.sets = this.allSets;
       else {
         this.sets = this.allSets

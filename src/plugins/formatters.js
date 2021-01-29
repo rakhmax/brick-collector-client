@@ -12,7 +12,8 @@ const PriceFormatter = {
 const SetIdFormatter = {
   install(VueClass) {
     VueClass.prototype.formatSetId = function (setId) {
-      if (this.itemType === 'Set' || this.$route.name === 'Set') {
+      console.log(this);
+      if ((this.itemType && this.itemType === 'Set') || this.$route.name === 'Set') {
         return setId.slice(0, -2);
       }
 

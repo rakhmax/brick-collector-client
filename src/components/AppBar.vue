@@ -11,7 +11,7 @@
     >
       <v-icon>mdi-arrow-left</v-icon>
     </v-btn>
-    <v-app-bar-title v-if="singlePage">{{ $route.params.itemId }}</v-app-bar-title>
+    <v-app-bar-title v-if="singlePage">{{ formatSetId($route.params.itemId) }}</v-app-bar-title>
     <v-app-bar-nav-icon
       v-if="$vuetify.breakpoint.smAndDown && !singlePage"
       @click.stop="openSidebar"
@@ -23,7 +23,7 @@
       {{ $t('wishlist') }}
     </v-app-bar-title>
     <div
-      v-if="$vuetify.breakpoint.smAndUp && !singlePage"
+      v-if="$vuetify.breakpoint.mdAndUp && !singlePage"
       class="d-flex align-center">
       <v-icon
         class="mr-3"
@@ -41,6 +41,7 @@
       <v-menu
         v-if="$vuetify.breakpoint.smAndUp"
         bottom
+        max-height="500px"
         min-width="200px"
         offset-y
         rounded
@@ -54,14 +55,7 @@
           </v-btn>
         </template>
         <v-card min-width="500px">
-          <v-row>
-            <v-col>
-              <filter-category></filter-category>
-            </v-col>
-            <!-- <v-col>
-              <filter-year></filter-year>
-            </v-col> -->
-          </v-row>
+          <filter-category></filter-category>
         </v-card>
       </v-menu>
       <v-text-field
@@ -157,7 +151,6 @@ import { logout } from '@/api/auth';
 import AuthHelper from '@/helpers/auth';
 import { SET_DARK_MODE } from '@/store/types';
 import FilterCategory from './FilterCategory.vue';
-// import FilterYear from './FilterYear.vue';
 import SwitcherView from './SwitcherView.vue';
 
 export default {
@@ -165,7 +158,6 @@ export default {
 
   components: {
     FilterCategory,
-    // FilterYear,
     SwitcherView,
   },
 

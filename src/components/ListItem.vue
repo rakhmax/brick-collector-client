@@ -16,10 +16,11 @@
       >
       <v-img
         contain
-        :lazy-src="lazySrc"
+        :lazy-src="`https://img.bricklink.com/${this.itemType.charAt(0)}/${this.item.itemId}.${extension}`"
         light
-        :src="src"
+        :src="`https://img.bricklink.com/${this.itemType.charAt(0)}/${this.item.itemId}.${extension}`"
         :style="{ background: '#fff' }"
+        @error="replaceBrokenImage"
       ></v-img>
       </v-list-item-avatar>
       <v-list-item-content>
@@ -65,22 +66,32 @@ export default {
     itemType: String,
   },
 
-  computed: {
-    lazySrc() {
-      if (this.item.itemId.length === 6 && this.itemType === 'Set') {
-        return `https://img.bricklink.com/${this.itemType.charAt(0)}/${this.item.itemId}.gif`;
-      }
+  data: () => ({
+    extension: 'jpg',
+  }),
 
-      return `https://img.bricklink.com/${this.itemType.charAt(0)}/${this.item.itemId}.jpg`;
-    },
-
-    src() {
-      if (this.item.itemId.length === 6 && this.itemType === 'Set') {
-        return `https://img.bricklink.com/${this.itemType.charAt(0)}/${this.item.itemId}.gif`;
-      }
-
-      return `https://img.bricklink.com/${this.itemType.charAt(0)}/${this.item.itemId}.jpg`;
+  methods: {
+    replaceBrokenImage() {
+      this.extension = 'gif';
     },
   },
+
+  // computed: {
+  //   lazySrc() {
+  //     // if (this.item.itemId.length === 6 && this.itemType === 'Set') {
+  //     //   return `https://img.bricklink.com/${this.itemType.charAt(0)}/${this.item.itemId}.gif`;
+  //     // }
+
+  //     return `https://img.bricklink.com/${this.itemType.charAt(0)}/${this.item.itemId}.jpg`;
+  //   },
+
+  //   src() {
+  //     // if (this.item.itemId.length === 6 && this.itemType === 'Set') {
+  //     //   return `https://img.bricklink.com/${this.itemType.charAt(0)}/${this.item.itemId}.gif`;
+  //     // }
+
+  //     return `https://img.bricklink.com/${this.itemType.charAt(0)}/${this.item.itemId}.jpg`;
+  //   },
+  // },
 };
 </script>
