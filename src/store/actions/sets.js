@@ -85,9 +85,9 @@ export default {
 
       const { data } = await deleteSet(payload);
       const filteredData = state.sets
-        .filter((set) => set.itemId !== data.set.itemId);
+        .filter((set) => set.itemId !== data.itemId);
       const filteredWishlist = state.wishlist.sets
-        .filter((minifig) => minifig.itemId !== data.itemId);
+        .filter((minifig) => minifig.itemId !== data.set.itemId);
 
       if (data.minifigures) {
         data.minifigures.forEach((minifig) => {

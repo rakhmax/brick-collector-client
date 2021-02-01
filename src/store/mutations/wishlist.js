@@ -73,14 +73,15 @@ export default {
     state.error = payload;
   },
 
-  [DELETE_WISHLIST](state, data) {
-    state.wishlist = data;
+  [DELETE_WISHLIST](state, { minifigures, sets }) {
+    state.wishlist.minifigures = minifigures;
+    state.wishlist.sets = sets;
   },
   [DELETE_WISHLIST_SUCCESS](state) {
-    state.loading = false;
+    state.saving = false;
   },
   [DELETE_WISHLIST_ERROR](state, payload) {
-    state.loading = false;
+    state.saving = false;
     state.error = payload;
   },
 };

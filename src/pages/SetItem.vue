@@ -18,7 +18,7 @@
               aspect-ratio="1"
               class="mx-auto"
               contain
-              :lazy-src="image.url"
+              :lazy-src="image.lazy || image.url"
               light
               :src="image.url"
               :style="{ background: '#fff' }"
@@ -107,9 +107,18 @@ export default {
   computed: {
     images() {
       return [
-        { url: `https://img.bricklink.com/SL/${this.$route.params.itemId}.jpg` },
-        { url: `https://img.bricklink.com/ItemImage/ON/0/${this.$route.params.itemId}.png` },
-        { url: `https://img.bricklink.com/ItemImage/IN/0/${this.$route.params.itemId}.png` },
+        {
+          url: `https://img.bricklink.com/SL/${this.$route.params.itemId}.jpg`,
+          lazy: `https://img.bricklink.com/S/${this.$route.params.itemId}.jpg`,
+        },
+        {
+          url: `https://img.bricklink.com/ItemImage/ON/0/${this.$route.params.itemId}.png`,
+          lazy: `https://img.bricklink.com/ItemImage/OT/0/${this.$route.params.itemId}.t1.png`,
+        },
+        {
+          url: `https://img.bricklink.com/ItemImage/IN/0/${this.$route.params.itemId}.png`,
+          lazy: `https://img.bricklink.com/ItemImage/IT/0/${this.$route.params.itemId}.t1.png`,
+        },
       ];
     },
   },

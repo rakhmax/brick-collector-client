@@ -12,7 +12,7 @@
       >
         <v-card>
           <v-card-title>
-            <span class="headline">{{ $t('edit') + ' ' + dialogData.itemId }}</span>
+            <span class="headline">{{ $t('edit') }} {{ dialogData.itemId }}</span>
           </v-card-title>
           <v-card-text>
             <v-container>
@@ -74,7 +74,11 @@
 
 <script>
 import { eventBus } from '@/main';
-import { UPDATE_SET, UPDATE_MINIFIGURE } from '@/store/types';
+import {
+  UPDATE_SET,
+  UPDATE_MINIFIGURE,
+  UPDATE_WISHLIST,
+} from '@/store/types';
 
 export default {
   name: 'DialogEditItem',
@@ -115,6 +119,7 @@ export default {
     actionTypes() {
       if (this.itemType === 'Minifig') return { update: UPDATE_MINIFIGURE };
       if (this.itemType === 'Set') return { update: UPDATE_SET };
+      if (this.itemType === 'Wishlist') return { update: UPDATE_WISHLIST };
 
       return {};
     },
@@ -122,16 +127,7 @@ export default {
 
   created() {
     eventBus.$on('openEditDialog', ({ dialog, item }) => {
-      const {
-        itemId, sealed, comment, price,
-      } = item;
-
-      this.dialogData = {
-        sealed,
-        comment,
-        price,
-        itemId,
-      };
+      this.dialogData = item;
       this.dialog = dialog;
     });
   },

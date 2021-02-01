@@ -95,7 +95,7 @@ export default {
 
   async [DELETE_WISHLIST]({ commit, state }, { itemId }) {
     try {
-      state.loading = true;
+      state.saving = true;
 
       const { data } = await deleteWishlist({ itemId });
       const filteredWishlistMinifigs = state.wishlist.minifigures

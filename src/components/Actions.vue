@@ -17,7 +17,7 @@
     <v-list>
       <v-list-item
         v-if="$route.name === 'Wishlist'"
-        @click="moveToCollection(item.itemId)"
+        @click="openEditDialog({ ...item, type: itemType.charAt(0) })"
       >
         <v-list-item-title>{{ $t('moveToCol') }}</v-list-item-title>
       </v-list-item>
@@ -43,7 +43,7 @@
 <script>
 import { mapState } from 'vuex';
 import { eventBus } from '@/main';
-import { DELETE_MINIFIGURE, DELETE_SET, UPDATE_WISHLIST } from '@/store/types';
+import { DELETE_MINIFIGURE, DELETE_SET } from '@/store/types';
 
 export default {
   name: 'Actions',
@@ -58,14 +58,6 @@ export default {
       eventBus.$emit('openEditDialog', {
         item,
         dialog: true,
-      });
-    },
-
-    moveToCollection(itemId) {
-      this.$store.dispatch(UPDATE_WISHLIST, {
-        itemId,
-        type: this.itemType.charAt(0),
-        inWishlist: false,
       });
     },
 

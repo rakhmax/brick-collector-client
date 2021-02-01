@@ -3,7 +3,7 @@
     app
     color="light"
     :elevate-on-scroll="$vuetify.breakpoint.smAndDown"
-    :elevation="$vuetify.breakpoint.smAndDown && 1"
+    :elevation="$vuetify.breakpoint.smAndDown ? 1 : 0"
     :flat="$vuetify.breakpoint.mdAndUp"
   >
     <v-btn

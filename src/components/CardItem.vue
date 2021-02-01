@@ -60,7 +60,7 @@ export default {
 
   computed: {
     lazySrc() {
-      return `https://img.bricklink.com/${this.itemType.charAt(0)}L/${this.item.itemId}.jpg`;
+      return `https://img.bricklink.com/${this.itemType.charAt(0)}/${this.item.itemId}.jpg`;
     },
 
     src() {
