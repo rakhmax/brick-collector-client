@@ -33,6 +33,18 @@
                   cols="12"
                   sm="4"
                 >
+                  <v-text-field
+                    v-model="dialogData.qty"
+                    :label="$t('qtyShort')"
+                    min="1"
+                    required
+                    type="number"
+                  ></v-text-field>
+                </v-col>
+                <v-col
+                  cols="12"
+                  sm="4"
+                >
                   <v-checkbox
                     v-if="itemType === 'Set'"
                     v-model="dialogData.sealed"
@@ -93,6 +105,7 @@ export default {
       sealed: null,
       comment: null,
       price: null,
+      qty: null,
     },
   }),
 
@@ -127,7 +140,7 @@ export default {
 
   created() {
     eventBus.$on('openEditDialog', ({ dialog, item }) => {
-      this.dialogData = item;
+      this.dialogData = { ...item };
       this.dialog = dialog;
     });
   },
