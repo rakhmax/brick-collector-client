@@ -57,7 +57,10 @@
           </v-btn>
         </template>
         <v-card min-width="500px">
-          <filter-category></filter-category>
+          <v-row class="ma-0">
+            <v-col class="pa-0"><filter-category></filter-category></v-col>
+            <v-col class="pa-0"><filter-items></filter-items></v-col>
+          </v-row>
         </v-card>
       </v-menu>
       <v-text-field
@@ -154,6 +157,7 @@ import AuthHelper from '@/helpers/auth';
 import { SET_DARK_MODE } from '@/store/types';
 import FilterCategory from './FilterCategory.vue';
 import SwitcherView from './SwitcherView.vue';
+import FilterItems from './FilterItems.vue';
 
 export default {
   name: 'AppBar',
@@ -161,6 +165,7 @@ export default {
   components: {
     FilterCategory,
     SwitcherView,
+    FilterItems,
   },
 
   data: () => ({

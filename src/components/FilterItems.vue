@@ -15,7 +15,6 @@
       v-else
       v-model="filterValue"
       hide-details
-      row
       @change="handleFilter"
     >
       <v-radio

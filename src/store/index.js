@@ -24,7 +24,7 @@ export default new Vuex.Store({
     error: null,
     loading: false,
     minifigures: [],
-    layout: localStorage.getItem('layout'),
+    layout: localStorage.getItem('layout') || '0',
     isMobile: window.innerWidth < 600,
     saving: false,
     sets: [],

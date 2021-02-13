@@ -30,21 +30,6 @@
         </v-list-item>
       </v-list-item-group>
     </v-list>
-    <!-- <v-select
-      v-else
-      v-model="categoryFilter"
-      class="mr-2"
-      clearable
-      dense
-      flat
-      hide-details
-      :items="categories"
-      :label="$t('category')"
-      multiple
-      solo
-      :style="{ maxWidth: '300px' }"
-      @change="handleCategoryFilter"
-    ></v-select> -->
   </div>
 </template>
 

@@ -85,8 +85,14 @@ export default {
     ...mapState({
       layout: 'layout',
       allMinifigs: 'minifigures',
-      moreThenOne: ({ minifigures }) => minifigures.filter((minifig) => minifig.qty > 1),
+      // moreThenOne: ({ minifigures }) => minifigures.filter((minifig) => minifig.qty > 1),
     }),
+    // allMinifigs() {
+    //   return this.minifigures;
+    // },
+    moreThenOne() {
+      return this.minifigures.filter((minifig) => minifig.qty > 1);
+    },
   },
 
   created() {
@@ -110,7 +116,7 @@ export default {
     eventBus.$on('changeCategoryFilter', (value) => {
       if (!value || !value.length) this.minifigures = this.allMinifigs;
       else {
-        this.minifigures = this.minifigures
+        this.minifigures = this.allMinifigs
           .filter((minifig) => value.includes(minifig.categoryId));
       }
     });
