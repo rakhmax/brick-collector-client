@@ -85,7 +85,7 @@ export default {
 
       const { data } = await deleteSet(payload);
       const filteredData = state.sets
-        .filter((set) => set.itemId !== data.itemId);
+        .filter((set) => set.itemId !== data.set.itemId);
       const filteredWishlist = state.wishlist.sets
         .filter((minifig) => minifig.itemId !== data.set.itemId);
 
@@ -95,6 +95,7 @@ export default {
           state.minifigures.splice(idx, 1, minifig);
         });
       }
+
       commit(DELETE_SET, filteredData);
       commit(DELETE_WISHLIST, {
         minifigures: state.wishlist.minifigures,

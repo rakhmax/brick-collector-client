@@ -9,9 +9,9 @@
           aspect-ratio="1"
           class="mx-auto"
           contain
-          :lazy-src="`https://img.bricklink.com/ML/${$route.params.itemId}.jpg`"
+          :lazy-src="item.thumbnail"
           light
-          :src="`https://img.bricklink.com/ML/${$route.params.itemId}.jpg`"
+          :src="item.image"
           :style="{ background: '#fff' }"
           width="250px"
         ></v-img>
@@ -81,11 +81,11 @@ export default {
 
   created() {
     const {
-      itemId, name, categoryId, year, qty,
+      itemId, name, categoryId, year, qty, image, thumbnail,
     } = this.$route.params;
 
     this.item = {
-      itemId, name, categoryId, year, qty,
+      itemId, name, categoryId, year, qty, image, thumbnail,
     };
   },
 

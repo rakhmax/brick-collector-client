@@ -108,8 +108,8 @@ export default {
     images() {
       return [
         {
-          url: `https://img.bricklink.com/SL/${this.$route.params.itemId}.jpg`,
-          lazy: `https://img.bricklink.com/S/${this.$route.params.itemId}.jpg`,
+          url: this.item.image,
+          lazy: this.item.thumbnail,
         },
         {
           url: `https://img.bricklink.com/ItemImage/ON/0/${this.$route.params.itemId}.png`,

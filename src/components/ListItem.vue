@@ -23,11 +23,10 @@
         >
         <v-img
           contain
-          :lazy-src="`https://img.bricklink.com/${this.itemType.charAt(0)}/${this.item.itemId}.${extension}`"
+          :lazy-src="item.thumbnail"
           light
-          :src="`https://img.bricklink.com/${this.itemType.charAt(0)}/${this.item.itemId}.${extension}`"
+          :src="item.image"
           :style="{ background: '#fff' }"
-          @error="replaceBrokenImage"
         ></v-img>
         </v-list-item-avatar>
         <v-list-item-content>
@@ -73,33 +72,5 @@ export default {
     item: Object,
     itemType: String,
   },
-
-  data: () => ({
-    extension: 'jpg',
-  }),
-
-  methods: {
-    replaceBrokenImage() {
-      this.extension = 'gif';
-    },
-  },
-
-  // computed: {
-  //   lazySrc() {
-  //     // if (this.item.itemId.length === 6 && this.itemType === 'Set') {
-  //     //   return `https://img.bricklink.com/${this.itemType.charAt(0)}/${this.item.itemId}.gif`;
-  //     // }
-
-  //     return `https://img.bricklink.com/${this.itemType.charAt(0)}/${this.item.itemId}.jpg`;
-  //   },
-
-  //   src() {
-  //     // if (this.item.itemId.length === 6 && this.itemType === 'Set') {
-  //     //   return `https://img.bricklink.com/${this.itemType.charAt(0)}/${this.item.itemId}.gif`;
-  //     // }
-
-  //     return `https://img.bricklink.com/${this.itemType.charAt(0)}/${this.item.itemId}.jpg`;
-  //   },
-  // },
 };
 </script>

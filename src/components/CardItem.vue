@@ -17,9 +17,9 @@
       <v-img
         contain
         height="200px"
-        :lazy-src="lazySrc"
+        :lazy-src="item.thumbnail"
         light
-        :src="src"
+        :src="item.image"
         :style="{ background: '#fff' }"
         width="auto"
       ></v-img>
@@ -63,16 +63,6 @@ export default {
   props: {
     item: Object,
     itemType: String,
-  },
-
-  computed: {
-    lazySrc() {
-      return `https://img.bricklink.com/${this.itemType.charAt(0)}/${this.item.itemId}.jpg`;
-    },
-
-    src() {
-      return `https://img.bricklink.com/${this.itemType.charAt(0)}L/${this.item.itemId}.jpg`;
-    },
   },
 };
 </script>
